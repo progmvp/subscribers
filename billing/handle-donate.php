@@ -1,0 +1,84 @@
+<?php
+
+// 🔐 1. Только POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(403);
+    exit('Access denied');
+}
+
+// 🔐 2. Honeypot
+if (!empty($_POST['website'])) {
+    exit;
+}
+
+// 🔐 3. Referer (если вдруг начнёт мешать — уберём)
+if (empty($_SERVER['HTTP_REFERER']) || 
+    strpos($_SERVER['HTTP_REFERER'], 'podberimuzyku.ru') === false) {
+    exit;
+}
+
+// 🔧 4. Подключаем WP конфиг
+require_once '/var/www/podberimuzyku.ru/wp-config.php';
+
+$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+if ($mysqli->connect_errno) {
+    die('Ошибка подключения: ' . $mysqli->connect_error);
+}
+
+// 📥 5. Данные
+$email     = trim($_POST['email'] ?? '');
+$firstName = trim($_POST['first_name'] ?? '');
+$lastName  = trim($_POST['full_last_name']);
+$plan      = trim($_POST['plan'] ?? '');
+$status    = 'pending';
+
+// 🧪 6. Проверки
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    die('Неверный email');
+}
+
+if (!preg_match('/^[a-zA-Zа-яА-ЯёЁ\s\-]{2,}$/u', $firstName)) {
+    die('Неверное имя');
+}
+
+if (strlen($lastName) < 1) {
+    die('Введите фамилию');
+}
+
+if (!in_array($plan, ['start', 'base', 'full'])) {
+    die('Неверный тариф');
+}
+
+// 💰 7. Сумма
+$amountMap = [
+    'start' => 250,
+    'base'  => 450,
+    'full'  => 750
+];
+
+$amount = $amountMap[$plan];
+
+// 🧠 8. Имя (для MBT)
+$name = $firstName . ' ' . mb_substr($lastName, 0, 1);
+
+// 💾 9. Запись в БД
+$stmt = $mysqli->prepare("
+INSERT INTO `24ffsgwp_payments` 
+(email, first_name, full_last_name, name, plan, amount, status, created_at, updated_at) 
+VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+");
+
+if (!$stmt) {
+    die('Ошибка SQL: ' . $mysqli->error);
+}
+
+$stmt->bind_param("sssssis", $email, $firstName, $lastName, $name, $plan, $amount, $status);
+$stmt->execute();
+
+$stmt->close();
+$mysqli->close();
+
+// 🔁 10. Редирект
+header("Location: https://ebpppm.ru/pay?email=" . urlencode($email) . "&name=" . urlencode($name) . "&plan=" . urlencode($plan));
+exit;

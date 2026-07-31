@@ -1,0 +1,101 @@
+<?php
+
+require_once __DIR__ . '/../wp-config.php';
+
+// 🔐 секретный ключ
+$secret = 'MBT_SECRET_2026';
+
+// 🔐 проверяем секретный header
+$incomingSecret = $_SERVER['HTTP_X_MBT_SECRET'] ?? '';
+
+if ($incomingSecret !== $secret) {
+    http_response_code(403);
+    exit('Forbidden');
+}
+
+$mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+if ($mysqli->connect_errno) {
+    http_response_code(500);
+    exit('DB connection error');
+}
+
+// 📥 принимаем JSON
+$input = file_get_contents('php://input');
+
+$data = json_decode($input, true);
+
+if (!$data) {
+    http_response_code(400);
+    exit('Invalid JSON');
+}
+
+$email = trim($data['email'] ?? '');
+$plan = trim($data['plan'] ?? '');
+$status = trim($data['status'] ?? '');
+
+if (!$email || !$plan || !$status) {
+    http_response_code(400);
+    exit('Missing fields');
+}
+
+/*
+|--------------------------------------------------------------------------
+| УДАЛЕНИЕ ЗАЯВКИ
+|--------------------------------------------------------------------------
+*/
+
+if ($status === 'deleted') {
+
+    $stmt = $mysqli->prepare("
+        DELETE FROM 24ffsgwp_payments
+        WHERE email = ?
+        AND plan = ?
+        ORDER BY id DESC
+        LIMIT 1
+    ");
+
+    $stmt->bind_param(
+        "ss",
+        $email,
+        $plan
+    );
+
+    $stmt->execute();
+    $stmt->close();
+
+    $mysqli->close();
+
+    echo 'DELETED';
+
+    exit;
+}
+
+/*
+|--------------------------------------------------------------------------
+| ПОДТВЕРЖДЕНИЕ ОПЛАТЫ
+|--------------------------------------------------------------------------
+*/
+
+$stmt = $mysqli->prepare("
+    UPDATE 24ffsgwp_payments
+    SET status = ?
+    WHERE email = ?
+    AND plan = ?
+    ORDER BY id DESC
+    LIMIT 1
+");
+
+$stmt->bind_param(
+    "sss",
+    $status,
+    $email,
+    $plan
+);
+
+$stmt->execute();
+
+$stmt->close();
+$mysqli->close();
+
+echo 'OK';
