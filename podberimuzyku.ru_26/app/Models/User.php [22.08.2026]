@@ -22,6 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'subscription_plan',
+        'subscription_started_at',
+        'subscription_expires_at',
     ];
 
     /**
@@ -43,8 +46,9 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'subscription_started_at' => 'datetime',
+            'subscription_expires_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
 }
-
