@@ -562,14 +562,27 @@ $headers = [
 // ОТПРАВКА
 // =====================================================
 
+add_action('phpmailer_init', function ($phpmailer) {
+    $phpmailer->Sender = 'info@podberimuzyku.ru';
+
+    file_put_contents(
+        '/tmp/pricelist-mail-debug.txt',
+        date('Y-m-d H:i:s') .
+        ' | From=' . $phpmailer->From .
+        ' | Sender=' . $phpmailer->Sender .
+        PHP_EOL,
+        FILE_APPEND
+    );
+});
+
+
 $mail = wp_mail(
     $email,
     $subject,
-    $message,
+     $message,
     $headers,
     [$file]
 );
-
 
 
 // =====================================================
