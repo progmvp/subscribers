@@ -80,5 +80,6 @@ $stmt->close();
 $mysqli->close();
 
 // 🔁 10. Редирект
-header("Location: https://ebpppm.ru/pay?email=" . urlencode($email) . "&name=" . urlencode($name) . "&plan=" . urlencode($plan));
+#header("Location: https://ebpppm.ru/pay?email=" . urlencode($email) . "&name=" . urlencode($name) . "&plan=" . urlencode($plan));
+header("Location: https://ebpp.podberimuzyku.ru/pay?email=" . urlencode($email) . "&name=" . urlencode($name) . "&plan=" . urlencode($plan));
 exit;
