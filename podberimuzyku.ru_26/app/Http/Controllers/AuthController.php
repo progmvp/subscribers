@@ -1,0 +1,337 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+
+class AuthController extends Controller
+{
+    /**
+     * Форма входа.
+     */
+    public function showLogin()
+    {
+        if (Auth::check()) {
+            return redirect()->route('lk.dashboard');
+        }
+
+        return view('auth.login');
+    }
+
+    /**
+     * Отправка одноразового кода.
+     *
+     * Вход разрешён только пользователям,
+     * которые уже есть в таблице payments.
+     */
+    public function sendCode(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        $email = mb_strtolower(trim($validated['email']));
+
+        /*
+         * ==========================================================
+         * 1. Ищем пользователя в payments.
+         * ==========================================================
+         *
+         * ВАЖНО:
+         * users здесь НЕ является источником права на вход.
+         *
+         * Пользователь может впервые входить в ЛК, поэтому
+         * записи в users ещё может не существовать.
+         */
+        $payment = DB::table('payments')
+            ->whereRaw('LOWER(email) = ?', [$email])
+            ->orderByDesc('id')
+            ->first();
+
+        if (!$payment) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'email' => 'Пользователь с таким e-mail не найден.',
+                ]);
+        }
+
+        /*
+         * ==========================================================
+         * 2. Пользователь найден в payments.
+         * ==========================================================
+         *
+         * Проверяем, существует ли уже его запись в users.
+         */
+        $user = User::whereRaw('LOWER(email) = ?', [$email])->first();
+
+        /*
+         * ==========================================================
+         * 3. Если пользователя в users ещё нет — создаём.
+         * ==========================================================
+         */
+        if (!$user) {
+            $user = User::create([
+                'name' => $payment->name ?? $email,
+                'email' => $email,
+                'subscription_plan' => $payment->plan ?? null,
+                'subscription_started_at' => null,
+                'subscription_expires_at' => null,
+                'password' => Hash::make(bin2hex(random_bytes(32))),
+            ]);
+        }
+
+        /*
+         * ==========================================================
+         * 4. Не позволяем запрашивать новый код слишком часто.
+         * ==========================================================
+         */
+        $lastSentAt = session('login_otp_sent_at');
+
+        if ($lastSentAt && now()->diffInSeconds($lastSentAt) < 60) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'email' => 'Новый код можно запросить через минуту.',
+                ]);
+        }
+
+        /*
+         * ==========================================================
+         * 5. Генерируем 6-значный код.
+         * ==========================================================
+         */
+        $code = (string) random_int(100000, 999999);
+
+        /*
+         * ==========================================================
+         * 6. Сохраняем данные OTP в сессии.
+         * ==========================================================
+         */
+        session([
+            'login_otp_user_id' => $user->id,
+            'login_otp_email' => $email,
+            'login_otp_hash' => Hash::make($code),
+            'login_otp_expires_at' => now()->addMinutes(10),
+            'login_otp_sent_at' => now(),
+            'login_otp_attempts' => 0,
+        ]);
+
+        /*
+         * ==========================================================
+         * 7. Отправляем письмо.
+         * ==========================================================
+         */
+        Mail::raw(
+            "Здравствуйте, {$user->name}!\n\n"
+            . "Ваш код для входа в личный кабинет:\n\n"
+            . "{$code}\n\n"
+            . "Код действителен 10 минут.\n\n"
+            . "Если вы не запрашивали вход в личный кабинет, просто проигнорируйте это письмо.",
+            function ($message) use ($email) {
+                $message
+                    ->to($email)
+                    ->subject('Код для входа в личный кабинет');
+            }
+        );
+
+        return redirect()
+            ->route('lk.verify')
+            ->with('status', 'Код отправлен на ваш e-mail.');
+    }
+
+    /**
+     * Форма проверки кода.
+     */
+    public function showVerify()
+    {
+        if (Auth::check()) {
+            return redirect()->route('lk.dashboard');
+        }
+
+        if (!session('login_otp_email')) {
+            return redirect()->route('lk.login');
+        }
+
+        return view('auth.verify-code', [
+            'email' => session('login_otp_email'),
+        ]);
+    }
+
+    /**
+     * Проверка одноразового кода.
+     */
+    public function verifyCode(Request $request)
+    {
+        $validated = $request->validate([
+            'code' => ['required', 'digits:6'],
+        ]);
+
+        $userId = session('login_otp_user_id');
+        $email = session('login_otp_email');
+        $hash = session('login_otp_hash');
+        $expiresAt = session('login_otp_expires_at');
+        $attempts = (int) session('login_otp_attempts', 0);
+
+        if (!$userId || !$email || !$hash || !$expiresAt) {
+            return redirect()
+                ->route('lk.login')
+                ->withErrors([
+                    'email' => 'Сессия входа истекла. Запросите новый код.',
+                ]);
+        }
+
+        /*
+         * Код действует 10 минут.
+         */
+        if (now()->greaterThan($expiresAt)) {
+            session()->forget([
+                'login_otp_user_id',
+                'login_otp_email',
+                'login_otp_hash',
+                'login_otp_expires_at',
+                'login_otp_sent_at',
+                'login_otp_attempts',
+            ]);
+
+            return redirect()
+                ->route('lk.login')
+                ->withErrors([
+                    'email' => 'Срок действия кода истёк. Запросите новый код.',
+                ]);
+        }
+
+        /*
+         * Максимум 5 попыток.
+         */
+        if ($attempts >= 5) {
+            session()->forget([
+                'login_otp_user_id',
+                'login_otp_email',
+                'login_otp_hash',
+                'login_otp_expires_at',
+                'login_otp_sent_at',
+                'login_otp_attempts',
+            ]);
+
+            return redirect()
+                ->route('lk.login')
+                ->withErrors([
+                    'email' => 'Превышено количество попыток. Запросите новый код.',
+                ]);
+        }
+
+        /*
+         * Увеличиваем счётчик попыток.
+         */
+        session([
+            'login_otp_attempts' => $attempts + 1,
+        ]);
+
+        /*
+         * Проверяем код.
+         */
+        if (!Hash::check($validated['code'], $hash)) {
+            return back()->withErrors([
+                'code' => 'Неверный код.',
+            ]);
+        }
+
+        /*
+         * Получаем пользователя.
+         */
+        $user = User::find($userId);
+
+        if (!$user || mb_strtolower($user->email) !== $email) {
+            session()->invalidate();
+
+            return redirect()
+                ->route('lk.login')
+                ->withErrors([
+                    'email' => 'Пользователь не найден.',
+                ]);
+        }
+
+        /*
+         * Авторизуем пользователя.
+         */
+        Auth::login($user);
+
+        /*
+         * Защита от session fixation.
+         */
+        $request->session()->regenerate();
+
+        /*
+         * Фиксируем время начала ЛК-сессии.
+         */
+        session([
+            'lk_authenticated_at' => now()->timestamp,
+        ]);
+
+        /*
+         * Удаляем данные одноразового кода.
+         */
+        session()->forget([
+            'login_otp_user_id',
+            'login_otp_email',
+            'login_otp_hash',
+            'login_otp_expires_at',
+            'login_otp_sent_at',
+            'login_otp_attempts',
+        ]);
+
+        return redirect()->route('lk.dashboard');
+    }
+
+    /**
+     * Личный кабинет.
+     */
+    public function dashboard()
+    {
+        $user = Auth::user();
+
+        /*
+         * Ограничиваем одну авторизованную сессию 24 часами.
+         */
+        $authenticatedAt = session('lk_authenticated_at');
+
+        if (
+            $authenticatedAt &&
+            now()->timestamp - $authenticatedAt >= 86400
+        ) {
+            Auth::logout();
+
+            request()->session()->invalidate();
+            request()->session()->regenerateToken();
+
+            return redirect()
+                ->route('lk.login')
+                ->withErrors([
+                    'email' => 'Сессия личного кабинета завершена. Войдите снова.',
+                ]);
+        }
+
+        return view('dashboard', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * Выход.
+     */
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('lk.login');
+    }
+}
