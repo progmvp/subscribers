@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\SubscrPayment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
+class SubscriptionPaymentController extends Controller
+{
+    public function create(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'plan_id' => ['required', 'integer'],
+        ]);
+
+        /*
+         * Пока не создаём платёж.
+         *
+         * На этом этапе нам нужно подключить реальные тарифы,
+         * которые уже используются существующим ЛК.
+         *
+         * Этот блок намеренно оставлен до получения фактической
+         * структуры тарифов из существующего кода.
+         */
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Payment creation is not connected yet.',
+        ], 501);
+    }
+}
