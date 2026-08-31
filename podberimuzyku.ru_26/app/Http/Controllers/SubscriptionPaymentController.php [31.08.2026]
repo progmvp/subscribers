@@ -1,0 +1,99 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\SubscrPayment;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
+class SubscriptionPaymentController extends Controller
+{
+    public function create(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'plan_id' => ['required', 'integer'],
+        ]);
+
+        /*
+         * Тарифы новой цепочки оплаты.
+         *
+         * 1 = start = 250 ₽
+         * 2 = base  = 450 ₽
+         * 3 = full  = 750 ₽
+         */
+        $plans = [
+            1 => [
+                'code' => 'start',
+                'name' => 'Стартовый',
+                'amount' => 250,
+            ],
+
+            2 => [
+                'code' => 'base',
+                'name' => 'Базовый',
+                'amount' => 450,
+            ],
+
+            3 => [
+                'code' => 'full',
+                'name' => 'Полный',
+                'amount' => 750,
+            ],
+        ];
+
+        $planId = (int) $validated['plan_id'];
+
+        if (!isset($plans[$planId])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Неизвестный тариф.',
+            ], 400);
+        }
+
+        $plan = $plans[$planId];
+
+        /*
+         * Уникальный ID новой операции.
+         */
+        $paymentId = (string) Str::uuid();
+
+        /*
+         * Создаём новую запись ТОЛЬКО в subscr_payments.
+         *
+         * Старая таблица payments здесь НЕ используется.
+         */
+        $payment = SubscrPayment::create([
+            'user_id' => $user->id,
+            'subscription_id' => null,
+            'plan_id' => $planId,
+            'payment_id' => $paymentId,
+            'amount' => $plan['amount'],
+            'status' => 'pending',
+            'paid_at' => null,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Платёж создан.',
+            'payment' => [
+                'id' => $payment->id,
+                'payment_id' => $payment->payment_id,
+                'user_id' => $payment->user_id,
+                'plan_id' => $payment->plan_id,
+                'plan' => $plan['code'],
+                'plan_name' => $plan['name'],
+                'amount' => $payment->amount,
+                'status' => $payment->status,
+                'paid_at' => $payment->paid_at,
+                'created_at' => $payment->created_at,
+            ],
+        ]);
+    }
+}
