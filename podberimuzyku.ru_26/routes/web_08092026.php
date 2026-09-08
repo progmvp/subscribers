@@ -104,8 +104,12 @@ Route::get('/pay', function () {
 | YOOMONEY HTTP NOTIFICATION
 |--------------------------------------------------------------------------
 |
-| ЮMoney отправляет POST-уведомление после поступления платежа.
-| Пока здесь только проверяем подпись и фиксируем успешный платёж.
+| Один endpoint используется одновременно для:
+|
+| 1. новой цепочки subscr_payments;
+| 2. старой цепочки payments.
+|
+| Разделение выполняется по label (= payment_id).
 |
 */
 
@@ -117,7 +121,7 @@ Route::post('/yoomoney/notification', function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Секретное слово ЮMoney
+    | Секретное слово YooMoney
     |--------------------------------------------------------------------------
     */
 
@@ -177,7 +181,86 @@ Route::post('/yoomoney/notification', function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Ищем нашу заявку
+    | НОВАЯ ЦЕПОЧКА — subscr_payments
+    |--------------------------------------------------------------------------
+    */
+
+    $subscriptionPayment = DB::table('subscr_payments')
+        ->where('payment_id', $paymentId)
+        ->first();
+
+    if ($subscriptionPayment) {
+
+        /*
+        |--------------------------------------------------------------------------
+        | Проверяем сумму
+        |--------------------------------------------------------------------------
+        */
+
+        if ((float) $amount !== (float) $subscriptionPayment->amount) {
+
+            \Log::warning('YOOMONEY SUBSCRIPTION INVALID AMOUNT', [
+                'subscr_payment_id' => $subscriptionPayment->id,
+                'payment_id' => $paymentId,
+                'expected_amount' => $subscriptionPayment->amount,
+                'received_amount' => $amount,
+                'operation_id' => $operationId,
+            ]);
+
+            return response('Invalid amount', 400);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Повторное уведомление
+        |--------------------------------------------------------------------------
+        */
+
+        if ($subscriptionPayment->status === 'success') {
+
+            \Log::info('YOOMONEY SUBSCRIPTION PAYMENT ALREADY CONFIRMED', [
+                'subscr_payment_id' => $subscriptionPayment->id,
+                'payment_id' => $paymentId,
+                'operation_id' => $operationId,
+            ]);
+
+            return response('OK', 200);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Подтверждаем новый платёж
+        |--------------------------------------------------------------------------
+        */
+
+        DB::table('subscr_payments')
+            ->where('id', $subscriptionPayment->id)
+            ->update([
+                'status' => 'success',
+                'paid_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+        \Log::info('YOOMONEY SUBSCRIPTION PAYMENT CONFIRMED', [
+            'subscr_payment_id' => $subscriptionPayment->id,
+            'payment_id' => $paymentId,
+            'user_id' => $subscriptionPayment->user_id,
+            'plan_id' => $subscriptionPayment->plan_id,
+            'amount' => $amount,
+            'operation_id' => $operationId,
+        ]);
+
+        /*
+         * На этом этапе только подтверждаем платёж.
+         * Создание/продление подписки сделаем следующим этапом.
+         */
+
+        return response('OK', 200);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | СТАРАЯ ЦЕПОЧКА — payments
     |--------------------------------------------------------------------------
     */
 
@@ -201,7 +284,7 @@ Route::post('/yoomoney/notification', function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Если уже оплачено — просто подтверждаем получение уведомления
+    | Если уже оплачено
     |--------------------------------------------------------------------------
     */
 
@@ -211,7 +294,7 @@ Route::post('/yoomoney/notification', function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Помечаем платёж как успешный
+    | Помечаем старый платёж как успешный
     |--------------------------------------------------------------------------
     */
 
@@ -224,7 +307,7 @@ Route::post('/yoomoney/notification', function () {
 
     /*
     |--------------------------------------------------------------------------
-    | TELEGRAM — УСПЕШНАЯ ОПЛАТА
+    | TELEGRAM — СТАРАЯ ЦЕПОЧКА
     |--------------------------------------------------------------------------
     */
 
@@ -247,6 +330,7 @@ Route::post('/yoomoney/notification', function () {
 
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
     curl_setopt($ch, CURLOPT_POSTFIELDS, [
         'chat_id' => $chatId,
         'text' => $text
@@ -255,10 +339,13 @@ Route::post('/yoomoney/notification', function () {
     $telegramResponse = curl_exec($ch);
 
     if ($telegramResponse === false) {
+
         \Log::error('Telegram notification failed', [
             'error' => curl_error($ch)
         ]);
+
     } else {
+
         \Log::info('Telegram notification sent', [
             'response' => $telegramResponse
         ]);
@@ -282,7 +369,12 @@ Route::post('/yoomoney/notification', function () {
         'https://podberimuzyku.ru/billing/confirm-payment.php'
     );
 
-    curl_setopt($ch, CURLOPT_USERAGENT, 'PODBERIMUZYKU-YOOMONEY/1.0');
+    curl_setopt(
+        $ch,
+        CURLOPT_USERAGENT,
+        'PODBERIMUZYKU-YOOMONEY/1.0'
+    );
+
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -298,6 +390,7 @@ Route::post('/yoomoney/notification', function () {
     );
 
     curl_exec($ch);
+
     curl_close($ch);
 
     return response('OK', 200);
@@ -540,7 +633,11 @@ Route::middleware('auth')->group(function () {
 | TEST PAY
 |--------------------------------------------------------------------------
 */
+
 Route::middleware(['auth'])->group(function () {
-    Route::post('/subscription/payment', [SubscriptionPaymentController::class, 'create'])
-        ->name('subscription.payment');
+
+    Route::post(
+        '/subscription/payment',
+        [SubscriptionPaymentController::class, 'create']
+    )->name('subscription.payment');
 });
