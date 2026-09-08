@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SubscriptionPaymentController;
+use App\Http\Controllers\SubscribeWPApiTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -436,6 +437,32 @@ Route::get('/admin/logout', function () {
     Session::forget('admin');
 
     return redirect('/admin/login');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN — WORDPRESS API TOKEN
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/admin/wp-api-token', function () {
+    if (!Session::get('admin')) {
+        return redirect('/admin/login');
+    }
+
+    return app(SubscribeWPApiTokenController::class)->show();
+});
+
+Route::post('/admin/wp-api-token', function () {
+    if (!Session::get('admin')) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Необходима авторизация администратора.',
+        ], 403);
+    }
+
+    return app(SubscribeWPApiTokenController::class)->store(request());
 });
 
 /*
