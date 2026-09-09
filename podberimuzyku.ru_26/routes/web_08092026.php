@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SubscriptionPaymentController;
-use App\Http\Controllers\SubscribeWPApiTokenController;
+//use App\Http\Controllers\SubscribeWPApiTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -446,7 +446,7 @@ Route::get('/admin/logout', function () {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/admin/wp-api-token', function () {
+/*Route::get('/admin/wp-api-token', function () {
     if (!Session::get('admin')) {
         return redirect('/admin/login');
     }
@@ -463,7 +463,7 @@ Route::post('/admin/wp-api-token', function () {
     }
 
     return app(SubscribeWPApiTokenController::class)->store(request());
-});
+});*/
 
 /*
 |--------------------------------------------------------------------------
