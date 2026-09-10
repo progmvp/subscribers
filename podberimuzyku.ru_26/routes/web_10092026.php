@@ -8,6 +8,7 @@ use App\Http\Controllers\DonateController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SubscriptionPaymentController;
 //use App\Http\Controllers\SubscribeWPApiTokenController;
+use App\Services\SubscrSubscriptionService;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::get('/', function () {
 | PAY PAGE
 |--------------------------------------------------------------------------
 */
+
 Route::get('/pay', function () {
 
     $name = request('name');
@@ -252,9 +254,52 @@ Route::post('/yoomoney/notification', function () {
         ]);
 
         /*
-         * На этом этапе только подтверждаем платёж.
-         * Создание/продление подписки сделаем следующим этапом.
-         */
+        |--------------------------------------------------------------------------
+        | АКТИВАЦИЯ / ПРОДЛЕНИЕ ПОДПИСКИ
+        |--------------------------------------------------------------------------
+        */
+
+        try {
+
+            $paymentModel = \App\Models\SubscrPayment::find(
+                $subscriptionPayment->id
+            );
+
+            if (!$paymentModel) {
+
+                \Log::error('SUBSCRIPTION PAYMENT MODEL NOT FOUND', [
+                    'subscr_payment_id' => $subscriptionPayment->id,
+                    'payment_id' => $paymentId,
+                ]);
+
+                return response('Subscription payment not found', 500);
+            }
+
+            $user = app(SubscrSubscriptionService::class)
+                ->activate($paymentModel);
+
+            \Log::info('SUBSCRIPTION ACTIVATED', [
+                'subscr_payment_id' => $subscriptionPayment->id,
+                'payment_id' => $paymentId,
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'plan' => $user->subscription_plan,
+                'subscription_started_at' => $user->subscription_started_at,
+                'subscription_expires_at' => $user->subscription_expires_at,
+            ]);
+
+        } catch (\Throwable $e) {
+
+            \Log::error('SUBSCRIPTION ACTIVATION FAILED', [
+                'subscr_payment_id' => $subscriptionPayment->id,
+                'payment_id' => $paymentId,
+                'user_id' => $subscriptionPayment->user_id,
+                'plan_id' => $subscriptionPayment->plan_id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return response('Subscription activation failed', 500);
+        }
 
         return response('OK', 200);
     }
@@ -439,7 +484,6 @@ Route::get('/admin/logout', function () {
     return redirect('/admin/login');
 });
 
-
 /*
 |--------------------------------------------------------------------------
 | ADMIN — WORDPRESS API TOKEN
@@ -447,6 +491,7 @@ Route::get('/admin/logout', function () {
 */
 
 /*Route::get('/admin/wp-api-token', function () {
+
     if (!Session::get('admin')) {
         return redirect('/admin/login');
     }
@@ -455,6 +500,7 @@ Route::get('/admin/logout', function () {
 });
 
 Route::post('/admin/wp-api-token', function () {
+
     if (!Session::get('admin')) {
         return response()->json([
             'success' => false,
@@ -547,6 +593,7 @@ Route::get('/admin/payments/confirm', function () {
     );
 
     curl_exec($ch);
+
     curl_close($ch);
 
     return redirect('/admin/payments');
