@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\DonateController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SubscriptionPaymentController;
+use App\Http\Controllers\SubscriptionController;
 //use App\Http\Controllers\SubscribeWPApiTokenController;
 use App\Services\SubscrSubscriptionService;
 
@@ -715,3 +716,16 @@ Route::middleware(['auth'])->group(function () {
         [SubscriptionPaymentController::class, 'create']
     )->name('subscription.payment');
 });
+
+/*
+|--------------------------------------------------------------------------
+| PUBLIC SUBSCRIPTION
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/subscribe', [SubscriptionController::class, 'show'])
+    ->name('subscription.subscribe');
+
+Route::post('/subscribe', [SubscriptionController::class, 'store'])
+    ->name('subscription.subscribe.store');
+    
