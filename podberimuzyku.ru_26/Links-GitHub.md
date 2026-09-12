@@ -111,8 +111,7 @@
 [/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_10092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_10092026.php)
 
 ### SubscriptionController.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionController_11092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionController_11092026.php)
-
+[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionController_12092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionController_12092026.php)
 
 ### SubscriptionPaymentController.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionPaymentController_10092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionPaymentController_10092026.php)
