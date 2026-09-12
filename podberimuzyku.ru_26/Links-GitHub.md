@@ -4,7 +4,6 @@
 
 ---
 ---
----
 
 ## subscribers/podberimuzyku.ru_26/routes
 
@@ -128,6 +127,9 @@
 
 ### Payment.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Models/Payment_10092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/Payment_10092026.php)
+
+### SubscrCheckou.php *(так файл называется на сервере)*
+[/subscribers/podberimuzyku.ru_26/app/Models/SubscrCheckout_12092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrCheckout_12092026.php)
 
 ### SubscrPayment.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Models/SubscrPayment_10092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrPayment_10092026.php)
