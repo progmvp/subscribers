@@ -116,6 +116,8 @@
 ### SubscriptionPaymentController.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionPaymentController_10092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionPaymentController_10092026.php)
 
+### YooMoneyNotificationController.php *(так файл называется на сервере)*
+[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/YooMoneyNotificationController_13092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/YooMoneyNotificationController_13092026.php)
 
 ---
 ---
