@@ -150,7 +150,7 @@
 
 
 ### SubscrSubscriptionService.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Services/SubscrSubscriptionService_10092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Services/SubscrSubscriptionService_10092026.php)
+[/subscribers/podberimuzyku.ru_26/app/Services/SubscrSubscriptionService_13092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Services/SubscrSubscriptionService_13092026.php)
 
 ### SubscrWordPressService.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Services/SubscrWordPressService_10092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Services/SubscrWordPressService_10092026.php)
