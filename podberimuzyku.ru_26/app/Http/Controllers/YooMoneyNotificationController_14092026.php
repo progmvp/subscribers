@@ -39,7 +39,57 @@ class YooMoneyNotificationController extends Controller
     {
         $data = $request->all();
 
-        \Log::info('YOOMONEY NOTIFICATION', $data);
+        \Log::info(
+            'YOOMONEY NOTIFICATION',
+            $data
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Диагностика HTTP/PHP окружения
+        |--------------------------------------------------------------------------
+        |
+        | Не записываем само секретное слово.
+        | Фиксируем только факт его наличия и длину.
+        |
+        */
+
+        $secret = env('YOOMONEY_NOTIFICATION_SECRET');
+
+        \Log::info(
+            'YOOMONEY NOTIFICATION ENV CHECK',
+            [
+                'secret_present' =>
+                    !empty($secret),
+
+                'secret_length' =>
+                    strlen((string) $secret),
+
+                'config_cached' =>
+                    app()->configurationIsCached(),
+
+                'app_env' =>
+                    app()->environment(),
+
+                'hostname' =>
+                    gethostname(),
+
+                'php_sapi' =>
+                    PHP_SAPI,
+
+                'request_method' =>
+                    $request->method(),
+
+                'content_type' =>
+                    $request->header('Content-Type'),
+
+                'parameter_keys' =>
+                    array_keys($data),
+
+                'parameter_count' =>
+                    count($data),
+            ]
+        );
 
         /*
         |--------------------------------------------------------------------------
@@ -47,9 +97,19 @@ class YooMoneyNotificationController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $secret = env('YOOMONEY_NOTIFICATION_SECRET');
-
         if (!$secret) {
+            \Log::error(
+                'YOOMONEY NOTIFICATION REJECTED: SECRET MISSING',
+                [
+                    'secret_present' => false,
+                    'secret_length' => 0,
+                    'config_cached' =>
+                        app()->configurationIsCached(),
+                    'hostname' =>
+                        gethostname(),
+                ]
+            );
+
             return response(
                 'Notification secret is not configured',
                 500
@@ -65,7 +125,22 @@ class YooMoneyNotificationController extends Controller
         $receivedSign = $data['sign'] ?? '';
 
         if (!$receivedSign) {
-            return response('Missing sign', 400);
+            \Log::warning(
+                'YOOMONEY NOTIFICATION REJECTED: SIGN MISSING',
+                [
+                    'parameter_keys' =>
+                        array_keys($data),
+                    'parameter_count' =>
+                        count($data),
+                    'hostname' =>
+                        gethostname(),
+                ]
+            );
+
+            return response(
+                'Missing sign',
+                400
+            );
         }
 
         unset($data['sign']);
@@ -74,20 +149,102 @@ class YooMoneyNotificationController extends Controller
 
         $parts = [];
 
-        foreach ($data as $key => $value) {
-            $parts[] = $key . '=' . rawurlencode((string) $value);
+        try {
+            foreach ($data as $key => $value) {
+                $parts[] =
+                    $key .
+                    '=' .
+                    rawurlencode((string) $value);
+            }
+
+            $signString = implode('&', $parts);
+
+            $calculatedSign = hash_hmac(
+                'sha256',
+                $signString,
+                $secret
+            );
+        } catch (\Throwable $e) {
+            \Log::error(
+                'YOOMONEY NOTIFICATION SIGN CALCULATION FAILED',
+                [
+                    'error' =>
+                        $e->getMessage(),
+
+                    'parameter_keys' =>
+                        array_keys($data),
+
+                    'parameter_count' =>
+                        count($data),
+
+                    'hostname' =>
+                        gethostname(),
+                ]
+            );
+
+            return response(
+                'Signature calculation failed',
+                500
+            );
         }
 
-        $signString = implode('&', $parts);
+        $signMatches =
+            hash_equals(
+                $calculatedSign,
+                $receivedSign
+            );
 
-        $calculatedSign = hash_hmac(
-            'sha256',
-            $signString,
-            $secret
+        \Log::info(
+            'YOOMONEY NOTIFICATION SIGN CHECK',
+            [
+                'received_sign' =>
+                    $receivedSign,
+
+                'calculated_sign' =>
+                    $calculatedSign,
+
+                'sign_matches' =>
+                    $signMatches,
+
+                'sign_string_length' =>
+                    strlen($signString),
+
+                'parameter_keys' =>
+                    array_keys($data),
+
+                'parameter_count' =>
+                    count($data),
+
+                'hostname' =>
+                    gethostname(),
+            ]
         );
 
-        if (!hash_equals($calculatedSign, $receivedSign)) {
-            return response('Invalid sign', 403);
+        if (!$signMatches) {
+            \Log::warning(
+                'YOOMONEY NOTIFICATION REJECTED: INVALID SIGN',
+                [
+                    'received_sign' =>
+                        $receivedSign,
+
+                    'calculated_sign' =>
+                        $calculatedSign,
+
+                    'sign_string_length' =>
+                        strlen($signString),
+
+                    'parameter_keys' =>
+                        array_keys($data),
+
+                    'hostname' =>
+                        gethostname(),
+                ]
+            );
+
+            return response(
+                'Invalid sign',
+                403
+            );
         }
 
         /*
@@ -96,12 +253,70 @@ class YooMoneyNotificationController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $paymentId = $data['label'] ?? null;
-        $amount = $data['withdraw_amount'] ?? null;
-        $operationId = $data['operation_id'] ?? null;
+        $paymentId =
+            $data['label'] ?? null;
 
-        if (!$paymentId || !$amount || !$operationId) {
-            return response('Missing payment data', 400);
+        $amount =
+            $data['withdraw_amount'] ?? null;
+
+        $operationId =
+            $data['operation_id'] ?? null;
+
+        \Log::info(
+            'YOOMONEY NOTIFICATION PAYMENT DATA',
+            [
+                'payment_id' =>
+                    $paymentId,
+
+                'amount' =>
+                    $amount,
+
+                'operation_id' =>
+                    $operationId,
+
+                'has_payment_id' =>
+                    !empty($paymentId),
+
+                'has_amount' =>
+                    !empty($amount),
+
+                'has_operation_id' =>
+                    !empty($operationId),
+
+                'hostname' =>
+                    gethostname(),
+            ]
+        );
+
+        if (
+            !$paymentId ||
+            !$amount ||
+            !$operationId
+        ) {
+            \Log::warning(
+                'YOOMONEY NOTIFICATION REJECTED: PAYMENT DATA MISSING',
+                [
+                    'payment_id' =>
+                        $paymentId,
+
+                    'amount' =>
+                        $amount,
+
+                    'operation_id' =>
+                        $operationId,
+
+                    'parameter_keys' =>
+                        array_keys($data),
+
+                    'hostname' =>
+                        gethostname(),
+                ]
+            );
+
+            return response(
+                'Missing payment data',
+                400
+            );
         }
 
         /*
@@ -111,8 +326,37 @@ class YooMoneyNotificationController extends Controller
         */
 
         $checkout = SubscrCheckout::query()
-            ->where('payment_id', $paymentId)
+            ->where(
+                'payment_id',
+                $paymentId
+            )
             ->first();
+
+        \Log::info(
+            'YOOMONEY NOTIFICATION CHECKOUT LOOKUP',
+            [
+                'payment_id' =>
+                    $paymentId,
+
+                'checkout_found' =>
+                    (bool) $checkout,
+
+                'checkout_id' =>
+                    $checkout?->id,
+
+                'checkout_status' =>
+                    $checkout?->status,
+
+                'checkout_expires_at' =>
+                    $checkout?->expires_at,
+
+                'operation_id' =>
+                    $operationId,
+
+                'hostname' =>
+                    gethostname(),
+            ]
+        );
 
         if ($checkout) {
             return $this->processCheckout(
@@ -130,6 +374,23 @@ class YooMoneyNotificationController extends Controller
         | Здесь оставляем существующий старый механизм.
         |
         */
+
+        \Log::info(
+            'YOOMONEY NOTIFICATION ROUTED TO LEGACY PAYMENT',
+            [
+                'payment_id' =>
+                    $paymentId,
+
+                'amount' =>
+                    $amount,
+
+                'operation_id' =>
+                    $operationId,
+
+                'hostname' =>
+                    gethostname(),
+            ]
+        );
 
         return $this->processLegacyPayment(
             $paymentId,
@@ -152,19 +413,34 @@ class YooMoneyNotificationController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if ((float) $amount !== (float) $checkout->amount) {
+        if (
+            (float) $amount !==
+            (float) $checkout->amount
+        ) {
             \Log::warning(
                 'YOOMONEY CHECKOUT INVALID AMOUNT',
                 [
-                    'checkout_id' => $checkout->id,
-                    'payment_id' => $checkout->payment_id,
-                    'expected_amount' => $checkout->amount,
-                    'received_amount' => $amount,
-                    'operation_id' => $operationId,
+                    'checkout_id' =>
+                        $checkout->id,
+
+                    'payment_id' =>
+                        $checkout->payment_id,
+
+                    'expected_amount' =>
+                        $checkout->amount,
+
+                    'received_amount' =>
+                        $amount,
+
+                    'operation_id' =>
+                        $operationId,
                 ]
             );
 
-            return response('Invalid amount', 400);
+            return response(
+                'Invalid amount',
+                400
+            );
         }
 
         /*
@@ -181,14 +457,24 @@ class YooMoneyNotificationController extends Controller
             \Log::warning(
                 'YOOMONEY CHECKOUT INVALID STATUS',
                 [
-                    'checkout_id' => $checkout->id,
-                    'payment_id' => $checkout->payment_id,
-                    'status' => $checkout->status,
-                    'operation_id' => $operationId,
+                    'checkout_id' =>
+                        $checkout->id,
+
+                    'payment_id' =>
+                        $checkout->payment_id,
+
+                    'status' =>
+                        $checkout->status,
+
+                    'operation_id' =>
+                        $operationId,
                 ]
             );
 
-            return response('Checkout is not pending', 400);
+            return response(
+                'Checkout is not pending',
+                400
+            );
         }
 
         /*
@@ -202,20 +488,36 @@ class YooMoneyNotificationController extends Controller
 
         $now = now();
 
-        if ($checkout->expires_at->lessThanOrEqualTo($now)) {
+        if (
+            $checkout->expires_at
+                ->lessThanOrEqualTo($now)
+        ) {
             \Log::warning(
                 'YOOMONEY CHECKOUT EXPIRED',
                 [
-                    'checkout_id' => $checkout->id,
-                    'payment_id' => $checkout->payment_id,
-                    'expires_at' => $checkout->expires_at,
-                    'operation_id' => $operationId,
+                    'checkout_id' =>
+                        $checkout->id,
+
+                    'payment_id' =>
+                        $checkout->payment_id,
+
+                    'expires_at' =>
+                        $checkout->expires_at,
+
+                    'current_time' =>
+                        $now,
+
+                    'operation_id' =>
+                        $operationId,
                 ]
             );
 
             $checkout->delete();
 
-            return response('Checkout expired', 400);
+            return response(
+                'Checkout expired',
+                400
+            );
         }
 
         /*
@@ -250,10 +552,14 @@ class YooMoneyNotificationController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $lockedCheckout = SubscrCheckout::query()
-                        ->where('id', $checkout->id)
-                        ->lockForUpdate()
-                        ->first();
+                    $lockedCheckout =
+                        SubscrCheckout::query()
+                            ->where(
+                                'id',
+                                $checkout->id
+                            )
+                            ->lockForUpdate()
+                            ->first();
 
                     if (!$lockedCheckout) {
                         throw new RuntimeException(
@@ -269,9 +575,13 @@ class YooMoneyNotificationController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    if ($lockedCheckout->status !== 'pending') {
+                    if (
+                        $lockedCheckout->status !==
+                        'pending'
+                    ) {
                         throw new RuntimeException(
-                            'Checkout уже не находится в статусе pending.'
+                            'Checkout уже не находится ' .
+                            'в статусе pending.'
                         );
                     }
 
@@ -289,7 +599,8 @@ class YooMoneyNotificationController extends Controller
                         (float) $lockedCheckout->amount
                     ) {
                         throw new RuntimeException(
-                            'Сумма YooMoney не совпадает с checkout.'
+                            'Сумма YooMoney не совпадает ' .
+                            'с checkout.'
                         );
                     }
 
@@ -300,7 +611,10 @@ class YooMoneyNotificationController extends Controller
                     */
 
                     $user = User::query()
-                        ->where('email', $lockedCheckout->email)
+                        ->where(
+                            'email',
+                            $lockedCheckout->email
+                        )
                         ->lockForUpdate()
                         ->first();
 
@@ -316,10 +630,12 @@ class YooMoneyNotificationController extends Controller
 
                         if (
                             $currentExpiresAt !== null &&
-                            $currentExpiresAt->greaterThan($now)
+                            $currentExpiresAt
+                                ->greaterThan($now)
                         ) {
                             throw new RuntimeException(
-                                'У пользователя уже имеется активная подписка.'
+                                'У пользователя уже имеется ' .
+                                'активная подписка.'
                             );
                         }
 
@@ -327,7 +643,9 @@ class YooMoneyNotificationController extends Controller
                         |--------------------------------------------------------------------------
                         | Для уже существующего пользователя:
                         |
-                        | start после окончания доступен только через 24 часа.
+                        | start после окончания доступен только
+                        | через 24 часа.
+                        |
                         | base/full доступны сразу.
                         |--------------------------------------------------------------------------
                         */
@@ -342,12 +660,16 @@ class YooMoneyNotificationController extends Controller
                                     'id',
                                     $lockedCheckout->plan_id
                                 )
-                                ->where('is_active', 1)
+                                ->where(
+                                    'is_active',
+                                    1
+                                )
                                 ->first();
 
                             if (!$plan) {
                                 throw new RuntimeException(
-                                    'Тариф для checkout не найден.'
+                                    'Тариф для checkout ' .
+                                    'не найден.'
                                 );
                             }
 
@@ -385,9 +707,14 @@ class YooMoneyNotificationController extends Controller
 
                         $user = User::create(
                             [
-                                'name' => $lockedCheckout->name,
-                                'email' => $lockedCheckout->email,
-                                'password' => Str::random(64),
+                                'name' =>
+                                    $lockedCheckout->name,
+
+                                'email' =>
+                                    $lockedCheckout->email,
+
+                                'password' =>
+                                    Str::random(64),
                             ]
                         );
                     }
@@ -403,7 +730,10 @@ class YooMoneyNotificationController extends Controller
                             'id',
                             $lockedCheckout->plan_id
                         )
-                        ->where('is_active', 1)
+                        ->where(
+                            'is_active',
+                            1
+                        )
                         ->first();
 
                     if (!$plan) {
@@ -420,18 +750,31 @@ class YooMoneyNotificationController extends Controller
                     |--------------------------------------------------------------------------
                     */
 
-                    $subscriptionPayment = SubscrPayment::create(
-                        [
-                            'user_id' => $user->id,
-                            'subscription_id' => null,
-                            'plan_id' => $plan->id,
-                            'payment_id' =>
-                                $lockedCheckout->payment_id,
-                            'amount' => $lockedCheckout->amount,
-                            'status' => 'success',
-                            'paid_at' => $now,
-                        ]
-                    );
+                    $subscriptionPayment =
+                        SubscrPayment::create(
+                            [
+                                'user_id' =>
+                                    $user->id,
+
+                                'subscription_id' =>
+                                    null,
+
+                                'plan_id' =>
+                                    $plan->id,
+
+                                'payment_id' =>
+                                    $lockedCheckout->payment_id,
+
+                                'amount' =>
+                                    $lockedCheckout->amount,
+
+                                'status' =>
+                                    'success',
+
+                                'paid_at' =>
+                                    $now,
+                            ]
+                        );
 
                     /*
                     |--------------------------------------------------------------------------
@@ -440,7 +783,9 @@ class YooMoneyNotificationController extends Controller
                     */
 
                     $subscriptionService =
-                        app(SubscrSubscriptionService::class);
+                        app(
+                            SubscrSubscriptionService::class
+                        );
 
                     $activatedUser =
                         $subscriptionService->activate(
@@ -456,10 +801,17 @@ class YooMoneyNotificationController extends Controller
                     $lockedCheckout->delete();
 
                     return [
-                        'user' => $activatedUser->fresh(),
-                        'payment_id' => $subscriptionPayment->id,
-                        'checkout_id' => $lockedCheckout->id,
-                        'operation_id' => $operationId,
+                        'user' =>
+                            $activatedUser->fresh(),
+
+                        'payment_id' =>
+                            $subscriptionPayment->id,
+
+                        'checkout_id' =>
+                            $lockedCheckout->id,
+
+                        'operation_id' =>
+                            $operationId,
                     ];
                 }
             );
@@ -495,23 +847,34 @@ class YooMoneyNotificationController extends Controller
                         $result['user']->subscription_plan,
 
                     'subscription_started_at' =>
-                        $result['user']->subscription_started_at,
+                        $result['user']
+                            ->subscription_started_at,
 
                     'subscription_expires_at' =>
-                        $result['user']->subscription_expires_at,
+                        $result['user']
+                            ->subscription_expires_at,
                 ]
             );
 
-            return response('OK', 200);
-
+            return response(
+                'OK',
+                200
+            );
         } catch (\Throwable $e) {
             \Log::error(
                 'YOOMONEY CHECKOUT ACTIVATION FAILED',
                 [
-                    'checkout_id' => $checkout->id,
-                    'payment_id' => $checkout->payment_id,
-                    'operation_id' => $operationId,
-                    'error' => $e->getMessage(),
+                    'checkout_id' =>
+                        $checkout->id,
+
+                    'payment_id' =>
+                        $checkout->payment_id,
+
+                    'operation_id' =>
+                        $operationId,
+
+                    'error' =>
+                        $e->getMessage(),
                 ]
             );
 
@@ -533,11 +896,17 @@ class YooMoneyNotificationController extends Controller
         string $operationId
     ) {
         $payment = DB::table('payments')
-            ->where('payment_id', $paymentId)
+            ->where(
+                'payment_id',
+                $paymentId
+            )
             ->first();
 
         if (!$payment) {
-            return response('Payment not found', 404);
+            return response(
+                'Payment not found',
+                404
+            );
         }
 
         /*
@@ -546,8 +915,14 @@ class YooMoneyNotificationController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if ((float) $amount !== (float) $payment->amount) {
-            return response('Invalid amount', 400);
+        if (
+            (float) $amount !==
+            (float) $payment->amount
+        ) {
+            return response(
+                'Invalid amount',
+                400
+            );
         }
 
         /*
@@ -557,7 +932,10 @@ class YooMoneyNotificationController extends Controller
         */
 
         if ($payment->status === 'success') {
-            return response('OK', 200);
+            return response(
+                'OK',
+                200
+            );
         }
 
         /*
@@ -567,11 +945,17 @@ class YooMoneyNotificationController extends Controller
         */
 
         DB::table('payments')
-            ->where('id', $payment->id)
+            ->where(
+                'id',
+                $payment->id
+            )
             ->update(
                 [
-                    'status' => 'success',
-                    'updated_at' => now(),
+                    'status' =>
+                        'success',
+
+                    'updated_at' =>
+                        now(),
                 ]
             );
 
@@ -581,8 +965,11 @@ class YooMoneyNotificationController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $token = env('TELEGRAM_BOT_TOKEN');
-        $chatId = env('TELEGRAM_CHAT_ID');
+        $token =
+            env('TELEGRAM_BOT_TOKEN');
+
+        $chatId =
+            env('TELEGRAM_CHAT_ID');
 
         $text =
             "✅ Успешная оплата\n\n" .
@@ -595,11 +982,17 @@ class YooMoneyNotificationController extends Controller
             "📌 Статус: success";
 
         $url =
-            "https://api.telegram.org/bot{$token}/sendMessage";
+            "https://api.telegram.org/" .
+            "bot{$token}/sendMessage";
 
         $ch = curl_init($url);
 
-        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt(
+            $ch,
+            CURLOPT_POST,
+            true
+        );
+
         curl_setopt(
             $ch,
             CURLOPT_RETURNTRANSFER,
@@ -610,25 +1003,31 @@ class YooMoneyNotificationController extends Controller
             $ch,
             CURLOPT_POSTFIELDS,
             [
-                'chat_id' => $chatId,
-                'text' => $text,
+                'chat_id' =>
+                    $chatId,
+
+                'text' =>
+                    $text,
             ]
         );
 
-        $telegramResponse = curl_exec($ch);
+        $telegramResponse =
+            curl_exec($ch);
 
         if ($telegramResponse === false) {
             \Log::error(
                 'Telegram notification failed',
                 [
-                    'error' => curl_error($ch),
+                    'error' =>
+                        curl_error($ch),
                 ]
             );
         } else {
             \Log::info(
                 'Telegram notification sent',
                 [
-                    'response' => $telegramResponse,
+                    'response' =>
+                        $telegramResponse,
                 ]
             );
         }
@@ -642,13 +1041,19 @@ class YooMoneyNotificationController extends Controller
         */
 
         $confirmData = [
-            'email' => $payment->email,
-            'plan' => $payment->plan,
-            'status' => 'confirmed',
+            'email' =>
+                $payment->email,
+
+            'plan' =>
+                $payment->plan,
+
+            'status' =>
+                'confirmed',
         ];
 
         $ch = curl_init(
-            'https://podberimuzyku.ru/billing/confirm-payment.php'
+            'https://podberimuzyku.ru/' .
+            'billing/confirm-payment.php'
         );
 
         curl_setopt(
@@ -657,7 +1062,11 @@ class YooMoneyNotificationController extends Controller
             'PODBERIMUZYKU-YOOMONEY/1.0'
         );
 
-        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt(
+            $ch,
+            CURLOPT_POST,
+            true
+        );
 
         curl_setopt(
             $ch,
@@ -670,7 +1079,9 @@ class YooMoneyNotificationController extends Controller
             CURLOPT_HTTPHEADER,
             [
                 'Content-Type: application/json',
-                'X-MBT-SECRET: ' . env('MBT_SECRET'),
+
+                'X-MBT-SECRET: ' .
+                    env('MBT_SECRET'),
             ]
         );
 
@@ -684,6 +1095,9 @@ class YooMoneyNotificationController extends Controller
 
         curl_close($ch);
 
-        return response('OK', 200);
+        return response(
+            'OK',
+            200
+        );
     }
 }
