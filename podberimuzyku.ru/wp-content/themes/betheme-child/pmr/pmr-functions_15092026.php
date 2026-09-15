@@ -24,6 +24,7 @@ define('PMR_URL', get_stylesheet_directory_uri() . '/pmr/');
 
 require_once PMR_PATH . 'pmr-roles.php';
 require_once PMR_PATH . 'pmr-api.php';
+require_once PMR_PATH . 'pmr-token.php';
 require_once PMR_PATH . 'pmr-access.php';
 require_once PMR_PATH . 'pmr-title.php';
 require_once PMR_PATH . 'pmr-thumbnail.php';
