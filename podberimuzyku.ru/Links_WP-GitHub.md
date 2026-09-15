@@ -13,6 +13,8 @@
 ### pmr-api.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-api_15092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-api_15092026.php)
 
+### pmr-audio.php *(так файл называется на сервере)*
+[/subscribers/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-audio_15092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-audio_15092026.php)
 
 ### pmr-functions.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-functions_15092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-functions_15092026.php)
