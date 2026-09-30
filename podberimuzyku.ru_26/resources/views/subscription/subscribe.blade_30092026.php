@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>РџРѕРґРїРёСЃРєР° вЂ” PODBERIMUZYKU.RU</title>
+    <title>Подписка — PODBERIMUZYKU.RU</title>
 
     <!-- Jivo -->
     <script src="//code.jivosite.com/widget/DaJfRsVrnb?ver=1.3.6.1"></script>
@@ -80,7 +80,7 @@
             background: #fff;
         }
 
-        /* Р’РµСЂС…РЅСЏСЏ РєРѕРЅС‚Р°РєС‚РЅР°СЏ СЃС‚СЂРѕРєР° */
+        /* Верхняя контактная строка */
 
         .pm-top-contact {
             min-height: 42px;
@@ -165,7 +165,7 @@
         }
 
 
-        /* РћСЃРЅРѕРІРЅР°СЏ С€Р°РїРєР° */
+        /* Основная шапка */
 
         .pm-main-header {
             min-height: 92px;
@@ -255,7 +255,7 @@
         /* Desktop dropdown */
 
         .pm-main-nav .pm-has-dropdown > a::after {
-            content: "вЊ„";
+            content: "⌄";
 
             margin-left: 7px;
 
@@ -1259,7 +1259,7 @@
 
 <header class="pm-site-header">
 
-    <!-- Р’РµСЂС…РЅСЏСЏ РєРѕРЅС‚Р°РєС‚РЅР°СЏ СЃС‚СЂРѕРєР° -->
+    <!-- Верхняя контактная строка -->
 
     <div class="pm-top-contact">
 
@@ -1270,7 +1270,7 @@
                 <ul class="pm-contact-details">
 
                     <li class="pm-contact-slogan">
-                        РњРѕРЅС‚Р°Р¶, СЃРІРµРґРµРЅРёРµ РјСѓР·С‹РєРё |
+                        Монтаж, сведение музыки |
                     </li>
 
                     <li>
@@ -1319,7 +1319,7 @@
                             rel="noopener"
                             aria-label="YouTube"
                         >
-                            в–¶
+                            ▶
                         </a>
                     </li>
 
@@ -1354,7 +1354,7 @@
     </div>
 
 
-    <!-- РћСЃРЅРѕРІРЅР°СЏ С€Р°РїРєР° -->
+    <!-- Основная шапка -->
 
     <div class="pm-main-header">
 
@@ -1380,16 +1380,16 @@
                 <button
                     class="pm-mobile-menu-button"
                     type="button"
-                    aria-label="РћС‚РєСЂС‹С‚СЊ РјРµРЅСЋ"
+                    aria-label="Открыть меню"
                     onclick="document.querySelector('.pm-main-nav').classList.toggle('is-open')"
                 >
-                    в°
+                    ☰
                 </button>
 
 
                 <nav
                     class="pm-main-nav"
-                    aria-label="Р“Р»Р°РІРЅРѕРµ РјРµРЅСЋ"
+                    aria-label="Главное меню"
                 >
 
                     <ul>
@@ -1398,9 +1398,9 @@
                             <a
                                 class="pm-home-link"
                                 href="https://podberimuzyku.ru/"
-                                aria-label="Р“Р»Р°РІРЅР°СЏ"
+                                aria-label="Главная"
                             >
-                                вЊ‚
+                                ⌂
                             </a>
                         </li>
 
@@ -1408,7 +1408,7 @@
                         <li class="pm-has-dropdown">
 
                             <a href="#">
-                                РџР РРњР•Р Р« Р РђР‘РћРў
+                                ПРИМЕРЫ РАБОТ
                             </a>
 
                             <ul class="pm-dropdown">
@@ -1416,15 +1416,15 @@
                                 <li class="pm-has-dropdown">
 
                                     <a href="https://podberimuzyku.ru/category/figurnoe-katanie/">
-                                        Р¤РёРіСѓСЂРЅРѕРµ РєР°С‚Р°РЅРёРµ
-                                        <span class="pm-submenu-arrow">вЂє</span>
+                                        Фигурное катание
+                                        <span class="pm-submenu-arrow">›</span>
                                     </a>
 
                                     <ul class="pm-dropdown">
 
                                         <li>
                                             <a href="https://podberimuzyku.ru/category/figurnoe-katanie/kupit-trek-dlya-fk/">
-                                                РљСѓРїРёС‚СЊ С‚СЂРµРє РґР»СЏ Р¤Рљ
+                                                Купить трек для ФК
                                             </a>
                                         </li>
 
@@ -1436,15 +1436,15 @@
                                 <li class="pm-has-dropdown">
 
                                     <a href="https://podberimuzyku.ru/category/xudozhestvennaya-gimnastika/">
-                                        РҐСѓРґРѕР¶РµСЃС‚РІРµРЅРЅР°СЏ РіРёРјРЅР°СЃС‚РёРєР°
-                                        <span class="pm-submenu-arrow">вЂє</span>
+                                        Художественная гимнастика
+                                        <span class="pm-submenu-arrow">›</span>
                                     </a>
 
                                     <ul class="pm-dropdown">
 
                                         <li>
                                             <a href="https://podberimuzyku.ru/category/xudozhestvennaya-gimnastika/kupit-trek-dlya-hg/">
-                                                РљСѓРїРёС‚СЊ С‚СЂРµРє РґР»СЏ РҐР“
+                                                Купить трек для ХГ
                                             </a>
                                         </li>
 
@@ -1456,15 +1456,15 @@
                                 <li class="pm-has-dropdown">
 
                                     <a href="https://podberimuzyku.ru/category/rollersport/">
-                                        Р РѕР»Р»РµСЂ РЎРїРѕСЂС‚
-                                        <span class="pm-submenu-arrow">вЂє</span>
+                                        Роллер Спорт
+                                        <span class="pm-submenu-arrow">›</span>
                                     </a>
 
                                     <ul class="pm-dropdown">
 
                                         <li>
                                             <a href="https://podberimuzyku.ru/category/rollersport/kupit-trek-dlya-rs/">
-                                                РљСѓРїРёС‚СЊ С‚СЂРµРє РґР»СЏ Р РЎ
+                                                Купить трек для РС
                                             </a>
                                         </li>
 
@@ -1480,26 +1480,26 @@
                         <li class="pm-has-dropdown">
 
                             <a href="https://podberimuzyku.ru/audio-category/muzyikalnyie-sborniki/">
-                                РњРЈР—Р«РљРђР›Р¬РќР«Р• РЎР‘РћР РќРРљР
+                                МУЗЫКАЛЬНЫЕ СБОРНИКИ
                             </a>
 
                             <ul class="pm-dropdown">
 
                                 <li>
                                     <a href="https://podberimuzyku.ru/audio-category/instrumentalnaya-muzyika/">
-                                        РРЅСЃС‚СЂСѓРјРµРЅС‚Р°Р»СЊРЅР°СЏ РјСѓР·С‹РєР°
+                                        Инструментальная музыка
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="https://podberimuzyku.ru/audio-category/originalnyiy-saundtrek/">
-                                        РћСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ СЃР°СѓРЅРґС‚СЂРµРє
+                                        Оригинальный саундтрек
                                     </a>
                                 </li>
 
                                 <li>
                                     <a href="https://podberimuzyku.ru/audio-category/muzyika-kino/">
-                                        РњСѓР·С‹РєР° РєРёРЅРѕ
+                                        Музыка кино
                                     </a>
                                 </li>
 
@@ -1510,14 +1510,14 @@
 
                         <li>
                             <a href="https://podberimuzyku.ru/about/">
-                                Рћ РџР РћР•РљРўР•
+                                О ПРОЕКТЕ
                             </a>
                         </li>
 
 
                         <li>
                             <a href="https://podberimuzyku.ru/contacts/">
-                                РљРћРќРўРђРљРўР«
+                                КОНТАКТЫ
                             </a>
                         </li>
 
@@ -1546,12 +1546,12 @@
         <header class="pm-heading">
 
             <h1>
-                РџРѕР»СѓС‡РёС‚СЊ РїРѕРґРїРёСЃРєСѓ
+                Получить подписку
             </h1>
 
             <p>
-                Р’С‹Р±РµСЂРёС‚Рµ РїРѕРґС…РѕРґСЏС‰РёР№ С‚Р°СЂРёС„, СѓРєР°Р¶РёС‚Рµ СЃРІРѕРё РґР°РЅРЅС‹Рµ
-                Рё РїРµСЂРµР№РґРёС‚Рµ Рє Р±РµР·РѕРїР°СЃРЅРѕР№ РѕРїР»Р°С‚Рµ.
+                Выберите подходящий тариф, укажите свои данные
+                и перейдите к безопасной оплате.
             </p>
 
         </header>
@@ -1569,18 +1569,18 @@
                     <div>
 
                         <h2 class="pm-card-title">
-                            РћС„РѕСЂРјР»РµРЅРёРµ РїРѕРґРїРёСЃРєРё
+                            Оформление подписки
                         </h2>
 
                         <p class="pm-card-description">
-                            Р—Р°РїРѕР»РЅРёС‚Рµ РґР°РЅРЅС‹Рµ РЅРёР¶Рµ. РџРѕСЃР»Рµ РѕС‚РїСЂР°РІРєРё
-                            РІС‹ РїРµСЂРµР№РґС‘С‚Рµ Рє РѕРїР»Р°С‚Рµ РІС‹Р±СЂР°РЅРЅРѕРіРѕ С‚Р°СЂРёС„Р°.
+                            Заполните данные ниже. После отправки
+                            вы перейдёте к оплате выбранного тарифа.
                         </p>
 
                     </div>
 
                     <div class="pm-step">
-                        РЁРђР“ 1
+                        ШАГ 1
                     </div>
 
                 </div>
@@ -1621,7 +1621,7 @@
                             class="pm-label"
                             for="pm-subscription-name"
                         >
-                            Р’Р°С€Рµ РёРјСЏ
+                            Ваше имя
                         </label>
 
                         <input
@@ -1632,7 +1632,7 @@
                             value="{{ old('name') }}"
                             maxlength="100"
                             autocomplete="name"
-                            placeholder="Р’РІРµРґРёС‚Рµ РІР°С€Рµ РёРјСЏ"
+                            placeholder="Введите ваше имя"
                             required
                         >
 
@@ -1669,7 +1669,7 @@
                             class="pm-label"
                             for="pm-subscription-plan"
                         >
-                            РўР°СЂРёС„ РїРѕРґРїРёСЃРєРё
+                            Тариф подписки
                         </label>
 
                         <select
@@ -1680,7 +1680,7 @@
                         >
 
                             <option value="">
-                                Р’С‹Р±РµСЂРёС‚Рµ С‚Р°СЂРёС„
+                                Выберите тариф
                             </option>
 
                             @foreach ($plans as $plan)
@@ -1693,17 +1693,17 @@
                                     )
                                 >
                                     {{ $plan->name }}
-                                    вЂ”
+                                    —
                                     {{ number_format(
                                         (float) $plan->price,
                                         0,
                                         ',',
                                         ' '
                                     ) }}
-                                    в‚Ѕ
+                                    ₽
                                     /
                                     {{ $plan->duration_days }}
-                                    РґРЅ.
+                                    дн.
                                 </option>
 
                             @endforeach
@@ -1716,13 +1716,13 @@
                     <div class="pm-conditions">
 
                         <p class="pm-conditions-title">
-                            РЈСЃР»РѕРІРёСЏ РїРѕРґРїРёСЃРєРё
+                            Условия подписки
                         </p>
 
                         <p class="pm-conditions-text">
-                            РЎСЂРѕРє РґРµР№СЃС‚РІРёСЏ Рё СЃС‚РѕРёРјРѕСЃС‚СЊ РѕРїСЂРµРґРµР»СЏСЋС‚СЃСЏ
-                            РІС‹Р±СЂР°РЅРЅС‹Рј С‚Р°СЂРёС„РѕРј. РџРѕСЃР»Рµ СѓСЃРїРµС€РЅРѕР№ РѕРїР»Р°С‚С‹
-                            РїРѕРґРїРёСЃРєР° Р°РєС‚РёРІРёСЂСѓРµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё.
+                            Срок действия и стоимость определяются
+                            выбранным тарифом. После успешной оплаты
+                            подписка активируется автоматически.
                         </p>
 
                     </div>
@@ -1734,19 +1734,19 @@
                     >
 
                         <span>
-                            РџРµСЂРµР№С‚Рё Рє РѕРїР»Р°С‚Рµ
+                            Перейти к оплате
                         </span>
 
                         <span>
-                            в†’
+                            →
                         </span>
 
                     </button>
 
 
                     <p class="pm-note">
-                        РџРѕСЃР»Рµ СЃРѕР·РґР°РЅРёСЏ Р·Р°РєР°Р·Р° РІС‹ Р±СѓРґРµС‚Рµ
-                        РїРµСЂРµРЅР°РїСЂР°РІР»РµРЅС‹ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РѕРїР»Р°С‚С‹ YooMoney.
+                        После создания заказа вы будете
+                        перенаправлены на страницу оплаты YooMoney.
                     </p>
 
                 </form>
@@ -1762,17 +1762,17 @@
                 <div class="pm-card pm-info-card pm-info-accent">
 
                     <div class="pm-info-icon">
-                        в™Є
+                        ♪
                     </div>
 
                     <h2 class="pm-info-title">
-                        Р’Р°С€Р° РјСѓР·С‹РєР° вЂ”
-                        РІР°С€ РґРѕСЃС‚СѓРї
+                        Ваша музыка —
+                        ваш доступ
                     </h2>
 
                     <p class="pm-info-text">
-                        РџРѕРґРїРёСЃРєР° РѕС‚РєСЂС‹РІР°РµС‚ РґРѕСЃС‚СѓРї Рє РјР°С‚РµСЂРёР°Р»Р°Рј
-                        Рё РїСЂРѕСЃР»СѓС€РёРІР°РЅРёСЋ Р·Р°РєСЂС‹С‚РѕРіРѕ РєРѕРЅС‚РµРЅС‚Р°
+                        Подписка открывает доступ к материалам
+                        и прослушиванию закрытого контента
                         PODBERIMUZYKU.RU.
                     </p>
 
@@ -1782,41 +1782,41 @@
                 <div class="pm-card pm-info-card pm-info-light">
 
                     <h3 class="pm-info-light-title">
-                        РљР°Рє СЌС‚Рѕ СЂР°Р±РѕС‚Р°РµС‚
+                        Как это работает
                     </h3>
 
                     <ul class="pm-info-list">
 
                         <li>
-                            <span class="pm-info-check">вњ“</span>
+                            <span class="pm-info-check">✓</span>
 
                             <span>
-                                Р’С‹Р±РµСЂРёС‚Рµ РїРѕРґС…РѕРґСЏС‰РёР№ С‚Р°СЂРёС„.
+                                Выберите подходящий тариф.
                             </span>
                         </li>
 
                         <li>
-                            <span class="pm-info-check">вњ“</span>
+                            <span class="pm-info-check">✓</span>
 
                             <span>
-                                РЈРєР°Р¶РёС‚Рµ РёРјСЏ Рё e-mail.
+                                Укажите имя и e-mail.
                             </span>
                         </li>
 
                         <li>
-                            <span class="pm-info-check">вњ“</span>
+                            <span class="pm-info-check">✓</span>
 
                             <span>
-                                РџРµСЂРµР№РґРёС‚Рµ РЅР° СЃС‚СЂР°РЅРёС†Сѓ РѕРїР»Р°С‚С‹.
+                                Перейдите на страницу оплаты.
                             </span>
                         </li>
 
                         <li>
-                            <span class="pm-info-check">вњ“</span>
+                            <span class="pm-info-check">✓</span>
 
                             <span>
-                                РџРѕСЃР»Рµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРёСЏ РѕРїР»Р°С‚С‹
-                                РґРѕСЃС‚СѓРї Р°РєС‚РёРІРёСЂСѓРµС‚СЃСЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё.
+                                После подтверждения оплаты
+                                доступ активируется автоматически.
                             </span>
                         </li>
 
@@ -1834,12 +1834,12 @@
                     </div>
 
                     <h3 class="pm-info-title">
-                        РќСѓР¶РЅР° РїРѕРјРѕС‰СЊ?
+                        Нужна помощь?
                     </h3>
 
                     <p class="pm-info-text">
-                        Р•СЃР»Рё Сѓ РІР°СЃ РІРѕР·РЅРёРєР»Рё РІРѕРїСЂРѕСЃС‹ РїРѕ РїРѕРґРїРёСЃРєРµ,
-                        С‚Р°СЂРёС„Р°Рј РёР»Рё РѕРїР»Р°С‚Рµ вЂ” РЅР°РїРёС€РёС‚Рµ РЅР°Рј.
+                        Если у вас возникли вопросы по подписке,
+                        тарифам или оплате — напишите нам.
                     </p>
 
                     <button
@@ -1851,7 +1851,7 @@
                             }
                         "
                     >
-                        рџ’¬ РћС‚РєСЂС‹С‚СЊ С‡Р°С‚ Jivo
+                        💬 Открыть чат Jivo
                     </button>
 
                 </div>
@@ -1881,7 +1881,7 @@
 
 
                 <!-- =========================
-                     РЈРЎР›РЈР“Р
+                     УСЛУГИ
                 ========================== -->
 
                 <div class="pm-footer-column">
@@ -1889,18 +1889,18 @@
                     <div class="pm-footer-separator"></div>
 
                     <h3 class="pm-footer-title">
-                        РЈРЎР›РЈР“Р
+                        УСЛУГИ
                     </h3>
 
                     <ul class="pm-footer-menu">
 
                         <li>
                             <a href="https://podberimuzyku.ru/category/dopolnitelnyie-uslugi-obrabotka/">
-                                <span class="pm-footer-icon">в—†</span>
+                                <span class="pm-footer-icon">◆</span>
                                 <span>
-                                    Р”РћРџРћР›РќРРўР•Р›Р¬РќР«Р• РЈРЎР›РЈР“Р
+                                    ДОПОЛНИТЕЛЬНЫЕ УСЛУГИ
                                     <sup class="pm-footer-sup">
-                                        (РѕР±СЂР°Р±РѕС‚РєР°)
+                                        (обработка)
                                     </sup>
                                 </span>
                             </a>
@@ -1908,27 +1908,27 @@
 
                         <li>
                             <a href="https://podberimuzyku.ru/category/podbor-muzyikalnyih-trekov/">
-                                <span class="pm-footer-icon">в™Є</span>
+                                <span class="pm-footer-icon">♪</span>
                                 <span>
-                                    РђРќРђР›РР— РњРЈР—Р«РљРђР›Р¬РќР«РҐ РўР Р•РљРћР’
+                                    АНАЛИЗ МУЗЫКАЛЬНЫХ ТРЕКОВ
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="https://podberimuzyku.ru/">
-                                <span class="pm-footer-icon">в—‰</span>
+                                <span class="pm-footer-icon">◉</span>
                                 <span>
-                                    + Р’РР”Р•Рћ + РђРЈР”РРћ
+                                    + ВИДЕО + АУДИО
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="https://podberimuzyku.ru/category/zvukozapis/">
-                                <span class="pm-footer-icon">в—Џ</span>
+                                <span class="pm-footer-icon">●</span>
                                 <span>
-                                    РЈРЎР›РЈР“Р Р—Р’РЈРљРћР—РђРџРРЎР
+                                    УСЛУГИ ЗВУКОЗАПИСИ
                                 </span>
                             </a>
                         </li>
@@ -1939,11 +1939,11 @@
                                 target="_blank"
                                 rel="noopener"
                             >
-                                <span class="pm-footer-icon">в–Ј</span>
+                                <span class="pm-footer-icon">▣</span>
                                 <span>
-                                    РђРЈР”РРћ Р Р•Р”РђРљРўРћР 
+                                    АУДИО РЕДАКТОР
                                     <sup class="pm-footer-sup">
-                                        (Р±РµСЃРїР»Р°С‚РЅС‹Р№)
+                                        (бесплатный)
                                     </sup>
                                 </span>
                             </a>
@@ -1955,7 +1955,7 @@
                     <img
                         class="pm-footer-logo"
                         src="https://res.cloudinary.com/dgvvtwlzl/image/upload/v1682190921/Sites%20Folder/retina-podberimuzyku.svg"
-                        alt="Р›РѕРіРѕС‚РёРї PODBERIMUZYKU.RU"
+                        alt="Логотип PODBERIMUZYKU.RU"
                     >
 
 
@@ -1968,12 +1968,12 @@
                         <input
                             type="search"
                             name="s"
-                            placeholder="РџРѕРёСЃРє..."
-                            aria-label="РџРѕРёСЃРє"
+                            placeholder="Поиск..."
+                            aria-label="Поиск"
                         >
 
                         <button type="submit">
-                            рџ”Ќ
+                            🔍
                         </button>
 
                     </form>
@@ -1982,7 +1982,7 @@
 
 
                 <!-- =========================
-                     РРќР¤РћР РњРђР¦РРЇ
+                     ИНФОРМАЦИЯ
                 ========================== -->
 
                 <div class="pm-footer-column">
@@ -1990,52 +1990,52 @@
                     <div class="pm-footer-separator"></div>
 
                     <h3 class="pm-footer-title">
-                        РРќР¤РћР РњРђР¦РРЇ
+                        ИНФОРМАЦИЯ
                     </h3>
 
                     <ul class="pm-footer-menu">
 
                         <li>
                             <a href="https://podberimuzyku.ru/ostavit-zayavku/">
-                                <span class="pm-footer-icon">в—Џ</span>
+                                <span class="pm-footer-icon">●</span>
                                 <span>
-                                    РџР Р•Р”Р’РђР РРўР•Р›Р¬РќРђРЇ Р—РђРЇР’РљРђ
+                                    ПРЕДВАРИТЕЛЬНАЯ ЗАЯВКА
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="https://podberimuzyku.ru/dlya-pravoobladatelej/">
-                                <span class="pm-footer-icon">в—Џ</span>
+                                <span class="pm-footer-icon">●</span>
                                 <span>
-                                    Р”Р›РЇ РџР РђР’РћРћР‘Р›РђР”РђРўР•Р›Р•Р™
+                                    ДЛЯ ПРАВООБЛАДАТЕЛЕЙ
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="https://podberimuzyku.ru/polzovatelskogo-soglasheniya/">
-                                <span class="pm-footer-icon">в—Џ</span>
+                                <span class="pm-footer-icon">●</span>
                                 <span>
-                                    РџРћР›Р¬Р—РћР’РђРўР•Р›Р¬РЎРљРћР“Рћ РЎРћР“Р›РђРЁР•РќРРЇ
+                                    ПОЛЬЗОВАТЕЛЬСКОГО СОГЛАШЕНИЯ
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="https://podberimuzyku.ru/politika-konfidencialnosti/">
-                                <span class="pm-footer-icon">в—Џ</span>
+                                <span class="pm-footer-icon">●</span>
                                 <span>
-                                    РџРћР›РРўРРљРђ РљРћРќР¤РР”Р•РќР¦РРђР›Р¬РќРћРЎРўР
+                                    ПОЛИТИКА КОНФИДЕНЦИАЛЬНОСТИ
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="#">
-                                <span class="pm-footer-icon">в—Џ</span>
+                                <span class="pm-footer-icon">●</span>
                                 <span>
-                                    Р’РћРџР РћРЎР«-РћРўР’Р•РўР«
+                                    ВОПРОСЫ-ОТВЕТЫ
                                 </span>
                             </a>
                         </li>
@@ -2046,12 +2046,12 @@
                     <div class="pm-footer-contact">
 
                         <div>
-                            <strong>вЋ</strong>
+                            <strong>☎</strong>
                             +7 925 276-01-68
                         </div>
 
                         <div>
-                            <strong>вњ‰</strong>
+                            <strong>✉</strong>
                             info@podberimuzyku.ru
                         </div>
 
@@ -2061,7 +2061,7 @@
 
 
                 <!-- =========================
-                     РћРџР›РђРўРђ Р Р”РћРЎРўРђР’РљРђ
+                     ОПЛАТА И ДОСТАВКА
                 ========================== -->
 
                 <div class="pm-footer-column">
@@ -2069,52 +2069,52 @@
                     <div class="pm-footer-separator"></div>
 
                     <h3 class="pm-footer-title">
-                        РћРџР›РђРўРђ Р Р”РћРЎРўРђР’РљРђ
+                        ОПЛАТА И ДОСТАВКА
                     </h3>
 
                     <ul class="pm-footer-menu">
 
                         <li>
                             <a href="https://podberimuzyku.ru/gde-kupit-trek/">
-                                <span class="pm-footer-icon">в—†</span>
+                                <span class="pm-footer-icon">◆</span>
                                 <span>
-                                    Р“Р”Р• РљРЈРџРРўР¬ РўР Р•Рљ?
+                                    ГДЕ КУПИТЬ ТРЕК?
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="https://podberimuzyku.ru/price-list/">
-                                <span class="pm-footer-icon">в–Ј</span>
+                                <span class="pm-footer-icon">▣</span>
                                 <span>
-                                    РџР РђР™РЎ-Р›РРЎРў
+                                    ПРАЙС-ЛИСТ
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="https://podberimuzyku.ru/conditions-for-composing/">
-                                <span class="pm-footer-icon">вњ“</span>
+                                <span class="pm-footer-icon">✓</span>
                                 <span>
-                                    РЈРЎР›РћР’РРЇ РР—Р“РћРўРћР’Р›Р•РќРРЇ
+                                    УСЛОВИЯ ИЗГОТОВЛЕНИЯ
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="https://podberimuzyku.ru/terms-of-delivery/">
-                                <span class="pm-footer-icon">в†‘</span>
+                                <span class="pm-footer-icon">↑</span>
                                 <span>
-                                    РЈРЎР›РћР’РРЇ Р”РћРЎРўРђР’РљР
+                                    УСЛОВИЯ ДОСТАВКИ
                                 </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="https://podberimuzyku.ru/terms-of-return/">
-                                <span class="pm-footer-icon">в†“</span>
+                                <span class="pm-footer-icon">↓</span>
                                 <span>
-                                    РЈРЎР›РћР’РРЇ Р’РћР—Р’Р РђРўРђ
+                                    УСЛОВИЯ ВОЗВРАТА
                                 </span>
                             </a>
                         </li>
@@ -2125,12 +2125,12 @@
                     <div class="pm-footer-address">
 
                         <span style="color:#ebd54e;">
-                            в—Џ
+                            ●
                         </span>
 
-                        Рі. РњРѕСЃРєРІР°, РњРѕСЃРєРѕРІСЃРєР°СЏ РѕР±Р»Р°СЃС‚СЊ,
-                        Р¦РµРЅС‚СЂР°Р»СЊРЅС‹Р№ С„РµРґРµСЂР°Р»СЊРЅС‹Р№ РѕРєСЂСѓРі,
-                        Р Р¤, Р РѕСЃСЃРёСЏ
+                        г. Москва, Московская область,
+                        Центральный федеральный округ,
+                        РФ, Россия
 
                     </div>
 
@@ -2144,7 +2144,7 @@
     </div>
 
 
-    <!-- РќРёР¶РЅСЏСЏ СЃС‚СЂРѕРєР° -->
+    <!-- Нижняя строка -->
 
     <div class="pm-footer-bottom">
 
@@ -2155,8 +2155,8 @@
 
                 <div class="pm-copyright">
 
-                    Р’СЃРµ РїСЂР°РІР° Р·Р°С‰РёС‰РµРЅС‹.
-                    В© 2026
+                    Все права защищены.
+                    © 2026
 
                     <a href="https://podberimuzyku.ru/">
                         PODBERIMUZYKU.RU
@@ -2196,7 +2196,7 @@
                             rel="noopener"
                             aria-label="YouTube"
                         >
-                            в–¶
+                            ▶
                         </a>
                     </li>
 
