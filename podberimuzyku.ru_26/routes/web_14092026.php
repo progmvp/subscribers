@@ -408,3 +408,22 @@ Route::get('/subscribe', [SubscriptionController::class, 'show'])
 
 Route::post('/subscribe', [SubscriptionController::class, 'store'])
     ->name('subscription.subscribe.store');
+
+/*
+|--------------------------------------------------------------------------
+| MEMBER SUBSCRIBERS
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/member-subscribers', function () {
+
+    $plans = DB::table('plans')
+        ->whereIn('id', [1, 2, 3, 4])
+        ->orderBy('id')
+        ->get();
+
+    return view('member-subscribers', [
+        'plans' => $plans,
+    ]);
+
+})->name('member-subscribers');
