@@ -3,9 +3,38 @@
 
 <head>
 
+<!-- /style for checkout-form.blade.php -->
+<link rel="stylesheet" href="{{ asset('css/subscription.css') }}">
+
 <script src="https://mc.yandex.ru/metrika/tag_phone.js?ver=2660&amp;b=se" type="text/javascript" charset="utf-8" async=""></script>
 
 <meta charset="UTF-8">
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script type="text/javascript" async="" charset="utf-8" src="https://site.yandex.net/v2.0/js/all.js"></script><script async="" src="https://mc.yandex.ru/metrika/tag.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.googletagmanager.com/gtag/js?id=G-0QHZK3JVFD&amp;cx=c&amp;gtm=4e69l1"></script><script type="text/javascript" async="" id="tmr-code" src="https://top-fwz1.mail.ru/js/code.js"></script><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-88186117-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-88186117-1');
+</script>
+<!-- //Global site tag (gtag.js) - Google Analytics -->
+
+<!-- Top.Mail.Ru counter -->
+<script type="text/javascript">
+var _tmr = window._tmr || (window._tmr = []);
+_tmr.push({id: "2918720", type: "pageView", start: (new Date()).getTime()});
+(function (d, w, id) {
+  if (d.getElementById(id)) return;
+  var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+  ts.src = "https://top-fwz1.mail.ru/js/code.js";
+  var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+  if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+})(document, window, "tmr-code");
+</script>
+<noscript><div><img src="https://top-fwz1.mail.ru/counter?id=2918720;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+<!-- /Top.Mail.Ru counter -->
 
 <title>Как стать подписчиком? » PODBERIMUZYKU.RU</title>
 
@@ -45,6 +74,7 @@
 <link rel="alternate" type="application/rss+xml" title="PODBERIMUZYKU.RU » Лента" href="https://podberimuzyku.ru/feed/">
 <link rel="alternate" type="application/rss+xml" title="PODBERIMUZYKU.RU » Лента комментариев" href="https://podberimuzyku.ru/comments/feed/">
 <link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://podberimuzyku.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fpodberimuzyku.ru%2Fmember-subscribers%2F">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://podberimuzyku.ru/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fpodberimuzyku.ru%2Fmember-subscribers%2F&amp;format=xml">
 
 		<style type="text/css">
 			.mistape-test, .mistape_mistake_inner {color: #E42029 !important;}
@@ -59,11 +89,15 @@
 img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 /*# sourceURL=wp-img-auto-sizes-contain-inline-css */
 </style>
-
+<style id="dzsap-hook-head-styles-inline-css" type="text/css">
+.audioplayer.skin-wave .total-time {background: rgba(255,255,255);}
+/*# sourceURL=dzsap-hook-head-styles-inline-css */
+</style>
 
 <link rel="stylesheet" id="dashicons-css" href="/cms-site/wp-content/themes/betheme-child/css/styleexternal.css" type="text/css" media="all">
-<link rel="stylesheet" id="dashicons-css" href="/cms-site/wp-includes/css/dashicons.min.css?ver=6.9.9" type="text/css" media="all">
 
+<link rel="stylesheet" id="dashicons-css" href="/cms-site/wp-includes/css/dashicons.min.css?ver=6.9.9" type="text/css" media="all">
+<link rel="stylesheet" id="post-views-counter-frontend-css" href="/cms-site/wp-content/plugins/post-views-counter/css/frontend.css?ver=1.7.15" type="text/css" media="all">
 <style id="wp-emoji-styles-inline-css" type="text/css">
 
 	img.wp-smiley, img.emoji {
@@ -79,33 +113,31 @@ img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
 	}
 /*# sourceURL=wp-emoji-styles-inline-css */
 </style>
-
 <style id="wp-block-library-inline-css" type="text/css">
 :root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}.has-text-align-center{text-align:center}.has-text-align-left{text-align:left}.has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-wrap:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
 
 /*# sourceURL=wp-block-library-inline-css */
 </style>
-
 <style id="classic-theme-styles-inline-css" type="text/css">
 /*! This file is auto-generated */
 .wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
 /*# sourceURL=/wp-includes/css/classic-themes.min.css */
 </style>
-
 <style id="global-styles-inline-css" type="text/css">
 :root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
 /*# sourceURL=global-styles-inline-css */
 </style>
 
-
+<link rel="stylesheet" id="cool-tag-cloud-css" href="/cms-site/wp-content/plugins/cool-tag-cloud/inc/cool-tag-cloud.css?ver=2.25" type="text/css" media="all">
+<link rel="stylesheet" id="mistape-front-css" href="/cms-site/wp-content/plugins/mistape/assets/css/mistape-front.css?ver=1.3.9" type="text/css" media="all">
 <link rel="stylesheet" id="custom-overlay-style-css" href="/cms-site/wp-content/themes/betheme-child/css/custom_overlay_styles.css?ver=6.9.9" type="text/css" media="all">
 <link rel="stylesheet" id="mfn-be-css" href="/cms-site/wp-content/themes/betheme/css/be.css?ver=28.1.12" type="text/css" media="all">
 <link rel="stylesheet" id="mfn-animations-css" href="/cms-site/wp-content/themes/betheme/assets/animations/animations.min.css?ver=28.1.12" type="text/css" media="all">
 <link rel="stylesheet" id="mfn-font-awesome-css" href="/cms-site/wp-content/themes/betheme/fonts/fontawesome/fontawesome.css?ver=28.1.12" type="text/css" media="all">
 <link rel="stylesheet" id="mfn-responsive-css" href="/cms-site/wp-content/themes/betheme/css/responsive.css?ver=28.1.12" type="text/css" media="all">
 <link rel="stylesheet" id="mfn-fonts-css" href="https://fonts.googleapis.com/css?family=Roboto%3A1%2C100%2C400%2C400italic%2C500%2C700%2C700italic%2C900%7CMaven+Pro%3A1%2C100%2C400%2C400italic%2C500%2C700%2C700italic%2C900%7CMonoton%3A1%2C100%2C400%2C400italic%2C500%2C700%2C700italic%2C900&amp;display=swap&amp;ver=6.9.9" type="text/css" media="all">
+<link rel="stylesheet" id="js_composer_front-css" href="/cms-site/wp-content/plugins/js_composer/assets/css/js_composer.min.css?ver=8.6.1" type="text/css" media="all">
 <link rel="stylesheet" id="mfn-static-css" href="/cms-site/wp-content/uploads/betheme/css/static.css?ver=28.1.12" type="text/css" media="all">
-
 <style id="mfn-dynamic-inline-css" type="text/css">
 form input.display-none{display:none!important}body{--mfn-featured-image: url();}
 /*# sourceURL=mfn-dynamic-inline-css */
@@ -220,29 +252,21 @@ form input.display-none{display:none!important}body{--mfn-featured-image: url();
 }
 /*# sourceURL=mfn-custom-inline-css */
 </style>
-
 <link rel="stylesheet" id="style-css" href="/cms-site/wp-content/themes/betheme-child/style.css?ver=6.9.9" type="text/css" media="all">
 <script type="text/javascript" src="/cms-site/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
-
+<script type="text/javascript" src="/cms-site/wp-content/plugins/dzs-zoomsounds/libs/dzsap/replace-gutenberg-player/replace-gutenberg-player.js?ver=6.90" id="replace-gutenberg-player-js"></script>
 <script type="text/javascript" src="/cms-site/wp-includes/js/wp-embed.min.js?ver=6.9.9" id="wp-embed-js" defer="defer" data-wp-strategy="defer"></script>
-<link rel="https://api.w.org/" href="https://podberimuzyku.ru/wp-json/">
-<link rel="alternate" title="JSON" type="application/json" href="https://podberimuzyku.ru/wp-json/wp/v2/pages/26854">
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://podberimuzyku.ru/xmlrpc.php?rsd">
+<script></script><link rel="https://api.w.org/" href="https://podberimuzyku.ru/wp-json/"><link rel="alternate" title="JSON" type="application/json" href="https://podberimuzyku.ru/wp-json/wp/v2/pages/26854"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://podberimuzyku.ru/xmlrpc.php?rsd">
 <link rel="shortlink" href="https://podberimuzyku.ru/pv7m">
-
-<!-- Yandex.RTB -->
+<script id="dzsap-main-settings" class="dzsap-main-settings" type="application/json">{"dzsap_site_url":"https:\/\/podberimuzyku.ru\/","pluginurl":"https:\/\/podberimuzyku.ru\/wp-content\/plugins\/dzs-zoomsounds\/audioplayer\/","dzsap_curr_user":0,"version":"6.90","view_replace_audio_shortcode":"player-cue-default","ajax_url":"https:\/\/podberimuzyku.ru\/wp-admin\/admin-ajax.php","action_received_time_total":"send_total_time"}</script><!-- Yandex.RTB -->
 <script>window.yaContextCb=window.yaContextCb||[]</script>
-<script src="https://yandex.ru/ads/system/context.js" async=""></script>
-
-
+<script src="https://yandex.ru/ads/system/context.js" async=""></script><meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress.">
 <title>Подбери Музыку</title>
-
-<link rel="icon" type="image/png" href="/cms-site/wp-content/uploads/logo_pm_2023_120x120.png">
+<link rel="icon" type="image/png" href="/cms-site/wp-content/uploads/logo_pm_2023_120x120.png"><meta name="generator" content="Powered by Slider Revolution 6.7.38 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface.">
 <link rel="icon" href="/cms-site/wp-content/uploads/2023/04/cropped-favicon_2023_512x512-min-75x75.png" sizes="32x32">
 <link rel="icon" href="/cms-site/wp-content/uploads/2023/04/cropped-favicon_2023_512x512-min-300x300.png" sizes="192x192">
 <link rel="apple-touch-icon" href="/cms-site/wp-content/uploads/2023/04/cropped-favicon_2023_512x512-min-300x300.png">
 <meta name="msapplication-TileImage" content="/cms-site/wp-content/uploads/2023/04/cropped-favicon_2023_512x512-min-300x300.png">
-
 <script>function setREVStartSize(e){
 			//window.requestAnimationFrame(function() {
 				window.RSIW = window.RSIW===undefined ? window.innerWidth : window.RSIW;
@@ -291,23 +315,16 @@ form input.display-none{display:none!important}body{--mfn-featured-image: url();
 					console.log("Failure at Presize of Slider:" + e)
 				}
 			//});
-		  };
-</script>
-
+		  };</script>
 <style>.shorten_url { 
 	   padding: 10px 10px 10px 10px ; 
 	   border: 1px solid #AAAAAA ; 
 	   background-color: #EEEEEE ;
-}
-</style>
-
+}</style>
 <!--Start VDZ Yandex Metrika Plugin-->
 <!-- Yandex.Metrika counter --><script type="text/javascript">(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");ym(93330852, "init", {clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true, ecommerce:"dataLayer"});</script>
 <noscript><div><img src="https://mc.yandex.ru/watch/93330852" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-
-<!--START ADD EVENTS FROM CF7-->
-<script type="text/javascript">document.addEventListener( 'wpcf7submit', function( event ) {
+<!-- /Yandex.Metrika counter --><!--START ADD EVENTS FROM CF7--><script type="text/javascript">document.addEventListener( 'wpcf7submit', function( event ) {
 					  //event.detail.contactFormId;
 					  if(ym){
 				          //console.log(event.detail);
@@ -320,59 +337,48 @@ form input.display-none{display:none!important}body{--mfn-featured-image: url();
 						  });
 					  }
 					}, false );
-</script>
-<!--END ADD EVENTS FROM CF7-->
-
+				</script><!--END ADD EVENTS FROM CF7-->
 <!--End VDZ Yandex Metrika Plugin-->
-
 <style type="text/css" data-type="vc_shortcodes-custom-css">.vc_custom_1772823692678{background: #2C2C2C url(https://res.cloudinary.com/dgvvtwlzl/image/upload/v1772823081/pm_site_2026/member-access/mesh-net.svg) !important;background-position: 0 0 !important;background-repeat: no-repeat !important;}.vc_custom_1776779314947{padding-top: 5% !important;padding-right: 0px !important;padding-bottom: 0px !important;padding-left: 30% !important;}.vc_custom_1772815616889{padding-left: 20% !important;}.vc_custom_1776784084450{padding-right: 5% !important;padding-left: 5% !important;}.vc_custom_1778595014550{border-left-width: 2px !important;border-left-style: solid !important;border-color: #C4BFBF !important;}.vc_custom_1778592958158{padding-left: 35% !important;}.vc_custom_1786542261477{padding-left: 35% !important;}</style><noscript><style> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript>
 <style id="dzsap-init-styles-inline-css" type="text/css">
 .audioplayer,.audioplayer-tobe,.audiogallery{opacity:0;}
 /*# sourceURL=dzsap-init-styles-inline-css */
 </style>
-
 <style id="dzsap-footer-style-inline-css" type="text/css">
  .audioplayer.apconfig-player-cue-default .player-but .svg-icon path{fill:#fcb53f}        body .controls-volume.controls-volume-vertical .volume-holder{background-color:#fcb53f;}    .audioplayer.apconfig-player-cue-default.skin-wave .player-but .the-icon-bg{background-color:#fcb53f;}    .audioplayer.apconfig-player-cue-default.skin-wave .volume_static:before{background-color:#fcb53f;} .audioplayer.apconfig-player-cue-default.skin-wave .meta-artist .the-name object>a{color:#fcb53f;}  .audioplayer.apconfig-player-cue-default.skin-wave .volumeicon:before{border-right-color:#fcb53f}  .audioplayer.apconfig-player-cue-default.skin-wave .volumeicon{background:#fcb53f} .audioplayer.apconfig-player-cue-default.skin-wave.button-aspect-noir i.svg-icon{color:#fcb53f}   .audioplayer.apconfig-player-cue-default.skin-wave.button-aspect-noir .con-playpause .the-icon-bg{border-color:#fcb53f;}   .audioplayer.apconfig-player-cue-default.skin-wave.button-aspect-noir .player-but .the-icon-bg{background-color:transparent;border-color:#fcb53f;}   .audioplayer.apconfig-player-cue-default.skin-wave.button-aspect-noir.button-aspect-noir--filled .player-but .the-icon-bg{background-color:#fcb53f;}  .audioplayer.apconfig-player-cue-default.skin-wave.button-aspect-noir.button-aspect-noir--stroked i.svg-icon{color:#fcb53f}      .audioplayer.apconfig-player-cue-default.skin-wave.button-aspect-noir.button-aspect-noir--stroked .svg-icon path{stroke:#fcb53f}    .audioplayer.apconfig-player-cue-default.skin-wave.button-aspect-noir .svg-icon path{fill:#fcb53f; }  .audioplayer.apconfig-player-cue-default.skin-silver .ap-controls .ap-controls-right .controls-volume .volumeicon::before{ border-right-color:#fcb53f; } .audioplayer.apconfig-player-cue-default.skin-silver .ap-controls .ap-controls-right .controls-volume .volumeicon {  background-color:#fcb53f;  }  .audioplayer.apconfig-player-cue-default.skin-default .ap-controls .ap-controls-right .controls-volume .volumeicon::before{ border-right-color:#fcb53f; } .audioplayer.apconfig-player-cue-default.skin-default .ap-controls .ap-controls-right .controls-volume .volumeicon {  background-color:#fcb53f;  } .audioplayer.apconfig-player-cue-default .volume_active{background-color:#111111}   body .btn-zoomsounds.btn-like:hover .the-icon>svg path,body .btn-zoomsounds.btn-like.active .the-icon>svg path{fill:#111111}  .audioplayer.apconfig-player-cue-default.skin-wave .volume_active{background-color:#111111}  .audioplayer.apconfig-player-cue-default.skin-wave .meta-artist .the-artist{color:#111111}     .audioplayer.apconfig-player-cue-default.skin-silver a{color:#111111}    .audioplayer.apconfig-player-cue-default.skin-silver{line-height:1}  body .dzsap-color_inverse_ui_text{color:#111111}.audioplayer.apconfig-player-cue-default .player-but .svg-icon path{fill:#000000;}.audioplayer.apconfig-player-cue-default.skin-wave.button-aspect-noir.button-aspect-noir--filled .svg-icon path{fill:#000000;} .audioplayer.apconfig-player-cue-default.skin-wave.button-aspect-noir.button-aspect-noir--filled i.svg-icon{ color: #000000; }
 /*# sourceURL=dzsap-footer-style-inline-css */
 </style>
+<link rel="stylesheet" id="rs-plugin-settings-css" href="/cms-site/wp-content/plugins/revslider/sr6/assets/css/rs6.css?ver=6.7.38" type="text/css" media="all">
+<style id="rs-plugin-settings-inline-css" type="text/css">
+.tp-caption a{color:#ff7302;text-shadow:none;-webkit-transition:all 0.2s ease-out;-moz-transition:all 0.2s ease-out;-o-transition:all 0.2s ease-out;-ms-transition:all 0.2s ease-out}.tp-caption a:hover{color:#ffa902}
+/*# sourceURL=rs-plugin-settings-inline-css */
+</style>
 
-<link rel="preconnect" href="https://yastatic.net"><link rel="preconnect" href="https://avatars.mds.yandex.net"><link rel="preconnect" href="https://mc.yandex.ru"><link rel="preconnect" href="https://ads.adfox.ru">
-<link rel="preload" href="https://yastatic.net/s3/home/fonts/ys/3/text-variable-full.woff2" type="font/woff2" as="font" crossorigin="anonymous">
-
-<style id="ysTextCssRule">@font-face {
+<link rel="preconnect" href="https://yastatic.net"><link rel="preconnect" href="https://avatars.mds.yandex.net"><link rel="preconnect" href="https://mc.yandex.ru"><link rel="preconnect" href="https://ads.adfox.ru"><link rel="preload" href="https://yastatic.net/s3/home/fonts/ys/3/text-variable-full.woff2" type="font/woff2" as="font" crossorigin="anonymous"><style id="ysTextCssRule">@font-face {
         font-family: "YS Text Variable";
         src: url("https://yastatic.net/s3/home/fonts/ys/3/text-variable-full.woff2") format("woff2");
         font-weight: 400 700;
         font-display: optional;
-    }
-</style>
-
-<script async="" crossorigin="anonymous" src="https://yastatic.net/safeframe-bundles/0.89/host.js"></script>
-<script src="/cms-site/wp-includes/js/wp-emoji-release.min.js?ver=6.9.9" defer=""></script>
-
-<style class="mb-style-tag">.UZznxc{height:inherit;max-height:inherit;min-height:inherit;width:100%}</style>
-
-<style type="text/css">#ya-site-form0,#ya-site-form0 .ya-site-form__form,#ya-site-form0 .ya-site-form__input,#ya-site-form0 .ya-site-form__input-text,#ya-site-form0 .ya-site-form__search-precise,#ya-site-form0 .ya-site-form__submit{font-size:12px!important;color:#000!important}#ya-site-form0 .ya-site-form__form-form{display:block;margin:0;padding:0}#ya-site-form0 .ya-site-form__input{margin:0;padding:0}#ya-site-form0 .ya-site-form__search-precise{margin:0}#ya-site-form0 .ya-site-form__search-precise__radio{padding:0}#ya-site-form0 .ya-site-form__gap,#ya-site-form0 .ya-site-form__gap-i,#ya-site-form0 .ya-site-form__logo-img{margin:0;padding:0}#ya-site-form0{margin:0!important;padding:0!important}#ya-site-form0 .ya-site-form__logo-wrap{width:65px;vertical-align:top;border-collapse:collapse}#ya-site-form0 .ya-site-form__logo{display:block;width:52px;margin:0;padding:0 6px 0 0;text-decoration:none}#ya-site-form0 .ya-site-form__logo-img{width:52px;height:21px;border:0!important}#ya-site-form0 .ya-site-form__search-wrap{border-collapse:collapse}#ya-site-form0 .ya-site-form__search{font-size:12px!important;width:100%}#ya-site-form0 .ya-site-form__search-input{padding:6px}#ya-site-form0 .ya-site-form__search-input-layout,#ya-site-form0 .ya-site-form__search-input-layout-l,#ya-site-form0 .ya-site-form__search-input-layout-r{font-size:12px!important;padding:0;vertical-align:middle;border:0;border-collapse:collapse}#ya-site-form0 .ya-site-form__search-input-layout,#ya-site-form0 .ya-site-form__search-input-layout-l{width:100%}#ya-site-form0 .ya-site-form__search-precise{padding:0 18px 5px 6px;text-align:left;vertical-align:top}#ya-site-form0 .ya-site-form__search-precise-i{white-space:nowrap}#ya-site-form0 .ya-site-form__search-precise__radio{width:auto;margin:0 .3em 0 0;vertical-align:middle;background:0 0}#ya-site-form0 .ya-site-form__search-precise__label{margin:0 .4em 0 0;padding:0;vertical-align:middle}#ya-site-form0 .ya-site-form__input-text{width:100%;margin:0!important;cursor:text;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;background-color:#fff;border:1px solid #7f9db9;outline-style:none;-webkit-appearance:textfield}#ya-site-form0 .ya-site-form__input-text_type_hint{background-repeat:no-repeat;background-position:.2em 50%}#ya-site-form0 .ya-site-form__submit{display:block;width:auto;margin:0 0 0 5px}#ya-site-form0 .ya-site-form__arrow-wrap{overflow:hidden;width:30px;padding:0;vertical-align:middle}#ya-site-form0 .ya-site-form__arrow{position:relative}#ya-site-form0 .ya-site-form__arrow-a{position:absolute;top:50%;right:0;width:0;height:0;margin-top:-59px;border:solid transparent;border-width:59px 0 59px 30px;-moz-border-end-style:dotted}#ya-site-form0 .ya-site-form__wrap{width:100%;table-layout:fixed;border-collapse:collapse}#ya-site-form0 .ya-site-form__gap{border:0}#ya-site-form0 .ya-site-form__gap-i{width:9em}#ya-site-form0.ya-site-form_arrow_yes .ya-site-form__search-input{padding-right:0}#ya-site-form0.ya-site-form_logo_left .ya-site-form__logo{margin-top:4px;margin-left:5px}#ya-site-form0.ya-site-form_logo_top .ya-site-form__logo{display:block;margin:6px 0 0 6px}#ya-site-form0 .ya-site-form__submit_type_image{width:19px;height:15px;outline:0;cursor:pointer;border:0}#ya-site-form0 .ya-site-form__submit_type_image { background: url(https://site.yandex.net/v2.0/i/search.png) no-repeat }#ya-site-form0 .ya-site-form__input-text_type_hint { background-image:url(https://site.yandex.net/v2.0/i/yandex-hint-rb.png) }#ya-site-form0 .ya-site-form__form * { font-size: 12px !important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { font-style: normal!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { font-weight: normal!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { color: #333333!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { border-color: #7f9db9!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text:focus { border-color: #7f9db9!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { background-color: #ffffff!important }#ya-site-form0 .ya-site-form__search, #ya-site-form0 .ya-site-form__search td, #ya-site-form0 .yaform__precise-i { background-color: transparent !important }#ya-site-form0 .ya-site-form__search-precise__label { color:#000000 !important }#ya-site-form0 .ya-site-form__arrow-a { border-left-color: transparent }</style>
-
-<link title="����� �� ����� podberimuzyku.ru" rel="search" type="application/opensearchdescription+xml" href="https://yandex.ru/search/site/opensearch.xml?ShortName=%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%20%EF%BF%BD%EF%BF%BD%20%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%20podberimuzyku.ru&amp;InputEncoding=utf-8&amp;Image=&amp;Url-results=https%3A%2F%2Fpodberimuzyku.ru%2Fsearch-yandex%2F%3Fsearchid%3D13889089%26web%3D0%26text%3D%7BsearchTerms%7D&amp;Url-suggest=https%3A%2F%2Fsitesearch-suggest.yandex.ru%2Fv1%2Fsuggest%3F%26site%3D13889089%26lang%3Dru%26part%3D%7BsearchTerms%7D&amp;Url-opensearchdescr=https%3A%2F%2Fyandex.ru%2Fsearch%2Fsite%2Fopensearch.xml%3FShortName%3D%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%2520%25EF%25BF%25BD%25EF%25BF%25BD%2520%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%2520podberimuzyku.ru%26InputEncoding%3Dutf-8%26Image%3D%26Url-results%3Dhttps%253A%252F%252Fpodberimuzyku.ru%252Fsearch-yandex%252F%253Fsearchid%253D13889089%2526web%253D0%2526text%253D%257BsearchTerms%257D%26Url-suggest%3Dhttps%253A%252F%252Fsitesearch-suggest.yandex.ru%252Fv1%252Fsuggest%253F%2526site%253D13889089%2526lang%253Dru%2526part%253D%257BsearchTerms%257D">
-
-<style type="text/css">#ya-site-form0 .ya-site-suggest{position:relative;margin:0}#ya-site-form0 .ya-site-suggest-popup{position:absolute;width:100%}#ya-site-form0 .ya-site-suggest__opera-gap{position:absolute;height:25em;border:1px solid transparent}#ya-site-form0 .ya-site-suggest-list{position:absolute;z-index:9999;overflow:hidden;min-width:25em;width:100%;margin-top:-1px;border-collapse:separate;-webkit-box-shadow:0 1px 7px #9a9a9a;-moz-box-shadow:0 1px 7px #9a9a9a;box-shadow:0 1px 7px #9a9a9a;border:1px solid #dedede;border-color:rgba(154,154,154,.4) rgba(154,154,154,.5) rgba(154,154,154,.6);box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}#ya-site-form0 .ya-site-suggest__iframe{position:absolute;z-index:-1;min-width:25em;width:100%;height:100%;background:#fff}#ya-site-form0 .ya-site-suggest-items{font-size:16px;min-width:25em;width:100%;margin:0;padding:0 1px 0 0;list-style:none}#ya-site-form0 .ya-site-suggest-items li{margin:0;padding:0;line-height:normal}#ya-site-form0 .ya-site-suggest-elem{display:block;padding:.25em .3em;cursor:pointer;background:url()}#ya-site-form0 a.ya-site-suggest-elem:link,#ya-site-form0 a.ya-site-suggest-elem:visited{text-decoration:none}html body #ya-site-form0 .ya-site-suggest-elem-link,html body #ya-site-form0 .ya-site-suggest-elem:link{color:#000!important}#ya-site-form0 .ya-site-suggest-elem:hover,html body #ya-site-form0 .ya-site-suggest-elem_state_hover{background:#fef6d7}#ya-site-form0 .ya-site-suggest-elem_nav:hover,#ya-site-form0 .ya-site-suggest-elem_translate:hover{text-decoration:none;color:#000!important}#ya-site-form0 .ya-site-suggest-elem_nav .ya-site-suggest__link{text-decoration:underline;color:#1a3dc1}#ya-site-form0 .ya-site-suggest-elem_translate .ya-site-suggest__link{text-decoration:underline;color:#000}#ya-site-form0 .ya-site-suggest-elem .ya-site-suggest__info{white-space:nowrap;color:#666}#ya-site-form0 .ya-site-suggest-elem_selected{background:#fdedaf}#ya-site-form0 .ya-site-suggest__fact{color:#555}#ya-site-form0 .ya-site-suggest__highlight{font-weight:700}</style>
-
-<link rel="stylesheet" href="https://code.jivo.ru/css/610aac3/widget.css" class="jv-css">
+    }</style><script async="" crossorigin="anonymous" src="https://yastatic.net/safeframe-bundles/0.89/host.js"></script><script src="/cms-site/wp-includes/js/wp-emoji-release.min.js?ver=6.9.9" defer=""></script><style class="mb-style-tag">.UZznxc{height:inherit;max-height:inherit;min-height:inherit;width:100%}</style><style type="text/css">#ya-site-form0,#ya-site-form0 .ya-site-form__form,#ya-site-form0 .ya-site-form__input,#ya-site-form0 .ya-site-form__input-text,#ya-site-form0 .ya-site-form__search-precise,#ya-site-form0 .ya-site-form__submit{font-size:12px!important;color:#000!important}#ya-site-form0 .ya-site-form__form-form{display:block;margin:0;padding:0}#ya-site-form0 .ya-site-form__input{margin:0;padding:0}#ya-site-form0 .ya-site-form__search-precise{margin:0}#ya-site-form0 .ya-site-form__search-precise__radio{padding:0}#ya-site-form0 .ya-site-form__gap,#ya-site-form0 .ya-site-form__gap-i,#ya-site-form0 .ya-site-form__logo-img{margin:0;padding:0}#ya-site-form0{margin:0!important;padding:0!important}#ya-site-form0 .ya-site-form__logo-wrap{width:65px;vertical-align:top;border-collapse:collapse}#ya-site-form0 .ya-site-form__logo{display:block;width:52px;margin:0;padding:0 6px 0 0;text-decoration:none}#ya-site-form0 .ya-site-form__logo-img{width:52px;height:21px;border:0!important}#ya-site-form0 .ya-site-form__search-wrap{border-collapse:collapse}#ya-site-form0 .ya-site-form__search{font-size:12px!important;width:100%}#ya-site-form0 .ya-site-form__search-input{padding:6px}#ya-site-form0 .ya-site-form__search-input-layout,#ya-site-form0 .ya-site-form__search-input-layout-l,#ya-site-form0 .ya-site-form__search-input-layout-r{font-size:12px!important;padding:0;vertical-align:middle;border:0;border-collapse:collapse}#ya-site-form0 .ya-site-form__search-input-layout,#ya-site-form0 .ya-site-form__search-input-layout-l{width:100%}#ya-site-form0 .ya-site-form__search-precise{padding:0 18px 5px 6px;text-align:left;vertical-align:top}#ya-site-form0 .ya-site-form__search-precise-i{white-space:nowrap}#ya-site-form0 .ya-site-form__search-precise__radio{width:auto;margin:0 .3em 0 0;vertical-align:middle;background:0 0}#ya-site-form0 .ya-site-form__search-precise__label{margin:0 .4em 0 0;padding:0;vertical-align:middle}#ya-site-form0 .ya-site-form__input-text{width:100%;margin:0!important;cursor:text;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;background-color:#fff;border:1px solid #7f9db9;outline-style:none;-webkit-appearance:textfield}#ya-site-form0 .ya-site-form__input-text_type_hint{background-repeat:no-repeat;background-position:.2em 50%}#ya-site-form0 .ya-site-form__submit{display:block;width:auto;margin:0 0 0 5px}#ya-site-form0 .ya-site-form__arrow-wrap{overflow:hidden;width:30px;padding:0;vertical-align:middle}#ya-site-form0 .ya-site-form__arrow{position:relative}#ya-site-form0 .ya-site-form__arrow-a{position:absolute;top:50%;right:0;width:0;height:0;margin-top:-59px;border:solid transparent;border-width:59px 0 59px 30px;-moz-border-end-style:dotted}#ya-site-form0 .ya-site-form__wrap{width:100%;table-layout:fixed;border-collapse:collapse}#ya-site-form0 .ya-site-form__gap{border:0}#ya-site-form0 .ya-site-form__gap-i{width:9em}#ya-site-form0.ya-site-form_arrow_yes .ya-site-form__search-input{padding-right:0}#ya-site-form0.ya-site-form_logo_left .ya-site-form__logo{margin-top:4px;margin-left:5px}#ya-site-form0.ya-site-form_logo_top .ya-site-form__logo{display:block;margin:6px 0 0 6px}#ya-site-form0 .ya-site-form__submit_type_image{width:19px;height:15px;outline:0;cursor:pointer;border:0}#ya-site-form0 .ya-site-form__submit_type_image { background: url(https://site.yandex.net/v2.0/i/search.png) no-repeat }#ya-site-form0 .ya-site-form__input-text_type_hint { background-image:url(https://site.yandex.net/v2.0/i/yandex-hint-rb.png) }#ya-site-form0 .ya-site-form__form * { font-size: 12px !important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { font-style: normal!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { font-weight: normal!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { color: #333333!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { border-color: #7f9db9!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text:focus { border-color: #7f9db9!important }#ya-site-form0 .ya-site-form__form .ya-site-form__input-text { background-color: #ffffff!important }#ya-site-form0 .ya-site-form__search, #ya-site-form0 .ya-site-form__search td, #ya-site-form0 .yaform__precise-i { background-color: transparent !important }#ya-site-form0 .ya-site-form__search-precise__label { color:#000000 !important }#ya-site-form0 .ya-site-form__arrow-a { border-left-color: transparent }</style><link title="����� �� ����� podberimuzyku.ru" rel="search" type="application/opensearchdescription+xml" href="https://yandex.ru/search/site/opensearch.xml?ShortName=%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%20%EF%BF%BD%EF%BF%BD%20%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%EF%BF%BD%20podberimuzyku.ru&amp;InputEncoding=utf-8&amp;Image=&amp;Url-results=https%3A%2F%2Fpodberimuzyku.ru%2Fsearch-yandex%2F%3Fsearchid%3D13889089%26web%3D0%26text%3D%7BsearchTerms%7D&amp;Url-suggest=https%3A%2F%2Fsitesearch-suggest.yandex.ru%2Fv1%2Fsuggest%3F%26site%3D13889089%26lang%3Dru%26part%3D%7BsearchTerms%7D&amp;Url-opensearchdescr=https%3A%2F%2Fyandex.ru%2Fsearch%2Fsite%2Fopensearch.xml%3FShortName%3D%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%2520%25EF%25BF%25BD%25EF%25BF%25BD%2520%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%25EF%25BF%25BD%2520podberimuzyku.ru%26InputEncoding%3Dutf-8%26Image%3D%26Url-results%3Dhttps%253A%252F%252Fpodberimuzyku.ru%252Fsearch-yandex%252F%253Fsearchid%253D13889089%2526web%253D0%2526text%253D%257BsearchTerms%257D%26Url-suggest%3Dhttps%253A%252F%252Fsitesearch-suggest.yandex.ru%252Fv1%252Fsuggest%253F%2526site%253D13889089%2526lang%253Dru%2526part%253D%257BsearchTerms%257D"><style type="text/css">#ya-site-form0 .ya-site-suggest{position:relative;margin:0}#ya-site-form0 .ya-site-suggest-popup{position:absolute;width:100%}#ya-site-form0 .ya-site-suggest__opera-gap{position:absolute;height:25em;border:1px solid transparent}#ya-site-form0 .ya-site-suggest-list{position:absolute;z-index:9999;overflow:hidden;min-width:25em;width:100%;margin-top:-1px;border-collapse:separate;-webkit-box-shadow:0 1px 7px #9a9a9a;-moz-box-shadow:0 1px 7px #9a9a9a;box-shadow:0 1px 7px #9a9a9a;border:1px solid #dedede;border-color:rgba(154,154,154,.4) rgba(154,154,154,.5) rgba(154,154,154,.6);box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box}#ya-site-form0 .ya-site-suggest__iframe{position:absolute;z-index:-1;min-width:25em;width:100%;height:100%;background:#fff}#ya-site-form0 .ya-site-suggest-items{font-size:16px;min-width:25em;width:100%;margin:0;padding:0 1px 0 0;list-style:none}#ya-site-form0 .ya-site-suggest-items li{margin:0;padding:0;line-height:normal}#ya-site-form0 .ya-site-suggest-elem{display:block;padding:.25em .3em;cursor:pointer;background:url()}#ya-site-form0 a.ya-site-suggest-elem:link,#ya-site-form0 a.ya-site-suggest-elem:visited{text-decoration:none}html body #ya-site-form0 .ya-site-suggest-elem-link,html body #ya-site-form0 .ya-site-suggest-elem:link{color:#000!important}#ya-site-form0 .ya-site-suggest-elem:hover,html body #ya-site-form0 .ya-site-suggest-elem_state_hover{background:#fef6d7}#ya-site-form0 .ya-site-suggest-elem_nav:hover,#ya-site-form0 .ya-site-suggest-elem_translate:hover{text-decoration:none;color:#000!important}#ya-site-form0 .ya-site-suggest-elem_nav .ya-site-suggest__link{text-decoration:underline;color:#1a3dc1}#ya-site-form0 .ya-site-suggest-elem_translate .ya-site-suggest__link{text-decoration:underline;color:#000}#ya-site-form0 .ya-site-suggest-elem .ya-site-suggest__info{white-space:nowrap;color:#666}#ya-site-form0 .ya-site-suggest-elem_selected{background:#fdedaf}#ya-site-form0 .ya-site-suggest__fact{color:#555}#ya-site-form0 .ya-site-suggest__highlight{font-weight:700}</style><link rel="stylesheet" href="https://code.jivo.ru/css/610aac3/widget.css" class="jv-css">
 </head>
 
 
 <body class="wp-singular page-template-default page page-id-26854 wp-embed-responsive wp-theme-betheme wp-child-theme-betheme-child woocommerce-block-theme-has-button-styles color-custom content-brightness-light input-brightness-light style-default keyboard-support underline-links warning-links button-animation-slide button-animation-slide-right layout-full-width full-width-content no-content-padding hide-love no-shadows boxed-no-margin header-classic header-fw sticky-header sticky-dark ab-show menu-line-below menuo-right menuo-no-borders subheader-both-center responsive-overflow-x-mobile no-hover-all mobile-tb-right mobile-mini-mr-ll mobile-icon-user-hide mobile-icon-wishlist-hide mobile-icon-cart-hide mobile-icon-search-ss mobile-icon-wpml-hide mobile-icon-action-ss be-page-26854 be-reg-28112 wpb-js-composer js-comp-ver-8.6.1 vc_responsive mfn-header-scrolled">
 
+	
+		
 		<!-- mfn_hook_top --><!-- mfn_hook_top -->
 		
-	<div id="Wrapper">
+		
+		<div id="Wrapper">
+
 	<div id="Header_wrapper" class="" role="banner" aria-label="Header container">
 
 	<header id="Header">
 	<div id="Action_bar">
 		<div class="container">
 			<div class="column one">
+
 				
 <ul class="contact_details" aria-label="contact details">
   <li class="slogan">Монтаж, сведение музыки | </li><li class="phone phone-1"><i class="icon-phone"></i><a href="tel:+79252760168" aria-label="phone"><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit;"><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.916667;">+</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.833333;">7</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.75;">9</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.666667;">2</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.583333;">5</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.5;">2</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.416667;">7</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.333333;">6</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.25;">0</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.166667;">1</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0.0833333;">6</small><small style="display: inline; margin: 0px; padding: 0px; font-size: inherit; color: inherit; line-height: inherit; opacity: 0;">8</small></small></a></li><li class="mail"><i class="icon-mail-line"></i><a href="mailto:info@podberimuzyku.ru" aria-label="mail">info@podberimuzyku.ru</a></li></ul>
@@ -455,9 +461,7 @@ form input.display-none{display:none!important}body{--mfn-featured-image: url();
 </div>
 
 		<div class="ya-site-form ya-site-form_bg_transparent ya-site-form_logo_hint ya-site-form_inited_yes" data-bem="{&quot;action&quot;:&quot;https://podberimuzyku.ru/search-yandex/&quot;,&quot;arrow&quot;:false,&quot;bg&quot;:&quot;transparent&quot;,&quot;fontsize&quot;:12,&quot;fg&quot;:&quot;#000000&quot;,&quot;language&quot;:&quot;ru&quot;,&quot;logo&quot;:&quot;rb&quot;,&quot;publicname&quot;:&quot;����� �� ����� podberimuzyku.ru&quot;,&quot;suggest&quot;:true,&quot;target&quot;:&quot;_self&quot;,&quot;tld&quot;:&quot;ru&quot;,&quot;type&quot;:2,&quot;usebigdictionary&quot;:true,&quot;searchid&quot;:13889089,&quot;input_fg&quot;:&quot;#333333&quot;,&quot;input_bg&quot;:&quot;#ffffff&quot;,&quot;input_fontStyle&quot;:&quot;normal&quot;,&quot;input_fontWeight&quot;:&quot;normal&quot;,&quot;input_placeholder&quot;:null,&quot;input_placeholderColor&quot;:&quot;#000000&quot;,&quot;input_borderColor&quot;:&quot;#7f9db9&quot;}" id="ya-site-form0"><div class="ya-site-form__form"><table class="ya-site-form__wrap" cellpadding="0" cellspacing="0"><tbody><tr><td class="ya-site-form__search-wrap"><table class="ya-site-form__search" cellpadding="0" cellspacing="0"><tbody><tr><td class="ya-site-form__search-input"><table class="ya-site-form__search-input-layout"><tbody><tr><td class="ya-site-form__search-input-layout-l"><div class="ya-site-form__input"><input name="text" type="search" value="" class="ya-site-form__input-text ya-site-form__input-text_type_hint" autocomplete="off"><div class="ya-site-suggest"><div class="ya-site-suggest-popup" style="display: none;"><i class="ya-site-suggest__opera-gap"></i><div class="ya-site-suggest-list"><div class="ya-site-suggest__iframe"></div><ul class="ya-site-suggest-items"></ul></div></div></div></div></td><td class="ya-site-form__search-input-layout-r"><input class="ya-site-form__submit" type="button" value="Найти"></td></tr></tbody></table></td></tr><tr><td class="ya-site-form__gap"><div class="ya-site-form__gap-i"></div></td></tr></tbody></table></td></tr></tbody></table></div></div><style type="text/css">.ya-page_js_yes .ya-site-form_inited_no { display: none; }</style><script type="text/javascript">(function(w,d,c){var s=d.createElement('script'),h=d.getElementsByTagName('script')[0],e=d.documentElement;if((' '+e.className+' ').indexOf(' ya-page_js_yes ')===-1){e.className+=' ya-page_js_yes';}s.type='text/javascript';s.async=true;s.charset='utf-8';s.src=(d.location.protocol==='https:'?'https:':'http:')+'//site.yandex.net/v2.0/js/all.js';h.parentNode.insertBefore(s,h);(w[c]||(w[c]=[])).push(function(){Ya.Site.Form.init()})})(window,document,'yandex_site_callbacks');</script>
-		
-		<!-- mfn_hook_content_before -->
-		<style>
+		<!-- mfn_hook_content_before --><style>
 #blink {
   -webkit-animation: blink 2s linear infinite;
   animation: blink 2s linear infinite;
@@ -473,7 +477,6 @@ form input.display-none{display:none!important}body{--mfn-featured-image: url();
   100% { color: rgba(34, 34, 34, 0); }
 }
 </style>
-
 <h2 id="blink" align="center">Сейчас на сайте проводятся технические работы. Благодарим за понимание и просим прощения за временные неудобства!</h2><!-- mfn_hook_content_before -->
 	
 
@@ -543,127 +546,48 @@ form input.display-none{display:none!important}body{--mfn-featured-image: url();
 		</div>
 	</div>
 
-	<div class="wpb_raw_code wpb_raw_html wpb_content_element vc_custom_1778592958158">
-		<div class="wpb_wrapper">
-			<form id="donateForm" method="POST" action="https://podberimuzyku.ru/billing/handle-donate.php" target="_blank">
+<div class="wpb_raw_code wpb_raw_html wpb_content_element" style="margin-bottom: 5px;">
+    <div class="wpb_wrapper" style="width: 100%;">
+					<style>
+				    .pm-form-card {
+				    		width: 100%;
+				    		max-width: none;
+						}
 
-<!-- Email -->
-<input type="email" id="email" name="email" placeholder="Ваш email" required="">
+						.pm-form-card form {
+						    width: 100%;
+						}
 
-<!-- Имя -->
-<input type="text" id="first_name" name="first_name" placeholder="Ваше имя" required="">
-
-<!-- Фамилия -->
-<input type="text" id="last_name" name="full_last_name" placeholder="Ваша фамилия" required="">
-
-<!-- Для MBT -->
-<input type="hidden" id="name" name="name">
-
-<!-- 🔐 Honeypot -->
-<input type="text" name="website" style="display:none">
-
-<!-- План -->
-<select name="plan" required="">
-    <option value="">Выберите тариф</option>
-    <option value="start">Стартовый — 250 MBT / 3 дня</option>
-    <option value="base">Базовый — 450 MBT / 2 недели</option>
-    <option value="full">Полный — 750 MBT / месяц</option>
-</select>
-
-<!-- Согласие -->
-<label>
-    <input type="checkbox" required="">
-    Я соглашаюсь с условиями
-</label>
-
-<!-- Кнопка -->
-<button type="submit">
-    Получить MBT для доступа
-</button>
-
-</form>
-
-<!-- 📌 БЛОК ИНСТРУКЦИИ (изначально скрыт) -->
-<div id="access-info" style="
-    display:none;
-    margin-top:20px;
-    padding:15px;
-    border:1px solid #ddd;
-    border-radius:8px;
-    background:#fafafa;
-">
-    <h3>Как войти в личный кабинет</h3>
-
-    <p><b>1.</b> Перейдите на страницу входа:</p>
-
-    <p>
-        <a href="https://podberimuzyku.ru/member-access/" target="_blank">
-            </a></p><blockquote class="wp-embedded-content" data-secret="r3pEOLCQu5" style="display: none;"><a href="https://podberimuzyku.ru/member-access/">Вход для подписчиков</a></blockquote><iframe class="wp-embedded-content" sandbox="allow-scripts" security="restricted" title="«Вход для подписчиков» — PODBERIMUZYKU.RU" src="./Как стать подписчиком_ » PODBERIMUZYKU.RU_files/saved_resource.html" data-secret="r3pEOLCQu5" width="600" height="200" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe>
-        
-    <p></p>
-
-    <p><b>2.</b> Используйте ваш email как логин</p>
-
-    <p><b>3.</b> Пароль вы получите после оплаты</p>
+						.pm-input {
+						    width: 100%;
+						}
+						.pm-select {
+						    width: 100%;
+						}						
+						.pm-card-title {
+						    margin: 0 0 7px;
+						    color: #414141;
+						    font-size: 22px;
+						    line-height: 32px;
+						    font-weight: 800;
+						}
+						.pm-card-description {
+						    margin: 0;
+						    color: #585858;
+						    font-size: 16px;
+						    line-height: 1.55;
+						}
+						.pm-label {
+						    display: block;
+						    margin-bottom: 8px;
+						    color: var(--pm-black);
+						    font-size: 16px;
+						    font-weight: 700;
+						}																
+					</style>		
+				@include('subscription.partials.checkout-form')
+    </div>
 </div>
-
-<script>
-
-// Проверка email
-function isValidEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-// Проверка имени
-function isValidName(text) {
-    return /^[a-zA-Zа-яА-ЯёЁ\s\-]+$/.test(text);
-}
-
-// Показ инструкции
-function showAccessInfo() {
-    document.getElementById('access-info').style.display = 'block';
-}
-
-// Основная логика формы
-document.getElementById('donateForm').addEventListener('submit', function (e) {
-
-    let email = document.getElementById('email').value.trim();
-    let firstName = document.getElementById('first_name').value.trim();
-    let lastName = document.getElementById('last_name').value.trim();
-
-    // Email
-    if (!isValidEmail(email)) {
-        alert('Введите корректный email (пример: name@mail.ru)');
-        e.preventDefault();
-        return;
-    }
-
-    // Имя
-    if (!isValidName(firstName) || firstName.length < 2) {
-        alert('Введите корректное имя (только буквы, минимум 2 символа)');
-        e.preventDefault();
-        return;
-    }
-
-    // Фамилия
-    if (!isValidName(lastName) || lastName.length < 2) {
-        alert('Введите корректную фамилию');
-        e.preventDefault();
-        return;
-    }
-
-    // Формируем имя для MBT
-    let finalName = firstName + ' ' + lastName[0];
-    document.getElementById('name').value = finalName;
-
-    // 📌 ПОКАЗЫВАЕМ ИНСТРУКЦИЮ ВХОДА
-    showAccessInfo();
-
-});
-
-</script>
-		</div>
-	</div>
 
 	<div class="wpb_raw_code wpb_raw_html wpb_content_element">
 		<div class="wpb_wrapper">
@@ -701,7 +625,7 @@ document.getElementById('donateForm').addEventListener('submit', function (e) {
 
 
 
-<!-- mfn_hook_content_after -->
+<!-- mfn_hook_content_after --><!-- mfn_hook_content_after -->
 
 
 	<footer id="Footer" class="clearfix mfn-footer " role="contentinfo">
@@ -761,6 +685,8 @@ info@podberimuzyku.ru</p></div></aside></div></div><div class="column mobile-one
 					</div>
 				</div>
 			</div>
+
+		
 		
 	</footer>
 
@@ -769,6 +695,15 @@ info@podberimuzyku.ru</p></div></aside></div></div><div class="column mobile-one
 </div>
 
 <div id="body_overlay"></div>
+
+
+
+
+
+<div id="body_overlay"></div>
+
+
+
 
 
 <!-- mfn_hook_bottom --><!-- mfn_hook_bottom -->
@@ -782,11 +717,16 @@ info@podberimuzyku.ru</p></div></aside></div></div><div class="column mobile-one
 			window.RS_MODULES.moduleWaiting = window.RS_MODULES.moduleWaiting || {};
 			window.RS_MODULES.type = 'compiled';
 		</script>
-
-<script type="speculationrules">
+		      <div hidden="" class="dzsap-feed--dzsap-configs">{"player-cue-default":{"skin_ap":"skin-wave","settings_extrahtml_in_player":"","enable_embed_button":"off","preview_on_hover":"off","loop":"off","preload_method":"metadata","cue_method":"on","playfrom":"off","default_volume":"default","menu_right_enable_info_btn":"off","menu_right_enable_multishare":"off","settings_exclude_from_list":"off","player_navigation":"default","footer_btn_playlist":"off","color_ui":"#fcb53f","color_ui_alternate":"#000000","color_text":"","colorhighlight":"111111","design_wave_color_bg":"","design_wave_color_progress":"","design_animateplaypause":"default","enable_footer_close_button":"off","disable_scrubbar":"off","disable_volume":"default","skinwave_dynamicwaves":"off","skinwave_wave_mode":"canvas","skinwave_wave_mode_canvas_reflection_size":"0.25","skinwave_wave_mode_canvas_waves_number":"","skinwave_wave_mode_canvas_waves_padding":"","skinwave_wave_mode_canvas_normalize":"","skinwave_enablespectrum":"off","skinwave_timer_static":"off","skinwave_enablereflect":"on","skinwave_comments_enable":"off","skinwave_mode":"normal","skinwave_wave_mode_canvas_mode":"normal","button_aspect":"default","extra_classes_player":"","settings_extrahtml_after_artist":"","js_settings_extrahtml_in_float_right_from_config":"","js_settings_extrahtml_in_bottom_controls_from_config":"","settings_extrahtml_after_playpause_from_config":"","settings_extrahtml_after_con_controls_from_config":"","config_extra_css":""}}</div><script type="speculationrules">
 {"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/betheme-child/*","/wp-content/themes/betheme/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
 </script>
-
+    <script>
+        function coolTagCloudToggle( element ) {
+            var parent = element.closest('.cool-tag-cloud');
+            parent.querySelector('.cool-tag-cloud-inner').classList.toggle('cool-tag-cloud-active');
+            parent.querySelector( '.cool-tag-cloud-load-more').classList.toggle('cool-tag-cloud-active');
+        }
+    </script>
     <style>
 #subscriber-popup p {
     margin: 15px 0;
@@ -937,7 +877,16 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <script type="text/javascript" src="/cms-site/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="/cms-site/wp-content/plugins/revslider/sr6/assets/js/rbtools.min.js?ver=6.7.38" defer="" id="tp-tools-js"></script>
+<script type="text/javascript" src="/cms-site/wp-content/plugins/revslider/sr6/assets/js/rs6.min.js?ver=6.7.38" defer="" id="revmin-js"></script>
 <script type="text/javascript" src="/cms-site/wp-content/plugins/mistape/assets/js/modernizr.custom.js?ver=1.3.9" id="modernizr-js"></script>
+<script type="text/javascript" id="mistape-front-js-extra">
+/* <![CDATA[ */
+var decoMistape = {"ajaxurl":"https://podberimuzyku.ru/wp-admin/admin-ajax.php"};
+//# sourceURL=mistape-front-js-extra
+/* ]]> */
+</script>
+<script type="text/javascript" src="/cms-site/wp-content/plugins/mistape/assets/js/mistape-front.js?ver=1775420804" id="mistape-front-js"></script>
 <script type="text/javascript" src="/cms-site/wp-content/themes/betheme-child/js/custom_overlay_script.js" id="custom-overlay-script-js"></script>
 <script type="text/javascript" src="/cms-site/wp-content/themes/betheme-child/assets/js/site-protection.js?ver=1.0" id="site-protection-js"></script>
 <script type="text/javascript" src="/cms-site/wp-includes/js/jquery/ui/core.min.js?ver=1.13.3" id="jquery-ui-core-js"></script>
@@ -957,6 +906,8 @@ var mfn = {"ajax":"https://podberimuzyku.ru/wp-admin/admin-ajax.php","mobileInit
 <script type="text/javascript" src="/cms-site/wp-content/themes/betheme/js/scripts.js?ver=28.1.12" id="mfn-scripts-js"></script>
 <script type="text/javascript" src="/cms-site/wp-content/themes/betheme/js/accessibility.js?ver=28.1.12" id="mfn-accessibility-js"></script>
 <script type="text/javascript" src="//code.jivosite.com/widget/DaJfRsVrnb?ver=1.3.6.1" id="jivosite_widget_code-js"></script>
+<script type="text/javascript" src="/cms-site/wp-content/plugins/js_composer/assets/js/dist/js_composer_front.min.js?ver=8.6.1" id="wpb_composer_front_js-js"></script>
+<script defer="" async="" type="text/javascript" src="/cms-site/wp-content/plugins/dzs-zoomsounds/inc/js/shortcodes/init-all-players-on-interval.js?ver=6.90" id="dzsap-init-all-players-on-interval-js"></script>
 <script id="wp-emoji-settings" type="application/json">
 {"baseUrl":"https://s.w.org/images/core/emoji/17.0.2/72x72/","ext":".png","svgUrl":"https://s.w.org/images/core/emoji/17.0.2/svg/","svgExt":".svg","source":{"concatemoji":"/cms-site/wp-includes/js/wp-emoji-release.min.js?ver=6.9.9"}}
 </script>
@@ -967,10 +918,43 @@ var e="script#wp-emoji-settings",t=document.querySelector(e);if(!(t instanceof H
 //# sourceURL=https://podberimuzyku.ru/wp-includes/js/wp-emoji-loader.min.js
 /* ]]> */
 </script>
+<script></script><div id="mistape_dialog" data-mode="comment" data-dry-run="0">
+			           <div class="dialog__overlay"></div><div class="dialog__content"><div id="mistape_confirm_dialog" class="mistape_dialog_screen">
+					<div class="dialog-wrap">
+						<div class="dialog-wrap-top">
+							<h2>Сообщить об опечатке</h2>
+							 <div class="mistape_dialog_block">
+								<h3>Текст, который будет отправлен нашим редакторам:</h3>
+								<div id="mistape_reported_text"></div>
+							 </div>
+							 </div>
+						<div class="dialog-wrap-bottom"><div class="mistape_dialog_block comment">
+				        <h3><label for="mistape_comment">Ваш комментарий (необязательно):</label></h3>
+				        <textarea id="mistape_comment" cols="60" rows="3" maxlength="1000"></textarea>
+			         </div><div class="pos-relative">
+						</div>
+					</div>
+			    </div>
+			    <div class="mistape_dialog_block">
+					<a class="mistape_action" data-action="send" data-id="26854" role="button">Отправить</a>
+					<a class="mistape_action" data-dialog-close="" role="button" style="display:none">Отмена</a>
+				</div>
+				<div class="mistape-letter-front letter-part">
+				    <div class="front-left"></div>
+				    <div class="front-right"></div>
+				    <div class="front-bottom"></div>
+				</div>
+				<div class="mistape-letter-back letter-part">
+					<div class="mistape-letter-back-top"></div>
+				</div>
+				<div class="mistape-letter-top letter-part"></div>
+			</div></div></div>
+
+
+
 
 
 
 <script type="text/javascript" async="" src="https://top-fwz1.mail.ru/js/dyn-goal-config.js?ids=2918720"></script><div id="jivo-iframe-container" style="opacity: 0; visibility: hidden; width: 0px; height: 0px; overflow: hidden;"><iframe src="" role="presentation" allow="autoplay" title="Jivochat" name="jivo_container" id="jivo_container" frameborder="no"></iframe></div><jdiv><jdiv class="globalClass__BuyKt global__ZHI4f __light__aCgBv __blue__Bbs2m jv-copyright jv-windows jv-opera jv-chrome jv-desktop" style="--jv-font-family: 'Arial', system-ui, -apple-system, 'Arial', sans-serif;"><jdiv translate="no" class="notranslate" style="animation-duration: 300ms; animation-timing-function: cubic-bezier(0.39, 0.24, 0.21, 0.99); animation-delay: 0s; animation-iteration-count: 1; animation-direction: normal; animation-fill-mode: both; animation-play-state: running; animation-name: Label_CLOSE_WIDGET__ez1up; display: block; z-index: 2147483646; position: fixed;"><jdiv id="jvLabelWrap" translate="no" class="container__JEgDE __bottom__EtkyZ __isShow__dxQ4y notranslate" style="--jv-label-font-size: 14px; --jv-label-font-style: normal; --jv-label-text-color: #ffffff; --jv-label-background: linear-gradient(95deg, #3F51B5 20%, #424867 80%); --jv-label-background-corner: #424867; max-width: calc(-80px + 100vw); bottom: 0px; right: 40px;"><jdiv class="hoverArea__ajkc4"><jdiv class="menu__gAApX __bottom__rN9gM"></jdiv></jdiv><jdiv class="text__eZW1p contentTransitionWrap__ww7jU __bottom__NCW4L">Напишите нам, мы онлайн!</jdiv><jdiv class="container__dFyuf"><jdiv class="logo__AJwc_"><jdiv class="icon__jojtw __isBillRu__DLR9V" style="background-image: url(&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2225.688%22%20height%3D%2218%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M7.155%205.93H6.134a.4.4%200%2000-.287.128.378.378%200%2000-.123.268v7.448a.377.377%200%2000.123.28.389.389%200%2000.287.12h1.021a.382.382%200%2000.274-.12.353.353%200%2000.131-.28V6.33a.375.375%200%2000-.131-.268.353.353%200%2000-.274-.132zm9.313.02h-.824a.557.557%200%2000-.57.228l-2.353%205.04h-.041l-2.242-5.04a.379.379%200%2000-.369-.228H8.958a.356.356%200%2000-.328.14.289.289%200%2000.021.32l3.648%207.748a.376.376%200%2000.369.208h.111a.373.373%200%2000.348-.208l3.648-7.748a.288.288%200%2000.021-.32.368.368%200%2000-.328-.14zm4.935-.188a4.312%204.312%200%2000-4.3%204.276%204.212%204.212%200%20001.254%203.044%204.11%204.11%200%20003.038%201.284%204.069%204.069%200%20003.025-1.284%204.181%204.181%200%20001.262-3.044%204.313%204.313%200%2000-4.279-4.276zm1.783%206.156a2.379%202.379%200%2001-1.783.756%202.4%202.4%200%2001-1.8-.744%202.623%202.623%200%2001-.725-1.888%202.529%202.529%200%2001.725-1.84%202.427%202.427%200%20011.8-.736%202.368%202.368%200%20011.783.736%202.525%202.525%200%2001.725%201.84%202.669%202.669%200%2001-.725%201.876zM3.322%205.93H.416a.392.392%200%2000-.275.128.373.373%200%2000-.131.272v1a.386.386%200%2000.131.28.4.4%200%2000.275.12h1.475v7.17a1.331%201.331%200%2001-1.18%201.312H.416a.4.4%200%2000-.287.12.371.371%200%2000-.123.28v1a.415.415%200%2000.111.28.394.394%200%2000.295.12h.143a3.13%203.13%200%20003.152-2.9.848.848%200%2000.017-.188V6.33a.377.377%200%2000-.123-.28.365.365%200%2000-.279-.12z%22%20fill-rule%3D%22evenodd%22%2F%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%2318c139%22%20d%3D%22M.03-.006c-.254%204.676%203.681%205.34%203.681%205.34C3.515.214.03-.006.03-.006z%22%20fill-rule%3D%22evenodd%22%2F%3E%0A%3C%2Fsvg%3E&quot;);"></jdiv></jdiv><jdiv class="tooltipWrapper__xoLx2"><jdiv class="tooltip__gEf51"><a href="https://www.jivo.ru/i_sa/?utm_source=podberimuzyku.ru&amp;utm_medium=link&amp;utm_content=label_tooltip&amp;utm_campaign=from_widget" rel="nofollow noopener noreferrer" target="_blank" class="link__FSixq">Бизнес-мессенджер <jdiv class="icon__jojtw __isBillRu__DLR9V" style="background-image: url(&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2225.688%22%20height%3D%2218%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M7.155%205.93H6.134a.4.4%200%2000-.287.128.378.378%200%2000-.123.268v7.448a.377.377%200%2000.123.28.389.389%200%2000.287.12h1.021a.382.382%200%2000.274-.12.353.353%200%2000.131-.28V6.33a.375.375%200%2000-.131-.268.353.353%200%2000-.274-.132zm9.313.02h-.824a.557.557%200%2000-.57.228l-2.353%205.04h-.041l-2.242-5.04a.379.379%200%2000-.369-.228H8.958a.356.356%200%2000-.328.14.289.289%200%2000.021.32l3.648%207.748a.376.376%200%2000.369.208h.111a.373.373%200%2000.348-.208l3.648-7.748a.288.288%200%2000.021-.32.368.368%200%2000-.328-.14zm4.935-.188a4.312%204.312%200%2000-4.3%204.276%204.212%204.212%200%20001.254%203.044%204.11%204.11%200%20003.038%201.284%204.069%204.069%200%20003.025-1.284%204.181%204.181%200%20001.262-3.044%204.313%204.313%200%2000-4.279-4.276zm1.783%206.156a2.379%202.379%200%2001-1.783.756%202.4%202.4%200%2001-1.8-.744%202.623%202.623%200%2001-.725-1.888%202.529%202.529%200%2001.725-1.84%202.427%202.427%200%20011.8-.736%202.368%202.368%200%20011.783.736%202.525%202.525%200%2001.725%201.84%202.669%202.669%200%2001-.725%201.876zM3.322%205.93H.416a.392.392%200%2000-.275.128.373.373%200%2000-.131.272v1a.386.386%200%2000.131.28.4.4%200%2000.275.12h1.475v7.17a1.331%201.331%200%2001-1.18%201.312H.416a.4.4%200%2000-.287.12.371.371%200%2000-.123.28v1a.415.415%200%2000.111.28.394.394%200%2000.295.12h.143a3.13%203.13%200%20003.152-2.9.848.848%200%2000.017-.188V6.33a.377.377%200%2000-.123-.28.365.365%200%2000-.279-.12z%22%20fill-rule%3D%22evenodd%22%2F%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%2318c139%22%20d%3D%22M.03-.006c-.254%204.676%203.681%205.34%203.681%205.34C3.515.214.03-.006.03-.006z%22%20fill-rule%3D%22evenodd%22%2F%3E%0A%3C%2Fsvg%3E&quot;);"></jdiv></a></jdiv></jdiv></jdiv><jdiv class="leaf__wTjVP"><jdiv class="leaf__Mp5l1 _bottom__aCBPM"><jdiv class="cssLeaf__e19Rf" style="background-image: url(&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2240%22%20viewBox%3D%220%200%2032%2040%22%3E%0A%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20fill%3D%22%23424867%22%20d%3D%22M0%200h9.02L32%2033.196V40H0z%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20fill%3D%22%2318c139%22%20d%3D%22M9%200c3.581.05%2023%205.426%2023%2033.08v.03C18.922%2030.751%209%2019.311%209%205.554V0z%22%2F%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A&quot;);"></jdiv></jdiv></jdiv></jdiv></jdiv><jdiv id="jivo-player" class="player__ehTK9"><audio preload="auto" id="jivo-sound-agent_message"><source src="https://code.jivo.ru/sounds/agent_message.mp3" type="audio/mpeg"><source src="https://code.jivo.ru/sounds/agent_message.ogg" type="audio/ogg; codecs=vorbis"><source src="https://code.jivo.ru/sounds/agent_message.wav" type="audio/wav"></audio><audio preload="auto" id="jivo-sound-notification"><source src="https://code.jivo.ru/sounds/notification.mp3" type="audio/mpeg"><source src="https://code.jivo.ru/sounds/notification.ogg" type="audio/ogg; codecs=vorbis"><source src="https://code.jivo.ru/sounds/notification.wav" type="audio/wav"></audio><audio preload="auto" id="jivo-sound-outgoing_message"><source src="https://code.jivo.ru/sounds/outgoing_message.mp3" type="audio/mpeg"><source src="https://code.jivo.ru/sounds/outgoing_message.ogg" type="audio/ogg; codecs=vorbis"><source src="https://code.jivo.ru/sounds/outgoing_message.wav" type="audio/wav"></audio></jdiv><jdiv id="jcont" translate="no" class="notranslate" style="animation-duration: 300ms; animation-timing-function: cubic-bezier(0.39, 0.24, 0.21, 0.99); animation-delay: 0s; animation-iteration-count: 1; animation-direction: normal; animation-fill-mode: both; animation-play-state: running; animation-name: WidgetContainer_CLOSE_WIDGET__CqugA; --jright: 30px; --jheight: 496px; display: block; position: fixed; --jlabelwidth: 300px; --jlabelright: 40px;"><jdiv dir="ltr" id="jivo_action" class="wrap__N68N6"><jdiv id="jivo_close_button" class="closeButton__eRzXk"><jdiv class="closeIcon__swSgS" style="background-image: url(&quot;data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2228%22%20height%3D%2228%22%20viewBox%3D%220%200%2028%2028%22%3E%0A%20%20%20%20%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%20transform%3D%22translate(2%202)%22%3E%0A%20%20%20%20%20%20%20%20%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2212%22%20fill%3D%22%23FFF%22%20opacity%3D%221%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%2212.75%22%20stroke%3D%22%23222D38%22%20stroke-width%3D%221.5%22%20opacity%3D%221%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Cg%20fill%3D%22%23222D38%22%20opacity%3D%221%22%20transform%3D%22translate(6%206)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Crect%20width%3D%221.611%22%20height%3D%2213.9%22%20x%3D%225.435%22%20y%3D%22-.941%22%20rx%3D%22.806%22%20transform%3D%22rotate(45%206.24%206.01)%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Crect%20width%3D%221.611%22%20height%3D%2213.9%22%20x%3D%225.435%22%20y%3D%22-.941%22%20rx%3D%22.806%22%20transform%3D%22scale(-1%201)%20rotate(45%200%20-9.058)%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A&quot;);"></jdiv></jdiv></jdiv></jdiv><jdiv class="jv-pseudo-height"></jdiv><jdiv class="jv-mouse-track"></jdiv></jdiv></jdiv>
-
 </body>
 </html>
