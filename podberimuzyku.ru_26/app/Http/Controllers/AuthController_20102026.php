@@ -25,8 +25,8 @@ class AuthController extends Controller
     /**
      * Отправка одноразового кода.
      *
-     * Вход разрешён только существующим пользователям
-     * с активной подпиской.
+     * Вход разрешён существующим пользователям
+     * независимо от срока действия подписки.
      */
     public function sendCode(Request $request)
     {
@@ -37,9 +37,7 @@ class AuthController extends Controller
         $email = mb_strtolower(trim($validated['email']));
 
         /*
-         * ==========================================================
          * 1. Ищем пользователя в users.
-         * ==========================================================
          */
         $user = User::whereRaw('LOWER(email) = ?', [$email])
             ->first();
@@ -53,25 +51,7 @@ class AuthController extends Controller
         }
 
         /*
-         * ==========================================================
-         * 2. Проверяем активную подписку.
-         * ==========================================================
-         */
-        if (
-            !$user->subscription_expires_at ||
-            $user->subscription_expires_at->isPast()
-        ) {
-            return back()
-                ->withInput()
-                ->withErrors([
-                    'email' => 'Активная подписка не найдена.',
-                ]);
-        }
-
-        /*
-         * ==========================================================
-         * 3. Не позволяем запрашивать новый код слишком часто.
-         * ==========================================================
+         * 2. Ограничиваем частоту отправки кода.
          */
         $lastSentAt = session('login_otp_sent_at');
 
@@ -84,16 +64,12 @@ class AuthController extends Controller
         }
 
         /*
-         * ==========================================================
-         * 4. Генерируем 6-значный код.
-         * ==========================================================
+         * 3. Генерируем 6-значный код.
          */
         $code = (string) random_int(100000, 999999);
 
         /*
-         * ==========================================================
-         * 5. Сохраняем данные OTP в сессии.
-         * ==========================================================
+         * 4. Сохраняем данные OTP в сессии.
          */
         session([
             'login_otp_user_id' => $user->id,
@@ -105,9 +81,7 @@ class AuthController extends Controller
         ]);
 
         /*
-         * ==========================================================
-         * 6. Отправляем письмо.
-         * ==========================================================
+         * 5. Отправляем письмо.
          */
         Mail::raw(
             "Здравствуйте, {$user->name}!\n\n"
@@ -288,6 +262,7 @@ class AuthController extends Controller
             now()->timestamp - $authenticatedAt >= 86400
         ) {
             Auth::logout();
+
             request()->session()->invalidate();
             request()->session()->regenerateToken();
 
@@ -316,4 +291,3 @@ class AuthController extends Controller
         return redirect()->route('lk.login');
     }
 }
-
