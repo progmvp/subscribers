@@ -223,27 +223,20 @@
                 </div>
 
                 {{-- Временный тест оплаты. Существующий маршрут сохранён. --}}
+
                 <div class="payment-test-card">
                     <div class="payment-test-copy">
                         <div class="payment-test-icon">↗</div>
                         <div>
-                            <h3>Тест новой оплаты</h3>
+                            <h3>Продление подписки</h3>
                             <p>
-                                Временная кнопка для проверки платёжного процесса.
+                                Выберите тариф и перейдите к оплате.
                             </p>
                         </div>
                     </div>
 
-                    <form method="POST" action="{{ route('subscription.payment') }}">
-                        @csrf
-                        <input type="hidden" name="plan_id" value="1">
-
-                        <button class="primary-button" type="submit">
-                            Тест оплаты
-                            <span aria-hidden="true">→</span>
-                        </button>
-                    </form>
-                </div>
+                    @include('subscription.partials.renewal-form')
+                </div>                
             </section>
 
             <footer class="dashboard-footer">
