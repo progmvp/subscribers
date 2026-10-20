@@ -1,4 +1,4 @@
-{{-- Форма продления подписки в личном кабинете --}}
+{{-- Г”Г®Г°Г¬Г  ГЇГ°Г®Г¤Г«ГҐГ­ГЁГї ГЇГ®Г¤ГЇГЁГ±ГЄГЁ Гў Г«ГЁГ·Г­Г®Г¬ ГЄГ ГЎГЁГ­ГҐГІГҐ --}}
 
 @if ($errors->any())
     <div class="pm-errors">
@@ -15,7 +15,7 @@
 
     <div class="pm-field">
         <label class="pm-label" for="lk-renewal-plan">
-            Тариф подписки
+            Г’Г Г°ГЁГґ ГЇГ®Г¤ГЇГЁГ±ГЄГЁ
         </label>
 
         <select
@@ -24,7 +24,7 @@
             name="plan_id"
             required
         >
-            <option value="">Выберите тариф</option>
+            <option value="">Г‚Г»ГЎГҐГ°ГЁГІГҐ ГІГ Г°ГЁГґ</option>
 
             @foreach ($plans as $plan)
                 @if ($plan->code !== 'test' && $plan->is_active)
@@ -32,9 +32,9 @@
                         value="{{ $plan->id }}"
                         @selected((string) old('plan_id') === (string) $plan->id)
                     >
-                        {{ $plan->name }} —
+                        {{ $plan->name }} вЂ”
                         {{ number_format((float) $plan->price, 0, ',', ' ') }} ? /
-                        {{ $plan->duration_days }} дн.
+                        {{ $plan->duration_days }} Г¤Г­.
                     </option>
                 @endif
             @endforeach
@@ -42,7 +42,7 @@
     </div>
 
     <button class="pm-button" type="submit">
-        <span>Перейти к оплате</span>
+        <span>ГЏГҐГ°ГҐГ©ГІГЁ ГЄ Г®ГЇГ«Г ГІГҐ</span>
         <span>></span>
     </button>
 </form>
