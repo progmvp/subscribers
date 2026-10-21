@@ -10,21 +10,22 @@ use RuntimeException;
 class SubscrSubscriptionService
 {
     /**
-     * Активирует успешный платёж и создаёт новый период подписки.
+     * Активирует успешный платёж.
+     *
+     * subscriptions содержит одну текущую подписку на пользователя.
+     * История оплат хранится в subscr_payments.
      *
      * Логика:
-     * - первая покупка начинается с момента активации;
-     * - при действующей подписке новый период начинается точно
-     *   с текущего subscription_expires_at;
-     * - разрешены только переходы вверх/продление;
+     * - первая покупка создаёт строку subscriptions;
+     * - при действующей подписке новый период начинается
+     *   точно с текущего subscription_expires_at;
+     * - при завершённой подписке новый период начинается с момента активации;
+     * - разрешены только допустимые переходы тарифов;
      * - start после полного окончания подписки доступен только
      *   через 24 часа после точного момента expires_at;
-     * - каждый оплаченный период получает отдельную запись
-     *   в subscriptions;
-     * - subscr_payments.subscription_id связывается с созданной
-     *   записью subscriptions;
-     * - повторная активация уже обработанного платежа не создаёт
-     *   второй период.
+     * - повторная обработка уже связанного платежа ничего не изменяет;
+     * - при последующих оплатах используется существующая строка
+     *   subscriptions этого пользователя.
      */
     public function activate(SubscrPayment $payment): User
     {
@@ -59,7 +60,7 @@ class SubscrSubscriptionService
 
             /*
              * Если этот платёж уже связан с подпиской,
-             * повторно ничего не создаём.
+             * повторно ничего не изменяем.
              */
             if ($lockedPayment->subscription_id !== null) {
                 $existingUser = User::find($lockedPayment->user_id);
@@ -72,7 +73,7 @@ class SubscrSubscriptionService
 
                 return [
                     'user' => $existingUser->fresh(),
-                    'created' => false,
+                    'changed' => false,
                 ];
             }
 
@@ -81,7 +82,7 @@ class SubscrSubscriptionService
              *
              * Это важно при одновременной обработке двух успешных
              * платежей одного пользователя: второй процесс должен
-             * увидеть уже обновлённое subscription_expires_at.
+             * увидеть уже обновлённые даты подписки.
              */
             $user = User::query()
                 ->where('id', $lockedPayment->user_id)
@@ -118,7 +119,7 @@ class SubscrSubscriptionService
             );
 
             /*
-             * Определяем начало нового периода.
+             * Определяем начало нового оплаченного периода.
              *
              * Если текущая подписка ещё действует —
              * продолжаем её без потери времени.
@@ -137,35 +138,46 @@ class SubscrSubscriptionService
                 ->addDays($plan['duration_days']);
 
             /*
-             * Если существовал предыдущий период, который уже
-             * закончился, помечаем его как expired.
+             * Получаем существующую строку subscriptions.
              *
-             * При продлении действующей подписки старый период
-             * заканчивается ровно в момент начала нового.
+             * В таблице subscriptions.user_id имеет UNIQUE,
+             * поэтому для одного пользователя может существовать
+             * только одна строка.
              */
-            if ($currentExpiresAt !== null) {
+            $subscription = DB::table('subscriptions')
+                ->where('user_id', $user->id)
+                ->lockForUpdate()
+                ->first();
+
+            if ($subscription) {
+                /*
+                 * Обновляем текущую подписку.
+                 */
                 DB::table('subscriptions')
-                    ->where('user_id', $user->id)
-                    ->where('expires_at', '<=', $subscriptionStart)
-                    ->where('status', 'active')
+                    ->where('id', $subscription->id)
                     ->update([
-                        'status' => 'expired',
+                        'plan_id' => $plan['id'],
+                        'status' => 'active',
+                        'started_at' => $subscriptionStart,
+                        'expires_at' => $subscriptionExpires,
                         'updated_at' => $now,
                     ]);
-            }
 
-            /*
-             * Создаём отдельную запись истории подписки.
-             */
-            $subscriptionId = DB::table('subscriptions')->insertGetId([
-                'user_id' => $user->id,
-                'plan_id' => $plan['id'],
-                'status' => 'active',
-                'started_at' => $subscriptionStart,
-                'expires_at' => $subscriptionExpires,
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
+                $subscriptionId = (int) $subscription->id;
+            } else {
+                /*
+                 * Первая подписка пользователя.
+                 */
+                $subscriptionId = (int) DB::table('subscriptions')->insertGetId([
+                    'user_id' => $user->id,
+                    'plan_id' => $plan['id'],
+                    'status' => 'active',
+                    'started_at' => $subscriptionStart,
+                    'expires_at' => $subscriptionExpires,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
 
             /*
              * Обновляем текущее состояние пользователя.
@@ -177,7 +189,8 @@ class SubscrSubscriptionService
             ]);
 
             /*
-             * Связываем платёж с конкретным периодом подписки.
+             * Связываем платёж с единственной строкой
+             * subscriptions этого пользователя.
              */
             $lockedPayment->update([
                 'subscription_id' => $subscriptionId,
@@ -185,18 +198,15 @@ class SubscrSubscriptionService
 
             return [
                 'user' => $user->fresh(),
-                'created' => true,
+                'changed' => true,
             ];
         });
 
         /*
          * WordPress обновляем только после успешного завершения
          * транзакции Laravel.
-         *
-         * В случае ошибки WP данные Laravel уже остаются
-         * консистентными, а сама активация не откатывается.
          */
-        if ($result['created']) {
+        if ($result['changed']) {
             app(SubscrWordPressService::class)->updateSubscription(
                 $result['user']->email,
                 'active'
