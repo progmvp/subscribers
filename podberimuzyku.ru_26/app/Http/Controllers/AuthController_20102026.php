@@ -277,7 +277,6 @@ class AuthController extends Controller
 
         $plans = DB::table('plans')
             ->where('is_active', 1)
-            ->whereIn('code', ['start', 'base', 'full'])
             ->orderBy('id')
             ->get();
 
