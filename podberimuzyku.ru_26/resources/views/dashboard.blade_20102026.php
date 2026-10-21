@@ -236,6 +236,15 @@
                     </div>
 
                     @include('subscription.partials.renewal-form')
+
+
+                </div>
+                    <div class="pm-conditions">
+                        <h2>Что такое «MBT»?</h2>
+                        <p class="pm-conditions-text">
+                            <strong>MBT</strong> — это MonoBit, внутренняя цифровая единица доступа к функциям сервиса. (<strong>1 MBT = 1 ₽</strong>)
+                        </p>
+                    </div>
                 </div>                
             </section>
 
