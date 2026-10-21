@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -273,9 +274,18 @@ class AuthController extends Controller
                 ]);
         }
 
+
+        $plans = DB::table('plans')
+            ->where('is_active', 1)
+            ->whereIn('code', ['start', 'base', 'full'])
+            ->orderBy('id')
+            ->get();
+
         return view('dashboard', [
             'user' => $user,
+            'plans' => $plans,
         ]);
+
     }
 
     /**
