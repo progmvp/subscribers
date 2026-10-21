@@ -27,7 +27,8 @@ class SubscriptionController extends Controller
     {
         $plans = DB::table('plans')
             ->where('is_active', 1)
-            ->whereIn('code', ['start', 'base', 'full'])
+            //->whereIn('code', ['start', 'base', 'full'])
+            ->whereIn('code', ['test', 'start', 'base', 'full'])
             ->orderBy('id')
             ->get();
 
@@ -67,7 +68,8 @@ class SubscriptionController extends Controller
                 Rule::exists('plans', 'id')->where(function ($query) {
                     $query
                         ->where('is_active', 1)
-                        ->whereIn('code', ['start', 'base', 'full']);
+                        //->whereIn('code', ['start', 'base', 'full']);
+                        ->whereIn('code', ['test', 'start', 'base', 'full']);
                 }),
             ],
         ]);
@@ -79,7 +81,8 @@ class SubscriptionController extends Controller
         $plan = DB::table('plans')
             ->where('id', $planId)
             ->where('is_active', 1)
-            ->whereIn('code', ['start', 'base', 'full'])
+            //->whereIn('code', ['start', 'base', 'full'])
+            ->whereIn('code', ['test', 'start', 'base', 'full'])
             ->first();
 
         if (!$plan) {
