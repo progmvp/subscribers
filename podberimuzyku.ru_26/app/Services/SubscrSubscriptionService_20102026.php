@@ -12,20 +12,8 @@ class SubscrSubscriptionService
     /**
      * Активирует успешный платёж.
      *
-     * subscriptions содержит одну текущую подписку на пользователя.
-     * История оплат хранится в subscr_payments.
-     *
-     * Логика:
-     * - первая покупка создаёт строку subscriptions;
-     * - при действующей подписке новый период начинается
-     *   точно с текущего subscription_expires_at;
-     * - при завершённой подписке новый период начинается с момента активации;
-     * - разрешены только допустимые переходы тарифов;
-     * - start после полного окончания подписки доступен только
-     *   через 24 часа после точного момента expires_at;
-     * - повторная обработка уже связанного платежа ничего не изменяет;
-     * - при последующих оплатах используется существующая строка
-     *   subscriptions этого пользователя.
+     * Для одного пользователя используется одна строка subscriptions.
+     * История платежей хранится в subscr_payments.
      */
     public function activate(SubscrPayment $payment): User
     {
@@ -36,11 +24,6 @@ class SubscrSubscriptionService
         }
 
         $result = DB::transaction(function () use ($payment) {
-            /*
-             * Блокируем платёж на время транзакции.
-             * Это защищает от двойной обработки одного и того же
-             * успешного платежа при параллельных запросах.
-             */
             $lockedPayment = SubscrPayment::query()
                 ->where('id', $payment->id)
                 ->lockForUpdate()
@@ -59,15 +42,17 @@ class SubscrSubscriptionService
             }
 
             /*
-             * Если этот платёж уже связан с подпиской,
-             * повторно ничего не изменяем.
+             * Повторная активация уже обработанного платежа
+             * не должна менять подписку.
              */
             if ($lockedPayment->subscription_id !== null) {
                 $existingUser = User::find($lockedPayment->user_id);
 
                 if (!$existingUser) {
                     throw new RuntimeException(
-                        'Пользователь с ID ' . $lockedPayment->user_id . ' не найден.'
+                        'Пользователь с ID '
+                        . $lockedPayment->user_id
+                        . ' не найден.'
                     );
                 }
 
@@ -77,13 +62,6 @@ class SubscrSubscriptionService
                 ];
             }
 
-            /*
-             * Блокируем пользователя.
-             *
-             * Это важно при одновременной обработке двух успешных
-             * платежей одного пользователя: второй процесс должен
-             * увидеть уже обновлённые даты подписки.
-             */
             $user = User::query()
                 ->where('id', $lockedPayment->user_id)
                 ->lockForUpdate()
@@ -91,11 +69,15 @@ class SubscrSubscriptionService
 
             if (!$user) {
                 throw new RuntimeException(
-                    'Пользователь с ID ' . $lockedPayment->user_id . ' не найден.'
+                    'Пользователь с ID '
+                    . $lockedPayment->user_id
+                    . ' не найден.'
                 );
             }
 
-            $plan = $this->resolvePlan((int) $lockedPayment->plan_id);
+            $plan = $this->resolvePlan(
+                (int) $lockedPayment->plan_id
+            );
 
             $now = now();
 
@@ -106,10 +88,6 @@ class SubscrSubscriptionService
                 $currentExpiresAt !== null
                 && $currentExpiresAt->greaterThan($now);
 
-            /*
-             * Проверяем допустимость выбранного тарифа
-             * относительно текущей подписки.
-             */
             $this->validatePlanTransition(
                 $currentPlanCode,
                 $plan['code'],
@@ -119,13 +97,10 @@ class SubscrSubscriptionService
             );
 
             /*
-             * Определяем начало нового оплаченного периода.
+             * При активной подписке новый период начинается
+             * точно в момент окончания текущего периода.
              *
-             * Если текущая подписка ещё действует —
-             * продолжаем её без потери времени.
-             *
-             * Если подписка закончилась —
-             * начинаем новый период с момента активации.
+             * При завершённой подписке — с момента активации.
              */
             if ($hasActiveSubscription) {
                 $subscriptionStart = $currentExpiresAt->copy();
@@ -133,26 +108,19 @@ class SubscrSubscriptionService
                 $subscriptionStart = $now->copy();
             }
 
+            /*
+             * Срок определяется только plans.duration_days.
+             */
             $subscriptionExpires = $subscriptionStart
                 ->copy()
                 ->addDays($plan['duration_days']);
 
-            /*
-             * Получаем существующую строку subscriptions.
-             *
-             * В таблице subscriptions.user_id имеет UNIQUE,
-             * поэтому для одного пользователя может существовать
-             * только одна строка.
-             */
             $subscription = DB::table('subscriptions')
                 ->where('user_id', $user->id)
                 ->lockForUpdate()
                 ->first();
 
             if ($subscription) {
-                /*
-                 * Обновляем текущую подписку.
-                 */
                 DB::table('subscriptions')
                     ->where('id', $subscription->id)
                     ->update([
@@ -165,33 +133,24 @@ class SubscrSubscriptionService
 
                 $subscriptionId = (int) $subscription->id;
             } else {
-                /*
-                 * Первая подписка пользователя.
-                 */
-                $subscriptionId = (int) DB::table('subscriptions')->insertGetId([
-                    'user_id' => $user->id,
-                    'plan_id' => $plan['id'],
-                    'status' => 'active',
-                    'started_at' => $subscriptionStart,
-                    'expires_at' => $subscriptionExpires,
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]);
+                $subscriptionId = (int) DB::table('subscriptions')
+                    ->insertGetId([
+                        'user_id' => $user->id,
+                        'plan_id' => $plan['id'],
+                        'status' => 'active',
+                        'started_at' => $subscriptionStart,
+                        'expires_at' => $subscriptionExpires,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ]);
             }
 
-            /*
-             * Обновляем текущее состояние пользователя.
-             */
             $user->update([
                 'subscription_plan' => $plan['code'],
                 'subscription_started_at' => $subscriptionStart,
                 'subscription_expires_at' => $subscriptionExpires,
             ]);
 
-            /*
-             * Связываем платёж с единственной строкой
-             * subscriptions этого пользователя.
-             */
             $lockedPayment->update([
                 'subscription_id' => $subscriptionId,
             ]);
@@ -203,8 +162,7 @@ class SubscrSubscriptionService
         });
 
         /*
-         * WordPress обновляем только после успешного завершения
-         * транзакции Laravel.
+         * Синхронизация WordPress выполняется после транзакции Laravel.
          */
         if ($result['changed']) {
             app(SubscrWordPressService::class)->updateSubscription(
@@ -217,8 +175,7 @@ class SubscrSubscriptionService
     }
 
     /**
-     * Проверяет допустимость перехода с текущего тарифа
-     * на новый тариф.
+     * Проверяет допустимость перехода между тарифами.
      */
     private function validatePlanTransition(
         ?string $currentPlanCode,
@@ -235,26 +192,21 @@ class SubscrSubscriptionService
         }
 
         /*
-         * Пока подписка действует, разрешены:
-         *
-         * start -> start/base/full
-         * base  -> base/full
-         * full  -> full
+         * Тестовый тариф — исключение:
+         * на него разрешён переход при продлении из ЛК,
+         * в том числе с тарифа более высокого уровня.
          */
+        if ($newPlanCode === 'test') {
+            return;
+        }
+
         if ($hasActiveSubscription) {
             $allowedTransitions = [
                 'start' => ['start', 'base', 'full'],
                 'base' => ['base', 'full'],
                 'full' => ['full'],
+                'test' => ['test', 'start', 'base', 'full'],
             ];
-
-            /*
-             * Технический test не участвует в обычных правилах
-             * продления.
-             */
-            if ($currentPlanCode === 'test') {
-                return;
-            }
 
             if (
                 !isset($allowedTransitions[$currentPlanCode])
@@ -265,8 +217,10 @@ class SubscrSubscriptionService
                 )
             ) {
                 throw new RuntimeException(
-                    'Переход с тарифа "' . $currentPlanCode
-                    . '" на тариф "' . $newPlanCode
+                    'Переход с тарифа "'
+                    . $currentPlanCode
+                    . '" на тариф "'
+                    . $newPlanCode
                     . '" запрещён.'
                 );
             }
@@ -275,12 +229,9 @@ class SubscrSubscriptionService
         }
 
         /*
-         * Подписка уже закончилась.
-         *
-         * start можно купить только через 24 часа после
-         * точного момента окончания предыдущей подписки.
-         *
-         * base/full доступны сразу.
+         * После окончания подписки тариф start доступен
+         * только через 24 часа после точного времени окончания.
+         * Тарифы base и full доступны сразу.
          */
         if (
             $newPlanCode === 'start'
@@ -298,8 +249,6 @@ class SubscrSubscriptionService
 
     /**
      * Получает активный тариф из таблицы plans.
-     *
-     * Длительность берётся только из plans.duration_days.
      */
     private function resolvePlan(int $planId): array
     {
@@ -310,13 +259,20 @@ class SubscrSubscriptionService
 
         if (!$plan) {
             throw new RuntimeException(
-                'Активный тариф с plan_id ' . $planId . ' не найден.'
+                'Активный тариф с plan_id '
+                . $planId
+                . ' не найден.'
             );
         }
 
-        if ($plan->duration_days === null) {
+        if (
+            $plan->duration_days === null
+            || (int) $plan->duration_days < 1
+        ) {
             throw new RuntimeException(
-                'У тарифа "' . $plan->name . '" не задан duration_days.'
+                'У тарифа "'
+                . $plan->name
+                . '" не задан корректный duration_days.'
             );
         }
 
