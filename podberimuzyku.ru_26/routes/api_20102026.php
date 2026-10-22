@@ -1,6 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PaymentPageController;
-
-Route::get('/payment-page', [PaymentPageController::class, 'show']);
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Старый маршрут /payment-page удалён.
+| Новые маршруты подписок находятся в routes/web.php.
+|
+*/
