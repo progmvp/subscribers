@@ -45,9 +45,6 @@
 ## subscribers/podberimuzyku.ru_26/app/Models/
 
 
-### Payment.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Models/Payment_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/Payment_20102026.php)
-
 ### SubscrCheckou.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Models/SubscrCheckout_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrCheckout_20102026.php)
 
@@ -126,20 +123,6 @@
 
 ### member-subscribers.blade.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/resources/views/member-subscribers.blade_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/member-subscribers.blade_20102026.php)
-
-### pay.blade.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/resources/views/pay.blade_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/pay.blade_20102026.php)
-
----
-
-## subscribers/podberimuzyku.ru_26/resources/views/admin/
-
-
-### login.blade.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/resources/views/admin/login.blade_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/admin/login.blade_20102026.php)
-
-### payments.blade.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/resources/views/admin/payments.blade_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/admin/payments.blade_20102026.php)
 
 ---
 
