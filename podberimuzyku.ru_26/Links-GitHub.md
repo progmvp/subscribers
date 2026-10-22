@@ -17,27 +17,13 @@
 ### SubscrWpTokenCommand.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTokenCommand_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTokenCommand_20102026.php)
 
----
-
-## subscribers/podberimuzyku.ru_26/app/Http/Controllers/Api/
-
-
-### PaymentPageController.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/Api/PaymentPageController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/Api/PaymentPageController_20102026.php)
 
 ---
 
 ## subscribers/podberimuzyku.ru_26/app/Http/Controllers/
 
-
-### AdminPaymentController.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/AdminPaymentController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/AdminPaymentController_20102026.php) 
-
 ### AuthController.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Http/Controllers/AuthController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/AuthController_20102026.php)
-
-### DonateController.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/DonateController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/DonateController_20102026.php)
 
 ### SubscribeWPApiTokenController.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_20102026.php)
