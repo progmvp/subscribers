@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SubscrPayment;
+use App\Models\SubscrCheckout;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -10,11 +11,23 @@ use Illuminate\Support\Str;
 
 class SubscriptionPaymentController extends Controller
 {
+    /**
+     * Срок действия checkout — 20 минут.
+     */
+    private const CHECKOUT_TTL_MINUTES = 20;
+
+    /**
+     * Создание платежа для продления подписки из ЛК.
+     *
+     * До подтверждения YooMoney создаётся только subscr_checkout.
+     * Записи subscr_payments и активация подписки выполняются
+     * после подтверждения платежа.
+     */
     public function create(Request $request)
     {
-        $user = Auth::user();
+        $authenticatedUser = Auth::user();
 
-        if (!$user) {
+        if (!$authenticatedUser) {
             abort(403);
         }
 
@@ -22,55 +35,209 @@ class SubscriptionPaymentController extends Controller
             'plan_id' => ['required', 'integer'],
         ]);
 
-        /*
-         * Получаем тариф из таблицы plans.
-         */
-        $plan = DB::table('plans')
-            ->where('id', $validated['plan_id'])
-            ->where('is_active', 1)
-            ->first();
+        $planId = (int) $validated['plan_id'];
 
-        if (!$plan) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Тариф не найден или неактивен.',
-            ], 400);
+        $result = DB::transaction(function () use (
+            $authenticatedUser,
+            $planId
+        ) {
+            $now = now();
+
+            /*
+             * Блокируем пользователя, чтобы проверить актуальную
+             * подписку перед созданием нового платежа.
+             */
+            $user = User::query()
+                ->where('id', $authenticatedUser->id)
+                ->lockForUpdate()
+                ->first();
+
+            if (!$user) {
+                abort(403);
+            }
+
+            /*
+             * Получаем выбранный активный тариф.
+             */
+            $plan = DB::table('plans')
+                ->where('id', $planId)
+                ->where('is_active', 1)
+                ->first();
+
+            if (!$plan) {
+                return [
+                    'error' => 'Выбранный тариф не найден или неактивен.',
+                ];
+            }
+
+            if (
+                $plan->duration_days === null
+                || (int) $plan->duration_days < 1
+            ) {
+                return [
+                    'error' => 'У выбранного тарифа не задан срок действия.',
+                ];
+            }
+
+            /*
+             * Проверяем правила перехода до оплаты.
+             */
+            $currentPlanCode = $user->subscription_plan;
+            $currentExpiresAt = $user->subscription_expires_at;
+
+            $hasActiveSubscription =
+                $currentExpiresAt !== null
+                && $currentExpiresAt->greaterThan($now);
+
+            if (
+                $currentPlanCode !== null
+                && $currentExpiresAt !== null
+                && $hasActiveSubscription
+            ) {
+                /*
+                 * Тестовый тариф разрешён как исключение:
+                 * на него можно перейти при продлении из ЛК.
+                 */
+                $allowedTransitions = [
+                    'start' => ['start', 'base', 'full'],
+                    'base' => ['base', 'full'],
+                    'full' => ['full'],
+                    'test' => ['test', 'start', 'base', 'full'],
+                ];
+
+                $isTestRenewal = $plan->code === 'test';
+
+                if (
+                    !$isTestRenewal
+                    && (
+                        !isset($allowedTransitions[$currentPlanCode])
+                        || !in_array(
+                            $plan->code,
+                            $allowedTransitions[$currentPlanCode],
+                            true
+                        )
+                    )
+                ) {
+                    return [
+                        'error' =>
+                            'Переход с тарифа «'
+                            . $currentPlanCode
+                            . '» на тариф «'
+                            . $plan->code
+                            . '» запрещён правилами подписки.',
+                    ];
+                }
+            }
+
+            /*
+             * Если подписка закончилась, тариф start доступен
+             * только через 24 часа после точного времени окончания.
+             * Тарифы base и full доступны сразу.
+             */
+            if (
+                $currentExpiresAt !== null
+                && !$hasActiveSubscription
+                && $plan->code === 'start'
+            ) {
+                $startAvailableAt = $currentExpiresAt
+                    ->copy()
+                    ->addHours(24);
+
+                if ($startAvailableAt->greaterThan($now)) {
+                    return [
+                        'error' =>
+                            'Тариф «Стартовый» будет доступен после '
+                            . $startAvailableAt->format('d.m.Y H:i:s')
+                            . '.',
+                    ];
+                }
+            }
+
+            /*
+             * Удаляем просроченные checkout.
+             */
+            SubscrCheckout::query()
+                ->where('expires_at', '<=', $now)
+                ->delete();
+
+            /*
+             * Если для этого пользователя уже существует
+             * действующий checkout на тот же тариф, используем его.
+             *
+             * Если тариф другой — удаляем прежний checkout
+             * и создаём новый с новым payment_id.
+             */
+            $existingCheckout = SubscrCheckout::query()
+                ->where('email', $user->email)
+                ->where('status', 'pending')
+                ->where('expires_at', '>', $now)
+                ->lockForUpdate()
+                ->latest('id')
+                ->first();
+
+            if ($existingCheckout) {
+                if ((int) $existingCheckout->plan_id === (int) $plan->id) {
+                    return [
+                        'checkout' => $existingCheckout,
+                        'plan' => $plan,
+                    ];
+                }
+
+                SubscrCheckout::query()
+                    ->where('email', $user->email)
+                    ->where('status', 'pending')
+                    ->delete();
+            }
+
+            /*
+             * Создаём checkout — без создания subscr_payments.
+             */
+            $checkout = SubscrCheckout::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'plan_id' => $plan->id,
+                'payment_id' => (string) Str::uuid(),
+                'amount' => $plan->price,
+                'status' => 'pending',
+                'expires_at' => $now
+                    ->copy()
+                    ->addMinutes(self::CHECKOUT_TTL_MINUTES),
+            ]);
+
+            return [
+                'checkout' => $checkout,
+                'plan' => $plan,
+            ];
+        });
+
+        /*
+         * Если проверка правил не пройдена, платёж не создаём.
+         */
+        if (isset($result['error'])) {
+            return back()->withErrors([
+                'plan_id' => $result['error'],
+            ]);
         }
 
-        /*
-         * Уникальный ID операции.
-         */
-        $paymentId = (string) Str::uuid();
-
-        /*
-         * Создаём запись в новой таблице subscr_payments.
-         */
-        $payment = SubscrPayment::create([
-            'user_id' => $user->id,
-            'subscription_id' => null,
-            'plan_id' => $plan->id,
-            'payment_id' => $paymentId,
-            'amount' => $plan->price,
-            'status' => 'pending',
-            'paid_at' => null,
-        ]);
-
-        /*
-         * YooMoney.
-         */
         $yoomoneyReceiver = env('YOOMONEY_RECEIVER');
 
         if (!$yoomoneyReceiver) {
             abort(500, 'YOOMONEY_RECEIVER is not configured');
         }
 
+        $checkout = $result['checkout'];
+        $plan = $result['plan'];
+
+        /*
+         * Используем существующую страницу оплаты YooMoney.
+         */
         return response()->view('payment.yoomoney', [
-            'name' => $user->name,
-            'email' => $user->email,
+            'name' => $checkout->name,
+            'email' => $checkout->email,
             'plan' => $plan->code,
             'planName' => $plan->name,
-            'amount' => $plan->price,
-            'paymentId' => $payment->payment_id,
+            'amount' => $checkout->amount,
+            'paymentId' => $checkout->payment_id,
             'yoomoneyReceiver' => $yoomoneyReceiver,
         ]);
     }
