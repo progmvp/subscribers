@@ -7,7 +7,9 @@ use App\Models\SubscrPayment;
 use App\Models\User;
 use App\Services\SubscrSubscriptionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use RuntimeException;
 
@@ -15,16 +17,6 @@ class YooMoneyNotificationController extends Controller
 {
     /**
      * Обработка уведомления YooMoney.
-     *
-     * Используется только новая цепочка:
-     *
-     * subscr_checkout
-     * -> subscr_payments
-     * -> subscriptions
-     * -> users
-     * -> WordPress
-     *
-     * Перехода в старую таблицу payments нет.
      */
     public function handle(Request $request)
     {
@@ -36,25 +28,14 @@ class YooMoneyNotificationController extends Controller
             'hostname' => gethostname(),
         ]);
 
-        /*
-         * Проверяем секретное слово.
-         */
         $secret = env('YOOMONEY_NOTIFICATION_SECRET');
 
         if (!$secret) {
-            \Log::error(
-                'YOOMONEY NOTIFICATION REJECTED: SECRET MISSING'
-            );
+            \Log::error('YOOMONEY NOTIFICATION REJECTED: SECRET MISSING');
 
-            return response(
-                'Notification secret is not configured',
-                500
-            );
+            return response('Notification secret is not configured', 500);
         }
 
-        /*
-         * Проверяем подпись YooMoney.
-         */
         $receivedSign = $data['sign'] ?? '';
 
         if (!$receivedSign) {
@@ -79,16 +60,11 @@ class YooMoneyNotificationController extends Controller
         );
 
         if (!hash_equals($calculatedSign, $receivedSign)) {
-            \Log::warning(
-                'YOOMONEY NOTIFICATION REJECTED: INVALID SIGN'
-            );
+            \Log::warning('YOOMONEY NOTIFICATION REJECTED: INVALID SIGN');
 
             return response('Invalid sign', 403);
         }
 
-        /*
-         * Получаем данные подтверждённого платежа.
-         */
         $paymentId = $data['label'] ?? null;
         $amount = $data['withdraw_amount'] ?? null;
         $operationId = $data['operation_id'] ?? null;
@@ -99,29 +75,23 @@ class YooMoneyNotificationController extends Controller
             || $amount === ''
             || !$operationId
         ) {
-            \Log::warning(
-                'YOOMONEY NOTIFICATION REJECTED: PAYMENT DATA MISSING',
-                [
-                    'payment_id' => $paymentId,
-                    'operation_id' => $operationId,
-                ]
-            );
+            \Log::warning('YOOMONEY NOTIFICATION REJECTED: PAYMENT DATA MISSING', [
+                'payment_id' => $paymentId,
+                'operation_id' => $operationId,
+            ]);
 
             return response('Missing payment data', 400);
         }
 
-        /*
-         * Ищем checkout новой системы.
-         */
         $checkout = SubscrCheckout::query()
             ->where('payment_id', $paymentId)
             ->first();
 
         if (!$checkout) {
             /*
-             * YooMoney может повторно прислать уведомление
-             * после успешной обработки, когда checkout уже удалён.
-             * В таком случае проверяем историю новой системы.
+             * Checkout уже мог быть удалён после успешной оплаты.
+             * Проверяем платёж новой системы и при необходимости
+             * повторяем отправку Telegram-уведомления.
              */
             $existingPayment = SubscrPayment::query()
                 ->where('payment_id', $paymentId)
@@ -132,6 +102,15 @@ class YooMoneyNotificationController extends Controller
                 && $existingPayment->status === 'success'
                 && $existingPayment->subscription_id !== null
             ) {
+                $sent = $this->sendTelegramNotification(
+                    $existingPayment,
+                    (string) $operationId
+                );
+
+                if (!$sent) {
+                    return response('Telegram notification failed', 500);
+                }
+
                 \Log::info(
                     'YOOMONEY DUPLICATE NOTIFICATION: ALREADY PROCESSED',
                     [
@@ -143,21 +122,13 @@ class YooMoneyNotificationController extends Controller
                 return response('OK', 200);
             }
 
-            \Log::error(
-                'YOOMONEY CHECKOUT NOT FOUND',
-                [
-                    'payment_id' => $paymentId,
-                    'operation_id' => $operationId,
-                    'existing_subscr_payment_id' =>
-                        $existingPayment?->id,
-                    'existing_subscr_payment_status' =>
-                        $existingPayment?->status,
-                ]
-            );
+            \Log::error('YOOMONEY CHECKOUT NOT FOUND', [
+                'payment_id' => $paymentId,
+                'operation_id' => $operationId,
+                'existing_subscr_payment_id' => $existingPayment?->id,
+                'existing_subscr_payment_status' => $existingPayment?->status,
+            ]);
 
-            /*
-             * Не обращаемся к старой таблице payments.
-             */
             return response('Checkout not found', 404);
         }
 
@@ -169,53 +140,41 @@ class YooMoneyNotificationController extends Controller
     }
 
     /**
-     * Обрабатывает оплату по subscr_checkout.
+     * Обработка оплаты по subscr_checkout.
      */
     private function processCheckout(
         SubscrCheckout $checkout,
         $amount,
         string $operationId
     ) {
-        /*
-         * Сначала проверяем сумму.
-         */
         if ((float) $amount !== (float) $checkout->amount) {
-            \Log::error(
-                'YOOMONEY CHECKOUT INVALID AMOUNT',
-                [
-                    'checkout_id' => $checkout->id,
-                    'payment_id' => $checkout->payment_id,
-                    'expected_amount' => $checkout->amount,
-                    'received_amount' => $amount,
-                    'operation_id' => $operationId,
-                ]
-            );
+            \Log::error('YOOMONEY CHECKOUT INVALID AMOUNT', [
+                'checkout_id' => $checkout->id,
+                'payment_id' => $checkout->payment_id,
+                'expected_amount' => $checkout->amount,
+                'received_amount' => $amount,
+                'operation_id' => $operationId,
+            ]);
 
             return response('Invalid amount', 400);
         }
 
         if ($checkout->status !== 'pending') {
-            \Log::warning(
-                'YOOMONEY CHECKOUT INVALID STATUS',
-                [
-                    'checkout_id' => $checkout->id,
-                    'payment_id' => $checkout->payment_id,
-                    'status' => $checkout->status,
-                ]
-            );
+            \Log::warning('YOOMONEY CHECKOUT INVALID STATUS', [
+                'checkout_id' => $checkout->id,
+                'payment_id' => $checkout->payment_id,
+                'status' => $checkout->status,
+            ]);
 
             return response('Checkout is not pending', 400);
         }
 
         if ($checkout->expires_at->lessThanOrEqualTo(now())) {
-            \Log::warning(
-                'YOOMONEY CHECKOUT EXPIRED',
-                [
-                    'checkout_id' => $checkout->id,
-                    'payment_id' => $checkout->payment_id,
-                    'expires_at' => $checkout->expires_at,
-                ]
-            );
+            \Log::warning('YOOMONEY CHECKOUT EXPIRED', [
+                'checkout_id' => $checkout->id,
+                'payment_id' => $checkout->payment_id,
+                'expires_at' => $checkout->expires_at,
+            ]);
 
             $checkout->delete();
 
@@ -228,18 +187,12 @@ class YooMoneyNotificationController extends Controller
                 $amount,
                 $operationId
             ) {
-                /*
-                 * Блокируем checkout от параллельной обработки.
-                 */
                 $lockedCheckout = SubscrCheckout::query()
                     ->where('id', $checkout->id)
                     ->lockForUpdate()
                     ->first();
 
                 if (!$lockedCheckout) {
-                    /*
-                     * Другой запрос мог уже обработать платёж.
-                     */
                     $existingPayment = SubscrPayment::query()
                         ->where('payment_id', $checkout->payment_id)
                         ->first();
@@ -269,28 +222,18 @@ class YooMoneyNotificationController extends Controller
 
                 $now = now();
 
-                if (
-                    $lockedCheckout->expires_at
-                        ->lessThanOrEqualTo($now)
-                ) {
+                if ($lockedCheckout->expires_at->lessThanOrEqualTo($now)) {
                     throw new RuntimeException(
                         'Срок действия checkout истёк.'
                     );
                 }
 
-                if (
-                    (float) $amount
-                    !== (float) $lockedCheckout->amount
-                ) {
+                if ((float) $amount !== (float) $lockedCheckout->amount) {
                     throw new RuntimeException(
                         'Сумма уведомления не совпадает с checkout.'
                     );
                 }
 
-                /*
-                 * Проверяем, не был ли этот payment_id
-                 * уже использован в истории платежей.
-                 */
                 $existingPayment = SubscrPayment::query()
                     ->where('payment_id', $lockedCheckout->payment_id)
                     ->lockForUpdate()
@@ -317,9 +260,6 @@ class YooMoneyNotificationController extends Controller
                     );
                 }
 
-                /*
-                 * Проверяем выбранный тариф.
-                 */
                 $plan = DB::table('plans')
                     ->where('id', $lockedCheckout->plan_id)
                     ->where('is_active', 1)
@@ -340,24 +280,12 @@ class YooMoneyNotificationController extends Controller
                     );
                 }
 
-                /*
-                 * Ищем пользователя по e-mail.
-                 *
-                 * При продлении это существующий пользователь.
-                 * Его активная подписка сама по себе не является
-                 * причиной отклонять платёж: переход проверяет
-                 * SubscrSubscriptionService.
-                 */
                 $user = User::query()
                     ->where('email', $lockedCheckout->email)
                     ->lockForUpdate()
                     ->first();
 
                 if (!$user) {
-                    /*
-                     * Нового пользователя создаём только после
-                     * подтверждённого уведомления YooMoney.
-                     */
                     $user = User::create([
                         'name' => $lockedCheckout->name,
                         'email' => $lockedCheckout->email,
@@ -365,10 +293,6 @@ class YooMoneyNotificationController extends Controller
                     ]);
                 }
 
-                /*
-                 * Создаём запись об успешной оплате.
-                 * Транзакция откатится, если активация не пройдёт.
-                 */
                 $subscriptionPayment = SubscrPayment::create([
                     'user_id' => $user->id,
                     'subscription_id' => null,
@@ -379,18 +303,10 @@ class YooMoneyNotificationController extends Controller
                     'paid_at' => $now,
                 ]);
 
-                /*
-                 * Общая служба применяет правила перехода,
-                 * обновляет subscriptions и пользователя,
-                 * а затем синхронизирует WordPress.
-                 */
                 $activatedUser = app(
                     SubscrSubscriptionService::class
                 )->activate($subscriptionPayment);
 
-                /*
-                 * Удаляем checkout только после успешной активации.
-                 */
                 $lockedCheckout->delete();
 
                 return [
@@ -401,35 +317,179 @@ class YooMoneyNotificationController extends Controller
                 ];
             });
 
-            \Log::info(
-                'YOOMONEY CHECKOUT PROCESSED',
-                [
-                    'checkout_id' => $checkout->id,
-                    'payment_id' => $checkout->payment_id,
-                    'operation_id' => $operationId,
-                    'subscr_payment_id' => $result['payment_id'],
-                    'already_processed' => $result['already_processed'],
-                    'user_id' => $result['user']?->id,
-                    'email' => $result['user']?->email,
-                    'plan' => $result['user']?->subscription_plan,
-                    'subscription_expires_at' =>
-                        $result['user']?->subscription_expires_at,
-                ]
-            );
+            \Log::info('YOOMONEY CHECKOUT PROCESSED', [
+                'checkout_id' => $checkout->id,
+                'payment_id' => $checkout->payment_id,
+                'operation_id' => $operationId,
+                'subscr_payment_id' => $result['payment_id'],
+                'already_processed' => $result['already_processed'],
+                'user_id' => $result['user']?->id,
+                'email' => $result['user']?->email,
+                'plan' => $result['user']?->subscription_plan,
+                'subscription_expires_at' =>
+                    $result['user']?->subscription_expires_at,
+            ]);
+
+            /*
+             * Уведомление отправляется только после завершения
+             * транзакции и успешной активации подписки.
+             */
+            $subscriptionPayment = SubscrPayment::query()
+                ->find($result['payment_id']);
+
+            if (
+                !$subscriptionPayment
+                || !$this->sendTelegramNotification(
+                    $subscriptionPayment,
+                    $operationId
+                )
+            ) {
+                return response('Telegram notification failed', 500);
+            }
 
             return response('OK', 200);
         } catch (\Throwable $e) {
-            \Log::error(
-                'YOOMONEY CHECKOUT ACTIVATION FAILED',
-                [
-                    'checkout_id' => $checkout->id,
-                    'payment_id' => $checkout->payment_id,
-                    'operation_id' => $operationId,
-                    'error' => $e->getMessage(),
-                ]
-            );
+            \Log::error('YOOMONEY CHECKOUT ACTIVATION FAILED', [
+                'checkout_id' => $checkout->id,
+                'payment_id' => $checkout->payment_id,
+                'operation_id' => $operationId,
+                'error' => $e->getMessage(),
+            ]);
 
             return response('Subscription activation failed', 500);
+        }
+    }
+
+    /**
+     * Отправка уведомления в Telegram после успешной активации.
+     */
+    private function sendTelegramNotification(
+        SubscrPayment $payment,
+        string $operationId
+    ): bool {
+        $cacheKey = 'yoomoney_telegram_sent_' . sha1($payment->payment_id);
+
+        try {
+            /*
+             * Если уведомление об этом платеже уже отправлено,
+             * повторно сообщение не отправляем.
+             */
+            if (Cache::has($cacheKey)) {
+                return true;
+            }
+
+            $token = env('TELEGRAM_BOT_TOKEN');
+            $chatId = env('TELEGRAM_CHAT_ID');
+
+            if (!$token || !$chatId) {
+                \Log::error('Telegram notification failed: configuration missing', [
+                    'payment_id' => $payment->payment_id,
+                    'token_configured' => (bool) $token,
+                    'chat_id_configured' => (bool) $chatId,
+                ]);
+
+                return false;
+            }
+
+            if (
+                $payment->status !== 'success'
+                || $payment->subscription_id === null
+            ) {
+                \Log::error('Telegram notification skipped: payment not activated', [
+                    'payment_id' => $payment->payment_id,
+                    'status' => $payment->status,
+                    'subscription_id' => $payment->subscription_id,
+                ]);
+
+                return false;
+            }
+
+            $user = User::query()->find($payment->user_id);
+
+            $plan = DB::table('plans')
+                ->where('id', $payment->plan_id)
+                ->first();
+
+            if (!$user || !$plan) {
+                \Log::error('Telegram notification failed: user or plan not found', [
+                    'payment_id' => $payment->payment_id,
+                    'user_found' => (bool) $user,
+                    'plan_found' => (bool) $plan,
+                ]);
+
+                return false;
+            }
+
+            $planName = $plan->name
+                ?? $plan->code
+                ?? ('ID ' . $plan->id);
+
+            $planCode = $plan->code ?? 'не указан';
+
+            $paidAt = $payment->paid_at
+                ? \Illuminate\Support\Carbon::parse($payment->paid_at)
+                    ->format('d.m.Y H:i:s')
+                : 'не указана';
+
+            $expiresAt = $user->subscription_expires_at
+                ? \Illuminate\Support\Carbon::parse(
+                    $user->subscription_expires_at
+                )->format('d.m.Y H:i:s')
+                : 'не указана';
+
+            $message = "✅ Успешная оплата подписки\n\n"
+                . "👤 Имя: {$user->name}\n"
+                . "📧 E-mail: {$user->email}\n"
+                . "🆔 ID пользователя Laravel: {$user->id}\n\n"
+                . "📦 Тариф: {$planName} ({$planCode})\n"
+                . "💰 Сумма: {$payment->amount} MBT\n"
+                . "📅 Дата оплаты: {$paidAt}\n"
+                . "⏳ Подписка действует до: {$expiresAt}\n\n"
+                . "🧾 Payment ID: {$payment->payment_id}\n"
+                . "💳 YooMoney operation ID: {$operationId}\n"
+                . "📌 Статус: success";
+
+            $response = Http::asForm()
+                ->timeout(10)
+                ->post(
+                    'https://api.telegram.org/bot' . $token . '/sendMessage',
+                    [
+                        'chat_id' => $chatId,
+                        'text' => $message,
+                    ]
+                );
+
+            $responseData = $response->json();
+
+            if (
+                !$response->successful()
+                || !($responseData['ok'] ?? false)
+            ) {
+                \Log::error('Telegram notification failed', [
+                    'payment_id' => $payment->payment_id,
+                    'http_status' => $response->status(),
+                    'response' => $response->body(),
+                ]);
+
+                return false;
+            }
+
+            Cache::put($cacheKey, true, now()->addDays(30));
+
+            \Log::info('Telegram notification sent', [
+                'payment_id' => $payment->payment_id,
+                'telegram_message_id' =>
+                    $responseData['result']['message_id'] ?? null,
+            ]);
+
+            return true;
+        } catch (\Throwable $e) {
+            \Log::error('Telegram notification failed', [
+                'payment_id' => $payment->payment_id,
+                'error' => $e->getMessage(),
+            ]);
+
+            return false;
         }
     }
 }
