@@ -33,7 +33,7 @@
                         @selected((string) old('plan_id') === (string) $plan->id)
                     >
                         {{ $plan->name }} —
-                        {{ number_format((float) $plan->price, 0, ',', ' ') }} ? /
+                        {{ number_format((float) $plan->price, 0, ',', ' ') }} MBT /
                         {{ $plan->duration_days }} дн.
                     </option>
                 @endif
