@@ -12,7 +12,9 @@ use Illuminate\Support\Str;
 class SubscriptionPaymentController extends Controller
 {
     /**
-     * Срок действия checkout — 20 минут.
+     * Срок использования checkout для повторного открытия оплаты.
+     * Истечение срока не аннулирует заказ и не запрещает обработку
+     * уведомления YooMoney.
      */
     private const CHECKOUT_TTL_MINUTES = 20;
 
@@ -154,21 +156,19 @@ class SubscriptionPaymentController extends Controller
             }
 
             /*
-             * Удаляем просроченные checkout.
-             */
-            SubscrCheckout::query()
-                ->where('expires_at', '<=', $now)
-                ->delete();
-
-            /*
-             * Если для этого пользователя уже существует
-             * действующий checkout на тот же тариф, используем его.
+             * Ищем только неистёкший checkout для того же тарифа.
              *
-             * Если тариф другой — удаляем прежний checkout
-             * и создаём новый с новым payment_id.
+             * ВАЖНО:
+             * - просроченные checkout не удаляем;
+             * - checkout других тарифов не удаляем;
+             * - у каждого нового заказа свой payment_id.
+             *
+             * Если YooMoney задержит уведомление об уже выполненной
+             * оплате, контроллер уведомлений сможет найти старый заказ.
              */
             $existingCheckout = SubscrCheckout::query()
                 ->where('email', $user->email)
+                ->where('plan_id', $plan->id)
                 ->where('status', 'pending')
                 ->where('expires_at', '>', $now)
                 ->lockForUpdate()
@@ -176,21 +176,16 @@ class SubscriptionPaymentController extends Controller
                 ->first();
 
             if ($existingCheckout) {
-                if ((int) $existingCheckout->plan_id === (int) $plan->id) {
-                    return [
-                        'checkout' => $existingCheckout,
-                        'plan' => $plan,
-                    ];
-                }
-
-                SubscrCheckout::query()
-                    ->where('email', $user->email)
-                    ->where('status', 'pending')
-                    ->delete();
+                return [
+                    'checkout' => $existingCheckout,
+                    'plan' => $plan,
+                ];
             }
 
             /*
-             * Создаём checkout — без создания subscr_payments.
+             * Создаём новый checkout без создания subscr_payments.
+             * Старые pending-заказы сохраняются для обработки
+             * возможных уведомлений YooMoney.
              */
             $checkout = SubscrCheckout::create([
                 'name' => $user->name,
