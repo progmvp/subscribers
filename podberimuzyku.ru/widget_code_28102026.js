@@ -502,38 +502,52 @@
 
                 }
 
-
-                if (
-                    audio.currentTime >=
-                    state.fragment.end
-                ) {
-
-
-                    audio.pause();
+if (
+    audio.currentTime >=
+    state.fragment.end
+) {
 
 
-                    state.ended = true;
+    audio.pause();
 
 
-                    /*
-                     * При следующем Play
-                     * начинаем тот же фрагмент.
-                     */
+    /*
+     * Возвращаем визуальное состояние
+     * ZoomSounds в режим Play.
+     */
+    if (
+        typeof player.api_pause_media_visual === 'function'
+    ) {
 
-                    try {
+        player.api_pause_media_visual();
 
-                        audio.currentTime =
-                            state.fragment.start;
-
-                    } catch (e) {}
+    }
 
 
-                    console.log(
-                        '%c[DZSAP RELATED RANDOM] Превью завершено',
-                        'color: green; font-weight: bold;'
-                    );
+    state.ended = true;
 
-                }
+
+    /*
+     * При следующем Play
+     * начинаем тот же фрагмент.
+     */
+
+    try {
+
+        audio.currentTime =
+            state.fragment.start;
+
+    } catch (e) {}
+
+
+    console.log(
+        '%c[DZSAP RELATED RANDOM] Превью завершено',
+        'color: green; font-weight: bold;'
+    );
+
+}
+
+
 
             }
         );
