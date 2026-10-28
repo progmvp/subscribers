@@ -12,22 +12,20 @@ use Illuminate\Validation\Rule;
 class SubscriptionController extends Controller
 {
     /**
-     * Время жизни checkout.
+     * Срок действия checkout для повторного открытия оплаты.
      *
-     * Checkout действителен 20 минут.
+     * Истечение срока не удаляет заказ и не запрещает
+     * обработку позднего уведомления YooMoney.
      */
     private const CHECKOUT_TTL_MINUTES = 20;
 
     /**
-     * Публичная форма получения подписки.
-     *
-     * Тариф test намеренно не выводится.
+     * Публичная форма оформления подписки.
      */
     public function show()
     {
         $plans = DB::table('plans')
             ->where('is_active', 1)
-            //->whereIn('code', ['start', 'base', 'full'])
             ->whereIn('code', ['test', 'start', 'base', 'full'])
             ->orderBy('id')
             ->get();
@@ -38,12 +36,11 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Создание временного checkout для первой покупки.
+     * Создаёт checkout для публичной покупки.
      *
-     * ВАЖНО:
-     * - новый пользователь здесь НЕ создаётся;
-     * - запись в subscr_payments здесь НЕ создаётся;
-     * - до успешной оплаты используется только subscr_checkout.
+     * До подтверждения оплаты создаётся только subscr_checkout.
+     * Пользователь и платёж создаются в обработчике уведомления
+     * YooMoney после подтверждения успешной оплаты.
      */
     public function store(Request $request)
     {
@@ -54,22 +51,24 @@ class SubscriptionController extends Controller
                 'min:2',
                 'max:100',
             ],
-
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
             ],
-
             'plan_id' => [
                 'required',
                 'integer',
                 Rule::exists('plans', 'id')->where(function ($query) {
                     $query
                         ->where('is_active', 1)
-                        //->whereIn('code', ['start', 'base', 'full']);
-                        ->whereIn('code', ['test', 'start', 'base', 'full']);
+                        ->whereIn('code', [
+                            'test',
+                            'start',
+                            'base',
+                            'full',
+                        ]);
                 }),
             ],
         ]);
@@ -81,7 +80,6 @@ class SubscriptionController extends Controller
         $plan = DB::table('plans')
             ->where('id', $planId)
             ->where('is_active', 1)
-            //->whereIn('code', ['start', 'base', 'full'])
             ->whereIn('code', ['test', 'start', 'base', 'full'])
             ->first();
 
@@ -93,9 +91,17 @@ class SubscriptionController extends Controller
                 ]);
         }
 
-        /*
-         * Все действия с checkout выполняем в одной транзакции.
-         */
+        if (
+            $plan->duration_days === null
+            || (int) $plan->duration_days < 1
+        ) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'plan_id' => 'У выбранного тарифа не задан срок действия.',
+                ]);
+        }
+
         $result = DB::transaction(function () use (
             $name,
             $email,
@@ -104,21 +110,10 @@ class SubscriptionController extends Controller
             $now = now();
 
             /*
-             * Удаляем просроченные checkout.
+             * Находим существующего пользователя.
              *
-             * Это поддерживает правило:
-             * просроченный checkout автоматически становится недействительным
-             * и удаляется из таблицы.
-             */
-            SubscrCheckout::query()
-                ->where('expires_at', '<=', $now)
-                ->delete();
-
-            /*
-             * Проверяем существующего пользователя.
-             *
-             * Если пользователя ещё нет — это нормально.
-             * На этом этапе создавать его нельзя.
+             * Существующий аккаунт повторно не создаётся.
+             * Блокировка нужна для согласованной проверки подписки.
              */
             $user = User::query()
                 ->where('email', $email)
@@ -126,33 +121,56 @@ class SubscriptionController extends Controller
                 ->first();
 
             /*
-             * Если пользователь уже существует и подписка активна,
-             * новая первая покупка через публичную форму не создаётся.
+             * Проверяем допустимость выбранного тарифа,
+             * если у пользователя уже есть активная подписка.
              *
-             * Продление выполняется из ЛК.
+             * Тестовый тариф оставляем исключением.
              */
             if (
                 $user
+                && $user->subscription_plan !== null
                 && $user->subscription_expires_at !== null
                 && $user->subscription_expires_at->greaterThan($now)
             ) {
-                return [
-                    'type' => 'active_subscription',
-                    'user' => $user,
+                $allowedTransitions = [
+                    'start' => ['start', 'base', 'full'],
+                    'base' => ['base', 'full'],
+                    'full' => ['full'],
+                    'test' => ['test', 'start', 'base', 'full'],
                 ];
+
+                $isTestPlan = $plan->code === 'test';
+
+                if (
+                    !$isTestPlan
+                    && (
+                        !isset(
+                            $allowedTransitions[$user->subscription_plan]
+                        )
+                        || !in_array(
+                            $plan->code,
+                            $allowedTransitions[$user->subscription_plan],
+                            true
+                        )
+                    )
+                ) {
+                    return [
+                        'type' => 'transition_unavailable',
+                        'current_plan' => $user->subscription_plan,
+                        'selected_plan' => $plan->code,
+                    ];
+                }
             }
 
             /*
-             * Если пользователь существует, но подписка истекла,
-             * тариф start разрешён только через 24 часа после
-             * точного времени окончания.
-             *
-             * base/full после окончания доступны сразу.
+             * После окончания подписки тариф start доступен
+             * только через 24 часа после точного времени окончания.
+             * Тарифы base и full доступны сразу.
              */
             if (
                 $user
                 && $user->subscription_expires_at !== null
-                && $user->subscription_expires_at->isPast()
+                && $user->subscription_expires_at->lessThanOrEqualTo($now)
                 && $plan->code === 'start'
             ) {
                 $startAvailableAt = $user
@@ -169,14 +187,15 @@ class SubscriptionController extends Controller
             }
 
             /*
-             * Проверяем существующий действующий checkout
-             * для этого e-mail.
+             * Ищем только действующий checkout для этого e-mail
+             * и этого же тарифа.
              *
-             * Если тариф тот же — повторно используем checkout
-             * и тот же payment_id.
+             * Просроченные заказы и заказы с другими тарифами
+             * не удаляем: YooMoney может прислать позднее уведомление.
              */
             $existingCheckout = SubscrCheckout::query()
                 ->where('email', $email)
+                ->where('plan_id', $plan->id)
                 ->where('status', 'pending')
                 ->where('expires_at', '>', $now)
                 ->lockForUpdate()
@@ -184,43 +203,35 @@ class SubscriptionController extends Controller
                 ->first();
 
             if ($existingCheckout) {
-                if ((int) $existingCheckout->plan_id === (int) $plan->id) {
-                    return [
-                        'type' => 'checkout',
-                        'checkout' => $existingCheckout,
-                        'plan' => $plan,
-                    ];
-                }
-
-                /*
-                 * Тот же e-mail, но другой тариф.
-                 *
-                 * Старый checkout больше не должен использоваться.
-                 * Удаляем его и создаём новый payment_id.
-                 */
-                SubscrCheckout::query()
-                    ->where('email', $email)
-                    ->where('status', 'pending')
-                    ->delete();
+                return [
+                    'type' => 'checkout',
+                    'checkout' => $existingCheckout,
+                    'plan' => $plan,
+                ];
             }
 
             /*
-             * Новый checkout.
+             * Для существующего пользователя используем имя аккаунта,
+             * а не имя, случайно введённое в публичную форму.
+             */
+            $checkoutName = $user ? $user->name : $name;
+
+            /*
+             * Создаём новый checkout.
              *
-             * Здесь НЕ создаются:
-             * - users
-             * - subscr_payments
-             *
-             * Они появятся только после подтверждённой оплаты.
+             * Не удаляем старые заказы и не создаём здесь
+             * записи в users или subscr_payments.
              */
             $checkout = SubscrCheckout::create([
-                'name' => $name,
+                'name' => $checkoutName,
                 'email' => $email,
                 'plan_id' => $plan->id,
                 'payment_id' => (string) Str::uuid(),
                 'amount' => $plan->price,
                 'status' => 'pending',
-                'expires_at' => $now->copy()->addMinutes(self::CHECKOUT_TTL_MINUTES),
+                'expires_at' => $now
+                    ->copy()
+                    ->addMinutes(self::CHECKOUT_TTL_MINUTES),
             ]);
 
             return [
@@ -230,13 +241,16 @@ class SubscriptionController extends Controller
             ];
         });
 
-        if ($result['type'] === 'active_subscription') {
+        if ($result['type'] === 'transition_unavailable') {
             return back()
                 ->withInput()
                 ->withErrors([
-                    'email' =>
-                        'Указанный e-mail уже имеет активную подписку. '
-                        . 'Для продления используйте личный кабинет.',
+                    'plan_id' =>
+                        'Переход с тарифа «'
+                        . $result['current_plan']
+                        . '» на тариф «'
+                        . $result['selected_plan']
+                        . '» запрещён правилами подписки.',
                 ]);
         }
 
