@@ -46,5 +46,5 @@
 
 
 ### pmr-token.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-token_15092026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-token_15092026.php)
+[/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-token_28102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/pmr/pmr-token_28102026.php)
 
