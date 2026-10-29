@@ -50,3 +50,20 @@ add_action(
     'widgets_init',
     'pmr_register_login_widget'
 );
+
+/**
+ * DZSAP: общий скрипт случайных аудиофрагментов
+ * Подключение в футере сайта.
+ */
+function pmr_enqueue_dzsap_related_random() {
+
+    wp_enqueue_script(
+        'pmr-dzsap-related-random',
+        get_stylesheet_directory_uri() . '/js/dzsap-related-random.js',
+        array(),
+        '20261028',
+        true
+    );
+
+}
+add_action('wp_enqueue_scripts', 'pmr_enqueue_dzsap_related_random');
