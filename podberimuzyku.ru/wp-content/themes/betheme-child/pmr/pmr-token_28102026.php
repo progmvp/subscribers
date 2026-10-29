@@ -2,8 +2,8 @@
 /**
  * PMR Token Authentication
  *
- * Temporary test bridge:
- * token -> pmr-api WordPress session.
+ * Laravel subscription bridge:
+ * token -> existing technical WordPress user pmr-api session.
  *
  * @package Betheme Child
  */
@@ -46,7 +46,9 @@ function pmr_token_test_value() {
 }
 
 /**
- * Authenticate pmr-api using temporary token.
+ * Authenticate existing technical WordPress user pmr-api.
+ *
+ * The technical user is identified by login, not by a custom role.
  */
 function pmr_token_authenticate(WP_REST_Request $request) {
 
@@ -78,7 +80,7 @@ function pmr_token_authenticate(WP_REST_Request $request) {
     }
 
     /**
-     * Find technical WordPress user.
+     * Find the existing technical WordPress user.
      */
     $user = get_user_by(
         'login',
@@ -96,25 +98,10 @@ function pmr_token_authenticate(WP_REST_Request $request) {
     }
 
     /**
-     * Initial test:
-     * pmr-api must still have the temporary pmr_api role.
-     */
-    if (!in_array(
-        'pmr_api',
-        (array) $user->roles,
-        true
-    )) {
-        return new WP_Error(
-            'pmr_api_role_invalid',
-            'Technical user pmr-api does not have pmr_api role.',
-            [
-                'status' => 500,
-            ]
-        );
-    }
-
-    /**
      * Establish WordPress authentication.
+     *
+     * No custom pmr_api role is required.
+     * The existing pmr-api user may use the standard subscriber role.
      */
     wp_set_current_user(
         $user->ID
