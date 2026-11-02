@@ -1,6 +1,6 @@
 # Все файлы на GitHab актуальны на момент 28 октября 2026 года. На сервере находятся идентичные.
 
- (*в случае замены кода дата в названии будет изменятся на новую*) 
+ (*дата в названии будет изменятся на новую в случае замены кода в большом числе файлов или если создан новый*) 
 
 ---
 ---
@@ -22,6 +22,11 @@
 
 ### dzsap-related-random.js *(так файл называется на сервере)*
 [/podberimuzyku.ru/wp-content/themes/betheme-child/js/dzsap-related-random_28.10.2026.js](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/js/dzsap-related-random_28.10.2026.js)
+
+---
+
+### pmr-return-url.js *(так файл называется на сервере)*
+[(https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/js/dzsap-related-random_28.10.2026.js](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/js/pmr-return-url_02.11.2026.js)
 
 ---
 ---
