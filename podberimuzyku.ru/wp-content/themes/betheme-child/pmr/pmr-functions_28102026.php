@@ -67,3 +67,21 @@ function pmr_enqueue_dzsap_related_random() {
 
 }
 add_action('wp_enqueue_scripts', 'pmr_enqueue_dzsap_related_random');
+
+/**
+ * PMR: сохранение исходной страницы
+ * при переходе к оформлению подписки в Laravel.
+ */
+function pmr_enqueue_return_url() {
+
+    wp_enqueue_script(
+        'pmr-return-url',
+        get_stylesheet_directory_uri() . '/js/pmr-return-url.js',
+        array(),
+        '20261102',
+        true
+    );
+
+}
+
+add_action('wp_enqueue_scripts', 'pmr_enqueue_return_url');
