@@ -248,6 +248,34 @@
                 </div>                
             </section>
 
+            <section class="payment-section">
+                <div class="section-heading">
+                    <div>
+                        <div class="eyebrow">ВОЗВРАТ НА САЙТ</div>
+                        <h2>Продолжить работу с музыкой</h2>
+                        <p>
+                            После перехода сайт проверит вашу подписку
+                            и откроет сохранённую страницу.
+                        </p>
+                    </div>
+                </div>
+
+                @if ($errors->has('sso'))
+                    <div class="pm-errors">
+                        {{ $errors->first('sso') }}
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('pmr.sso.create') }}">
+                    @csrf
+
+                    <button class="pm-button" type="submit">
+                        <span>Перейти на сайт</span>
+                        <span>→</span>
+                    </button>
+                </form>
+            </section>
+
             <footer class="dashboard-footer">
                 <span>Подбери музыку</span>
                 <span>Личный кабинет подписчика</span>
