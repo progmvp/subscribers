@@ -8,9 +8,6 @@
 ## subscribers/podberimuzyku.ru_26/app/Console/Commands/
 
 
-### SubscrWordPressService.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Console/Commands/SubscrWordPressService_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Console/Commands/SubscrWordPressService_20102026.php)
-
 ### SubscrWpTestCommand.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTestCommand_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTestCommand_20102026.php)
 
