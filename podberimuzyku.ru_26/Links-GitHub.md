@@ -45,7 +45,7 @@
 ## subscribers/podberimuzyku.ru_26/app/Models/
 
 
-### SubscrCheckou.php *(так файл называется на сервере)*
+### SubscrCheckout.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Models/SubscrCheckout_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrCheckout_20102026.php)
 
 ### SubscrPayment.php *(так файл называется на сервере)*
