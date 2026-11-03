@@ -26,7 +26,7 @@
 ---
 
 ### pmr-return-url.js *(так файл называется на сервере)*
-[(https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/js/dzsap-related-random_28.10.2026.js](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/js/pmr-return-url_02.11.2026.js)
+[/podberimuzyku.ru/wp-content/themes/betheme-child/js/pmr-return-url_02.11.2026.js](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru/wp-content/themes/betheme-child/js/pmr-return-url_02.11.2026.js)
 
 ---
 ---
