@@ -83,6 +83,16 @@
 ---
 
 
+## subscribers/podberimuzyku.ru_26/config/
+
+
+### services.php *(так файл называется на сервере)*
+[/subscribers/podberimuzyku.ru_26/config/services_02.11.2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/config/services_02.11.2026.php)
+
+---
+---
+
+
 ## subscribers/podberimuzyku.ru_26/public
 
 ## subscribers/podberimuzyku.ru_26/public/css
