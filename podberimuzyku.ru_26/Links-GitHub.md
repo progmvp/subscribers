@@ -9,10 +9,10 @@
 
 
 ### SubscrWpTestCommand.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTestCommand_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTestCommand_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTestCommand_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTestCommand_04-11-2026.php)
 
 ### SubscrWpTokenCommand.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTokenCommand_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTokenCommand_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTokenCommand_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTokenCommand_04-11-2026.php)
 
 
 ---
