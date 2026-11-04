@@ -4,9 +4,8 @@
 
 ---
 ---
-
 ## subscribers/podberimuzyku.ru_26/app/Console/Commands/
-
+---
 
 ### SubscrWpTestCommand.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTestCommand_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTestCommand_04-11-2026.php)
@@ -14,10 +13,10 @@
 ### SubscrWpTokenCommand.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTokenCommand_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Console/Commands/SubscrWpTokenCommand_04-11-2026.php)
 
-
+---
+## subscribers/podberimuzyku.ru_26/app/Http/Controllers/
 ---
 
-## subscribers/podberimuzyku.ru_26/app/Http/Controllers/
 
 ### AuthController.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Http/Controllers/AuthController_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/AuthController_04-11-2026.php)
@@ -64,10 +63,7 @@
 ### AppServiceProvider.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Providers/AppServiceProvider_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Providers/AppServiceProvider_04-11-2026.php)
 
-
 ---
----
-
 
 ## subscribers/podberimuzyku.ru_26/app/Services/
 
@@ -84,41 +80,40 @@
 
 
 ## subscribers/podberimuzyku.ru_26/config/
-
+---
 
 ### services.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/config/services_02.11.2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/config/services_02.11.2026.php)
+[/subscribers/podberimuzyku.ru_26/config/services_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/config/services_04-11-2026.php)
 
 ---
 ---
 
-
-## subscribers/podberimuzyku.ru_26/public
 
 ## subscribers/podberimuzyku.ru_26/public/css
+---
 
 ### dashboard.css *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/public/css/dashboard_20102026.css](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/css/dashboard_20102026.css)
+[/subscribers/podberimuzyku.ru_26/public/css/dashboard_04-11-2026.css](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/css/dashboard_04-11-2026.css)
 
 ### pmr-laravel.css *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/public/css/pmr-laravel_20102026.css](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/css/pmr-laravel_20102026.css)
+[/subscribers/podberimuzyku.ru_26/public/css/pmr-laravel_04-11-2026.css](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/css/pmr-laravel_04-11-2026.css)
 
 ### subscription.css *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/public/css/subscription_20102026.css](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/css/subscription_20102026.css)
+[/subscribers/podberimuzyku.ru_26/public/css/subscription_04-11-2026.css](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/css/subscription_04-11-2026.css)
 
 ---
 
 ## subscribers/podberimuzyku.ru_26/public/js
 
 ### dashboard.js *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/public/js/dashboard_20102026.js](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/js/dashboard_20102026.js)
+[/subscribers/podberimuzyku.ru_26/public/js/dashboard_04-11-2026.js](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/js/dashboard_04-11-2026.js)
 
 ---
 
 ## subscribers/podberimuzyku.ru_26/public/lk
 
 ### index.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/public/lk/index_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/lk/index_20102026.php)
+[/subscribers/podberimuzyku.ru_26/public/lk/index_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/public/lk/index_04-11-2026.php)
 
 
 ---
