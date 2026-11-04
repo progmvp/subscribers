@@ -124,10 +124,10 @@
 
 
 ### dashboard.blade.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/resources/views/dashboard.blade_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/dashboard.blade_20102026.php)
+[/subscribers/podberimuzyku.ru_26/resources/views/dashboard.blade_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/dashboard.blade_04-11-2026.php)
 
 ### member-subscribers.blade.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/resources/views/member-subscribers.blade_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/member-subscribers.blade_20102026.php)
+[/subscribers/podberimuzyku.ru_26/resources/views/member-subscribers.blade_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/member-subscribers.blade_04-11-2026.php)
 
 ---
 
@@ -135,10 +135,10 @@
 
 
 ### login.blade.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/resources/views/auth/login.blade_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/auth/login.blade_20102026.php)
+[/subscribers/podberimuzyku.ru_26/resources/views/auth/login.blade_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/auth/login.blade_04-11-2026.php)
 
 ### login.blade.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/resources/views/auth/verify-code.blade_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/auth/verify-code.blade_20102026.php)
+[/subscribers/podberimuzyku.ru_26/resources/views/auth/verify-code.blade_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/resources/views/auth/verify-code.blade_04-11-2026.php)
 
 ---
 
