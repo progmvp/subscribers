@@ -46,16 +46,16 @@
 
 
 ### SubscrCheckout.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Models/SubscrCheckout_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrCheckout_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Models/SubscrCheckout_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrCheckout_04-11-2026.php)
 
 ### SubscrPayment.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Models/SubscrPayment_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrPayment_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Models/SubscrPayment_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrPayment_04-11-2026.php)
 
 ### SubscrWpApiToken.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Models/SubscrWpApiToken_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrWpApiToken_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Models/SubscrWpApiToken_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/SubscrWpApiToken_04-11-2026.php)
 
 ### User.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Models/User_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/User_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Models/User_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Models/User_04-11-2026.php)
 
 ---
 
