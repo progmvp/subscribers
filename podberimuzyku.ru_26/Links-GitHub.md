@@ -1,4 +1,4 @@
-# Все файлы на GitHab актуальны на момент 20 октября 2026 года. На сервере находятся идентичные.
+# Все файлы на GitHab актуальны на момент 4 ноября 2026 года. На сервере находятся идентичные.
 
  (*дата в названии будет изменятся на новую в случае замены кода в большом числе файлов или если создан новый*) 
 
@@ -20,10 +20,10 @@
 ## subscribers/podberimuzyku.ru_26/app/Http/Controllers/
 
 ### AuthController.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/AuthController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/AuthController_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/AuthController_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/AuthController_04-11-2026.php)
 
 ### PmrSsoController.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/PmrSsoController_02.11.2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/PmrSsoController_02.11.2026.php)
+[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/PmrSsoController_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/PmrSsoController_04-11-2026.php)
 
 ### SubscribeWPApiTokenController.php *(так файл называется на сервере)*
 [/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_20102026.php)
