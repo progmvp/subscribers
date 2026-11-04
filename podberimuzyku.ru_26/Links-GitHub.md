@@ -26,16 +26,16 @@
 [/subscribers/podberimuzyku.ru_26/app/Http/Controllers/PmrSsoController_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/PmrSsoController_04-11-2026.php)
 
 ### SubscribeWPApiTokenController.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscribeWPApiTokenController_04-11-2026.php)
 
 ### SubscriptionController.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionController_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionController_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionController_04-11-2026.php)
 
 ### SubscriptionPaymentController.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionPaymentController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionPaymentController_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionPaymentController_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/SubscriptionPaymentController_04-11-2026.php)
 
 ### YooMoneyNotificationController.php *(так файл называется на сервере)*
-[/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/YooMoneyNotificationController_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/YooMoneyNotificationController_20102026.php)
+[/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/YooMoneyNotificationController_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Http/Controllers/YooMoneyNotificationController_04-11-2026.php)
 
 
 ---
