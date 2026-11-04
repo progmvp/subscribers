@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Вход — Личный кабинет</title>
+    <title>Подтверждение входа — Личный кабинет</title>
 
     <style>
         * {
@@ -42,6 +42,11 @@
             line-height: 1.5;
         }
 
+        .email {
+            font-weight: 600;
+            color: #222;
+        }
+
         label {
             display: block;
             margin-bottom: 8px;
@@ -50,11 +55,13 @@
 
         input {
             width: 100%;
-            height: 48px;
+            height: 52px;
             padding: 0 14px;
             border: 1px solid #d5d5d5;
             border-radius: 7px;
-            font-size: 16px;
+            font-size: 24px;
+            letter-spacing: 7px;
+            text-align: center;
             outline: none;
         }
 
@@ -93,6 +100,14 @@
             background: #f0fff4;
             color: #176b35;
         }
+
+        .back {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #555;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -100,10 +115,12 @@
 
 <div class="login-box">
 
-    <h1>Личный кабинет</h1>
+    <h1>Введите код</h1>
 
     <p class="description">
-        Введите e-mail, который используется для вашей подписки.
+        Код отправлен на:
+        <br>
+        <span class="email">{{ $email }}</span>
     </p>
 
     @if ($errors->any())
@@ -118,25 +135,31 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('lk.send-code') }}">
+    <form method="POST" action="{{ route('lk.verify-code') }}">
         @csrf
 
-        <label for="email">E-mail</label>
+        <label for="code">Код</label>
 
         <input
-            type="email"
-            id="email"
-            name="email"
-            value="{{ old('email') }}"
+            type="text"
+            id="code"
+            name="code"
+            inputmode="numeric"
+            pattern="[0-9]{6}"
+            maxlength="6"
+            autocomplete="one-time-code"
             required
-            autocomplete="email"
             autofocus
         >
 
         <button type="submit">
-            Получить код
+            Войти
         </button>
     </form>
+
+    <a class="back" href="{{ route('lk.login') }}">
+        Изменить e-mail
+    </a>
 
 </div>
 
