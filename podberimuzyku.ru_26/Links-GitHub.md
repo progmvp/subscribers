@@ -62,7 +62,7 @@
 ## subscribers/podberimuzyku.ru_26/app/Providers/
 
 ### AppServiceProvider.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Providers/AppServiceProvider_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Providers/AppServiceProvider_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Providers/AppServiceProvider_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Providers/AppServiceProvider_04-11-2026.php)
 
 
 ---
@@ -73,10 +73,10 @@
 
 
 ### SubscrSubscriptionService.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Services/SubscrSubscriptionService_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Services/SubscrSubscriptionService_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Services/SubscrSubscriptionService_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Services/SubscrSubscriptionService_04-11-2026.php)
 
 ### SubscrWordPressService.php *(так файл называется на сервере)*
-[/subscribers/podberimuzyku.ru_26/app/Services/SubscrWordPressService_20102026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Services/SubscrWordPressService_20102026.php)
+[/subscribers/podberimuzyku.ru_26/app/Services/SubscrWordPressService_04-11-2026.php](https://raw.githubusercontent.com/progmvp/subscribers/refs/heads/main/podberimuzyku.ru_26/app/Services/SubscrWordPressService_04-11-2026.php)
 
 
 ---
